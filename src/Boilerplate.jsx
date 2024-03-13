@@ -60,7 +60,7 @@ function PageBoilerPlate({ component }) {
         <>
             <Nav />
             <div className='flex justify-between min-h-[93vh]'>
-                <nav className={`${classes.navbar} flex-[0.1]`}>
+                <nav className={`${classes.navbar} flex-[0.17]`}>
                     <div>
                         <Text fw={500} size="sm" className={classes.title} c="dimmed" mb="xs">
                         bgluesticker@mantine.dev
@@ -90,7 +90,7 @@ function PageBoilerPlate({ component }) {
                     </div>
                 </nav>
 
-                <div className='w-[100%] flex-[0.9]'>
+                <div className='w-[100%] flex-[0.9] p-3'>
                     {component}
                 </div>                
             </div>

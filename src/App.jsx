@@ -40,16 +40,21 @@ function App() {
       console.error("Error:", error);
     }
   }
-
+  // border: 1px solid rgba(111, 111, 111, 0.5);
   return (
     <>
-      {/* <h1>Data: {data}</h1> */}
-      <DisplayContainer 
-        title={"Open On Every Shift"}
-        title_1={'Support Portal'}
-        link_1={'Support Portal'}
-      />
-
+      <div className='flex justify-between'>
+        <div className='flex-[0.73] bg-white rounded-md border border-black-500'>
+          <DisplayContainer
+            title={"OPEN FOR EVERY SHIFT"}
+          />
+        </div> 
+        <div className='flex-[0.25] bg-white rounded-md border border-black-500'>
+          <div>
+            <h1>Reminder:</h1>
+          </div>
+        </div>
+      </div>
     </>
   )
 }
