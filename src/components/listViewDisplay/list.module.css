@@ -1,0 +1,8 @@
+.taskList{
+    background: linear-gradient(90deg, #D2F8D9 0%, rgba(182, 244, 146, 0.2) 0 20%, rgb(255, 255, 255) 100%);
+    border-left: 3px solid rgb(182, 244, 146);
+}
+.defaultTaskList{
+    border-left: 3px solid #E4F0F4;
+    background-color: #fff;
+}

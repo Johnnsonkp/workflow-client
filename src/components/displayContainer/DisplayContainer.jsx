@@ -26,17 +26,24 @@ const features = [
   },
   {
     icon: IconFlame,
-    title: <a href="https://myemergencydr-my.sharepoint.com/:w:/g/personal/cgallagher_myemergencydr_com_au/ETEtAKkP90RHnuQta46uXGMBr-mBAcNbKKp6cXH9lFKJzg?e=TcldQL" target='_blank'>Workflows</a>,
+    title: "Workflows",
     description:
       'Customize colors, spacing, shadows, fonts and many other settings with global theme object',
     link: "https://myemergencydr-my.sharepoint.com/:w:/g/personal/cgallagher_myemergencydr_com_au/ETEtAKkP90RHnuQta46uXGMBr-mBAcNbKKp6cXH9lFKJzg?e=TcldQL",
   },
   {
     icon: IconFlame,
-    title: <a href="https://myemergencydr-my.sharepoint.com/:w:/g/personal/cgallagher_myemergencydr_com_au/ETEtAKkP90RHnuQta46uXGMBr-mBAcNbKKp6cXH9lFKJzg?e=TcldQL" target='_blank'>Operations Client</a>,
+    title: "Operations Client",
     description:
       'Customize colors, spacing, shadows, fonts and many other settings with global theme object',
     link: "https://myemergencydr-my.sharepoint.com/:w:/g/personal/cgallagher_myemergencydr_com_au/ETEtAKkP90RHnuQta46uXGMBr-mBAcNbKKp6cXH9lFKJzg?e=TcldQL",
+  },
+  {
+    icon: IconFlame,
+    title: "Support Portal",
+    description:
+      'Customize colors, spacing, shadows, fonts and many other settings with global theme object',
+    link: "https://myemergencydr.sharepoint.com/sites/SupportPortal",
   },
   {
     icon: IconFlame,
