@@ -111,16 +111,22 @@ function PersonalLanding() {
       <DefaultContainer className={`${toggleForm? "h-[100vh]" : ""} !shadow-md`}>
         <InnerTopNav setTogglePanel={setTogglePanel}/>
         {taskPanel === 'list' && <DashboardBannerCards taskObj={taskObj}/> }
-        {loading? "loading..." : <DashboardDisplay />}
+        <DashboardDisplay />
       </DefaultContainer>
 
-      <Button onClick={open} onClose={close} 
+      <Button onMouseDown={open} onClose={close} 
         className={`shadow-lg ${classes.button} ${opened? classes.buttonOpen : classes.buttonClose}`}
       >
         <IconPlus size={30} className={`!transition-all !duration-500 ${opened && classes.buttonRotate}  `}/>
       </Button>
 
-      <FormModules />
+      <Modal opened={opened} onClose={close} centered fullScreen={false} size="900px">
+        <CreateTaskForm />
+      </Modal>
+      <Modal opened={updateForm.toggle} onClose={() => setUpdateForm({task: null, toggle: false})} centered fullScreen={false} size="900px">
+        <UpdateTaskForm task={updateForm?.task}/>
+      </Modal>
+
     </LoadingContainer>
   );
 }

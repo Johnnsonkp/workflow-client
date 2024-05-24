@@ -1,4 +1,4 @@
-import '../calendarInputDate/DateTimePicker.css'
+// import '../calendarInputDate/DateTimePicker.css'
 
 import { ActionIcon, Button, Group, Input, NumberInput, Select, SimpleGrid, TextInput, Textarea, Title } from '@mantine/core';
 import { DatePickerInput, DateTimePicker, TimeInput } from '@mantine/dates';
@@ -7,7 +7,6 @@ import {getDateTimeValue, monthsArr, reformatDateInput} from '../../utils/dateUt
 import {storeTask, taskFormActions} from '../../actions/taskActions.js'
 
 import CustomForm from './CreateTaskForm'
-import DateTimePickerCus from '../calendarInputDate/DateTimePickerCus';
 import { IconClock } from '@tabler/icons-react';
 import classes from './form.module.css'
 import {getItemFromLocalStorage} from '../../utils/localstorage.js'

@@ -18,6 +18,7 @@ module.exports = {
   plugins: {
     'postcss-preset-mantine': {
       autoRem: true,
+      'mantine-color-blue-light-color': '#464FEB',
     },
     'postcss-simple-vars': {
       variables: {
@@ -28,7 +29,9 @@ module.exports = {
         'mantine-breakpoint-xl': '88em',
         'docs-navbar-breakpoint': '47.5em',
         'docs-mdx-breakpoint': '67.5em',
+        'mantine-color-blue-light-color': '#464FEB',
       },
     },
   },
 };
+

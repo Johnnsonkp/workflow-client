@@ -29,7 +29,8 @@ function Nav() {
   }, [])
   
   return (
-    <div className='px-3 bg-[#FAFBFC] flex justify-between !align-bottom fixed w-[100%] z-10 border border-bottom'>
+    // <div className={` ${classes.navContainer} px-3 flex justify-between !align-bottom fixed w-[100%] z-10 `}>
+   <div className={` ${classes.navContainer}`}>
         <div className='flex !align-middle z-30'>
           <div className='mt-3 pr-5 '><IconMenu2 color='#999' size={30} className='cursor-pointer'/></div>
           <a href="/" className='w-[200px] h-[50px]'>

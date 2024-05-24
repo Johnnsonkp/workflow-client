@@ -30,8 +30,8 @@ function PageBoilerPlate({ component }) {
           <Nav />
           <LoadingContainer className={`flex justify-between min-h-[93vh]`}>
               <SideNav section={section} urlRedirect={urlRedirect} />
-              <LoadingContainer className={`${bpClasses.component} p-7 pt-4 mt-14 shadow-xl`}>
-                {component}
+              <LoadingContainer className={`${bpClasses.component} p-7 pt-4 mt-12 shadow-xl`}>
+                <div className=' max-w-[1800px] !m-[auto] pt-3'>{component}</div>
               </LoadingContainer>
           </LoadingContainer>
         </>

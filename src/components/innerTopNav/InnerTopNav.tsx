@@ -3,6 +3,7 @@ import * as classes from './InnerTopNav.module.css';
 import { Burger, Container, Group, SegmentedControl } from '@mantine/core';
 import { useEffect, useState } from 'react';
 
+import { IconDashboard } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
 
 export interface Link {               // interface describes the structure of the variable, Array or obj
@@ -52,7 +53,9 @@ const InnerTopNav: React.FC<Props> = ({ setTogglePanel, data, value}) => {
   return (
     <header className={`${classes.header} border border-#D1D1D1 bg-white shadow-md rounded-sm h-[560px]`}>
       <Container size="lg" className={classes.inner}>
-        <div className='text-[18px] font-semibold'>Dashboard</div>
+        <div className='text-[18px] font-semibold flex w-36'>
+         <IconDashboard color='#464FEB'/> <h3 className='px-1 text-[18px] font-semibold' >Dashboard</h3>
+        </div>
         {/* <Group gap={0} visibleFrom="xs" className='border border-gray-100'>
           {items}
         </Group> */}

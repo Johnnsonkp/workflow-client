@@ -26,12 +26,14 @@ const SideNav = ({section, urlRedirect}) => {
   }
 
   return (
-    <nav className={`${classes.navbar} w-56 !pt-16`}>
+    // <nav className={`${classes.navbar} w-56 !pt-16`}>
+    <nav className={`${classes.navbar}`}>
         <div className={`${classes.innerSideNav}`}>
             <div>
                 <Text fw={500} size="sm" className={classes.title} c="dimmed" mb="xs">
                 </Text>
                 <SegmentedControl
+                    className={`${classes.controller}`}
                     value={section}
                     onChange={(value) => urlRedirect(value)}
                     transitionTimingFunction="ease"

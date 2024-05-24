@@ -6,6 +6,15 @@
     padding: 4px;
     /* border: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8)); */
     border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8));
+    --dot-bg: white;
+    /* --dot-bg: linear-gradient(-45deg, #f7f7f8, #F4F2EE, #DCC2b6, #DDE1E3); */
+    --dot-color: black;
+    --dot-size: 1px;
+    --dot-space: 22px;
+    background:
+      linear-gradient(90deg, var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
+      linear-gradient(var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
+      var(--dot-color);
   
     @media (max-width: $mantine-breakpoint-sm) {
       flex-direction: column;
@@ -62,11 +71,22 @@
     /* flex: 0 0 rem(280px); */
     flex: 0.6;
     height: 100vh;
+    
+    /* --dot-bg: transparent;
+    --dot-color: black;
+    --dot-size: 1px;
+    --dot-space: 22px;
+    background:
+      linear-gradient(90deg, var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
+      linear-gradient(var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
+      var(--dot-color),
+      linear-gradient(-45deg, #f7f7f8, #F4F2EE, #DCC2b6, #DDE1E3); */
 
-    /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
     background: linear-gradient(-45deg, #f7f7f8, #F4F2EE, #DCC2b6, #DDE1E3);
     background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
+    animation: gradient 15s ease infinite; 
+
+    
   
     @media (max-width: $mantine-breakpoint-sm) {
       margin-bottom: var(--mantine-spacing-sm);

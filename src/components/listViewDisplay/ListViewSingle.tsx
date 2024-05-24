@@ -19,8 +19,8 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule}) 
             <ThemeIcon color="teal" size={30} radius="xl">
               <IconCircleCheck style={{ width: rem(36), height: rem(40) }} /> 
             </ThemeIcon> :
-            <ThemeIcon color="blue" size={30} radius="xl">
-              <IconCircleFilled color="blue" style={{ width: rem(36), height: rem(40) }} /> 
+            <ThemeIcon color="rgba(228, 230, 240)" size={30} radius="xl">
+              <IconCircleFilled color="" style={{ width: rem(36), height: rem(40) }} /> 
             </ThemeIcon>
           }
         </Group>

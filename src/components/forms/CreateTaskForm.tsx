@@ -1,13 +1,9 @@
-import '../calendarInputDate/DateTimePicker.css'
-
 import { Button, Group, Input, NumberInput, Select, SimpleGrid, TextInput, Textarea, Title } from '@mantine/core';
-import { DatePickerInput, DateTimePicker } from '@mantine/dates';
 import React, {useEffect, useState} from 'react'
 import {getDateTimeValue, monthsArr, reformatDateInput} from '../../utils/dateUtills.js'
 import {storeTask, taskFormActions} from '../../actions/taskActions.js'
 
 import CustomForm from './CreateTaskForm'
-import DateTimePickerCus from '../calendarInputDate/DateTimePickerCus';
 import classes from './form.module.css'
 import {getItemFromLocalStorage} from '../../utils/localstorage.js'
 import { useAppState } from '../../store/AppState.jsx'
@@ -17,7 +13,7 @@ import { useRef } from 'react';
 
 function CreateTaskForm() {
   const [value, setValue] = useState<any>(null)
-  const [hhMinute, setHhMinute] = useState<Date | string | undefined>(null)
+  const [hhMinute, setHhMinute] = useState<Date | string | undefined>()
   const navigate = useNavigate()
   const userData = getItemFromLocalStorage('AUTH')
   let newDate = new Date();
