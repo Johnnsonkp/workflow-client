@@ -85,21 +85,21 @@ const WeekView: React.FC<Props> = ({taskObj, dateObj, deleteTask}) => {
       toggle: false
     })
 
-    const TaskCountForWeek = () => {
-      dateDisplayObjWithTask.forEach((obj: DateObj) => {
-        if(obj.task && obj.task?.length > 1){ // task object array is greater than 1
-          obj.task?.forEach((task: Task) => {
-            task.status && task.status !== 'complete' && taskCounter++
-          })
-        } 
-        if(obj.task && obj.task?.length === 1){ // task object array === 1
-            if(obj.task[0]?.status && obj.task[0]?.status !== 'complete'){
-              taskCounter++
-            }
-        }
-    })
-      return taskCounter;
-    }
+    // const TaskCountForWeek = () => {
+    //   dateDisplayObjWithTask.forEach((obj: DateObj) => {
+    //     if(obj.task && obj.task?.length > 1){ // task object array is greater than 1
+    //       obj.task?.forEach((task: Task) => {
+    //         task.status && task.status !== 'complete' && taskCounter++
+    //       })
+    //     } 
+    //     if(obj.task && obj.task?.length === 1){ // task object array === 1
+    //         if(obj.task[0]?.status && obj.task[0]?.status !== 'complete'){
+    //           taskCounter++
+    //         }
+    //     }
+    // })
+    //   return taskCounter;
+    // }
 
     useEffect(() => {
       if(toggleDelete.toggle){
@@ -121,7 +121,7 @@ const WeekView: React.FC<Props> = ({taskObj, dateObj, deleteTask}) => {
           </div>
 
           <div className='ml-1 inline-flex border border-blue-200 bg-blue-100 text-blue-500 font-bold rounded-sm mb-4'>
-            <p className='px-3 inline-flex align-middle justify-around'> <TaskCountForWeek /> Up coming tasks</p>
+            {/* <p className='px-3 inline-flex align-middle justify-around'> <TaskCountForWeek /> Up coming tasks</p> */}
           </div>
           
           <div className='ml-1 inline-flex border border-blue-200 bg-blue-100 text-blue-500 font-bold rounded-sm mb-4'> 

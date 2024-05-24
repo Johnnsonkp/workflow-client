@@ -65,13 +65,6 @@ const ListViewDisplay: React.FC<Prop> = ({taskObj, checked, defaultChecked, onCh
     combineAllTasks.push(allCompletedTask?.concat(inCompletedTaskInOrder))
   }
   
-  
-  // combineAllTasks.push(allCompletedTask)
-
-  // setAllTaskInOrder(combineAllTasks)
-
-  console.log("combineAllTasks", combineAllTasks)
-
 
   const toggleFormModule = (task: Task, toggle: boolean) => {
     console.log("form toggled", task)
@@ -92,14 +85,14 @@ const ListViewDisplay: React.FC<Prop> = ({taskObj, checked, defaultChecked, onCh
   })
   const [loadingComponent, setLoadingComponent]: any = useState(true)
 
-  useEffect(() => {
-    if(toggleTaskComplete.toggle){
-      setCompleteTask({
-        task: toggleTaskComplete.task?.title,
-        toggle: toggleTaskComplete.task?.toggle 
-      })
-    }
-  }, [toggleTaskComplete])
+  // useEffect(() => {
+  //   if(toggleTaskComplete.toggle){
+  //     setCompleteTask({
+  //       task: toggleTaskComplete.task?.title,
+  //       toggle: toggleTaskComplete.task?.toggle 
+  //     })
+  //   }
+  // }, [toggleTaskComplete])
 
 
   function chunk<T>(array: T[], size: number): T[][] {
