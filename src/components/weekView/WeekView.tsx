@@ -21,12 +21,12 @@ interface DateObj {
     month: string;
     year: number;
     full_date?: string | undefined;
-    task?: Task[] | Task;
+    task?: Task[] | undefined;
  }
 
  interface Props {
     dateObj: DateObj;
-    taskObj: Task[];
+    taskObj: Task[] | undefined;
     todaysDate: number;
     deleteTask: (task: Task, deleteTask: Task[] | undefined) => void;
  }
@@ -130,7 +130,7 @@ const WeekView: React.FC<Props> = ({taskObj, dateObj, deleteTask}) => {
           
         </div>
         <div className='flex'>
-          {dateDisplayObjWithTask.map((obj: DateObj, index) => (
+          {dateDisplayObjWithTask.map((obj, index) => (
             <>
             <div className={`flex-col m-1 text-[13px] `} key={index + obj.day}>
               <WeekViewTab obj={obj} todaysDate={todaysDate} key={index + obj.day + todaysDate}/>

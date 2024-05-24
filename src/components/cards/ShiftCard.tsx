@@ -26,7 +26,7 @@ interface DateObj {
     month: string;
     year: number;
     full_date?: string | undefined;
-    task?: Task[] | Task;
+    task?: Task[] | undefined;
  }
 
 interface Props {
@@ -46,6 +46,7 @@ const ShiftCard: React.FC<Props>  = ({obj, todaysDate, toggleDelete, setToggleDe
     }
 
     return (
+        // obj.task && obj.task?.length > 0? obj.task?.map((task: any) => (
         obj.task && obj.task?.length > 0? obj.task?.map((task: any) => (
             <div key={index + task.order + task.title} className={`relative cursor-pointer border ${task ? 'border-gray-300' : 'border-gray-200'} flex-col mt-2 text-[12px] h-32 w-32 rounded-md  p-1 
                 ${obj?.date === todaysDate? '!bg-[#D2F8D9] !border-green-500' : "bg-[#F9F9FB] border-gray-200"}`}
