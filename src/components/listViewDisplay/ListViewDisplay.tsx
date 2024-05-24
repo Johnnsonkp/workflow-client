@@ -1,11 +1,8 @@
-import { ActionIcon, Anchor, Avatar, Badge, Checkbox, Group, Loader, Pagination, Skeleton, Table, Text, ThemeIcon, UnstyledButton, rem } from '@mantine/core';
-import { IconCircleCheck, IconCircleDashed } from '@tabler/icons-react';
-import { IconPencil, IconTrash } from '@tabler/icons-react';
+import { Pagination, Skeleton, Table, Text, ThemeIcon, UnstyledButton, rem } from '@mantine/core';
 import React, {MouseEvent, useEffect, useState} from 'react'
 
 import ListViewSingle from './ListViewSingle';
 import {useAppState} from '../../store/AppState.jsx'
-import { useUncontrolled } from '@mantine/hooks';
 
 const taskStatus: Record<string, string> = {
   todo: "blue",
