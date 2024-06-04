@@ -4,9 +4,19 @@ import { useEffect, useState } from 'react';
 import classes from './StatsRingCard.module.css';
 import { useAppState } from '../../../store/AppState';
 
+interface Task {
+  title: string;
+  description: string;
+  time_to_start: string;
+  status: string;
+  time_to_complete: string;
+  order: number;
+  project?: string;
+}
+
 function StatsRingCard({}) {
   const {state, dispatch} = useAppState()
-  const [taskObj, setTaskObj] = useState()
+  const [taskObj, setTaskObj] = useState<Task[]>()
 
   useEffect(() => {
     if(state.tasks && taskObj === undefined ){

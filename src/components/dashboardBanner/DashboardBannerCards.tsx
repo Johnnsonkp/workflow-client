@@ -88,7 +88,7 @@ const data = [
   },
 ]
 
-const CustomCarousel = ({position, setPosition, nextPosition, lastPosition, animationClass, rightAnimation, lastHiddenPosition, taskObj}) => (
+const CustomCarousel = ({position, setPosition, nextPosition, lastPosition, animationClass, rightAnimation, lastHiddenPosition}) => (
   // <div className='flex'>
   <>
     {/* <p>lastHiddenPosition: {lastHiddenPosition}</p> */}

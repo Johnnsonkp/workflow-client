@@ -44,7 +44,7 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule}) 
         onClick={() => toggleFormModule( {task: task, toggle: true})}
       > 
         {/* <Badge color={taskStatus[task.status]} variant="light" className='!flex'> */}
-        <Badge color={'black'} variant="light" className='!flex'>
+        <Badge color={'black'} variant="light" className='!flex '>
           <div className='!flex !justify-between !align-middle'>
             <ThemeIcon color={taskStatus[task.status]} size={15} radius="xl" variant="light">
               <IconCircleFilled color="transparent" style={{ width: rem(13), height: rem(8) }} /> 

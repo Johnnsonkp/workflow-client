@@ -7,7 +7,7 @@ import { useDisclosure } from '@mantine/hooks';
 const StandUpCardCustom = () => {
   const [toggle, setToggle] = useState(false)
   const [toggleText, setToggleText] = useState(false)
-  const [toggleForm, setToggleForm] = useState(false)
+  const [toggleForm, setToggleForm] = useState<boolean | any>(false);
   const [opened, { open, close }] = useDisclosure(toggleForm);
 
   const [standUpObj, setStandUpObj] = useState([ 
@@ -38,7 +38,7 @@ const StandUpCardCustom = () => {
   const Items = () => (
     standUpObj.map((standUp, index) => (
       <Group justify="space-between" className={`${classes.item} cursor-pointer`} wrap="nowrap" gap="md" key={index}>
-        <Text onMouseDown={open} onClose={close} size="sm" className={`${standUp.complete? '!line-through' : ''}`}>{index + 1}. {standUp.title}</Text>
+        <Text onMouseDown={open} size="sm" className={`${standUp.complete? '!line-through' : ''}`}>{index + 1}. {standUp.title}</Text>
         <Switch 
           onLabel="UNCHECK" offLabel="CHECK" className={`${classes.switch} !z-50`} size="xs" 
           onChange={() => completeStandup(index)}
@@ -93,7 +93,7 @@ const StandUpCardCustom = () => {
           </div>
           <div className='mt-4 w-[100%]'>
             <hr className='mb-5'></hr>
-            <Button onClose={close} className='!w-[100%]' 
+            <Button className='!w-[100%]' 
               onClick={() => {handleFormSubmit()}}
             >
             Save

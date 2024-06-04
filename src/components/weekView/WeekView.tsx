@@ -132,11 +132,14 @@ const WeekView: React.FC<Props> = ({taskObj, dateObj, deleteTask}) => {
         <div className='flex'>
           {dateDisplayObjWithTask.map((obj, index) => (
             <>
-            <div className={`flex-col m-1 text-[13px] `} key={index + obj.day}>
-              <WeekViewTab obj={obj} todaysDate={todaysDate} key={index + obj.day + todaysDate}/>
-              <ShiftCard obj={obj} todaysDate={todaysDate} toggleDelete={toggleDelete} 
+            <div className={`flex-col m-1 text-[13px] `} key={index}>
+              {/* <WeekViewTab obj={obj} todaysDate={todaysDate} key={index + obj.day + todaysDate}/> */}
+              <WeekViewTab obj={obj} todaysDate={todaysDate}/>
+              {/* <ShiftCard obj={obj} todaysDate={todaysDate} toggleDelete={toggleDelete} 
                 setToggleDelete={setToggleDelete} index={index + obj.day} key={index + obj.day + todaysDate + index}
-              />
+              /> */}
+              <ShiftCard obj={obj} todaysDate={todaysDate} toggleDelete={toggleDelete} 
+                setToggleDelete={setToggleDelete} index={index + obj.day} />
             </div>
             </>
           ))}
