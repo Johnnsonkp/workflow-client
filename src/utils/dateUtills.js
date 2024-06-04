@@ -20,7 +20,11 @@ export const getDateTimeValue = (calendarInput) => {
 }
 
 export const reformatDateInput = (dateStr) => {
-  let parts = dateStr?.split("-");
+  console.log("dateSTring", dateStr)
+
+  let newDateToString = dateStr.toString()
+  
+  let parts = newDateToString?.split("-");
   let monthNum = parseInt(parts[1]) - 1
   let rewrittenDate = parts[2] + '/' + monthsArr[monthNum] + '/' + parts[0];
   

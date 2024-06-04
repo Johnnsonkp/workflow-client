@@ -108,8 +108,10 @@ export const taskFormActions = ({
 })
 
 export const storeTask = (data, dispatch, action) => {
-    if(dispatch){
+  console.log("storing task", data, action)
+    // if(dispatch){
       dispatch({ type: action, payload: {
+        id: data.id,
         title: data.title,
         description: data.description,
         status: data.status,
@@ -119,7 +121,7 @@ export const storeTask = (data, dispatch, action) => {
         time_to_finish: data.time_to_finish,
         user_id: data.user_id
       }})
-    }
+    // }
   
     // if(data){
     //   setItemToLocalStorage("AUTH", {
@@ -130,4 +132,10 @@ export const storeTask = (data, dispatch, action) => {
     //     email: user.email
     //   })
     // }
+}
+
+export const storeTaskObj = (data, dispatch, action) => {
+  if(dispatch){
+    return dispatch({ type: action, payload: data})
+  }
 }

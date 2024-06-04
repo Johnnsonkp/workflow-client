@@ -1,7 +1,27 @@
+import { useEffect, useState } from 'react'
+
 import { DisplayContainer } from '../components/displayContainer/DisplayContainer'
-import React from 'react'
+import { useAppState } from '../store/AppState'
 
 function WorkLanding() {
+  const {state, dispatch} = useAppState()
+ const [checkState, setCheckState] = useState(false)
+
+  useEffect(() => {
+    console.log("useEffect state before hand", state)
+
+    // dispatch({type: "DARK_THEME", payload: true})
+    if(checkState){
+      console.log("useEffect state", state)
+      dispatch({type: "DARK_THEME", payload: true})
+      return setCheckState(false)
+    }
+
+    console.log("useEffect state after hand", state)
+
+  }, [checkState])
+
+  
   return (
     <>
     <div className='flex-[0.73] bg-white rounded-md border border-black-500'>
@@ -11,8 +31,10 @@ function WorkLanding() {
         </div> 
         <div className='flex-[0.25] bg-white rounded-md border border-black-500'>
           <div>
-            <h1>Reminder:</h1>
+            <h1>Reminder:sss</h1>
           </div>
+
+          <button onClick={() => setCheckState(true)}> update state</button>
     </div>
     </>
   )

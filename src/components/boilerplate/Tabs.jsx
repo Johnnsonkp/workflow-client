@@ -5,23 +5,22 @@ import {
     IconDatabaseImport,
     IconDeviceProjector,
     IconFileAnalytics,
+    IconLockAccess
 } from '@tabler/icons-react';
 
 import classes from './NavbarSegmented.module.css';
 
 export const tabs = {
-    Work: [
-        { link: '', label: 'Call workflows', icon: IconBellRinging },
-        { link: '', label: 'Med abreviations', icon: IconDatabaseImport },
-        { link: '', label: 'External links', icon: IconDatabaseImport },
-        { link: '', label: 'Trackers', icon: IconDatabaseImport },
-      ],
-      Personal: [
-        { link: '/personal', label: 'Dashboard', icon: IconDashboard },
-        { link: '', label: 'Projects Overview', icon: IconDeviceProjector },
-        { link: '', label: 'RYLLAB', icon: IconFileAnalytics },
-        { link: '', label: 'Calendar', icon: IconCalendar },
-      ],
+    Userxp: [
+      { link: '', label: 'Milestones', icon: IconLockAccess },
+      { link: '', label: 'Stats', icon: IconLockAccess }
+    ],
+    Personal: [
+      { link: '/personal', label: 'Dashboard', icon: IconDashboard },
+      { link: '', label: 'Projects Overview', icon: IconLockAccess },
+      { link: '', label: 'RYLLAB', icon: IconLockAccess },
+      { link: '', label: 'Calendar', icon: IconLockAccess },
+    ],
 };
 
 

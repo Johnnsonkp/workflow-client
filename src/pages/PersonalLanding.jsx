@@ -1,7 +1,7 @@
 import * as classes from '../components/formButtonToggle/formButton.module.css'
 
 import { Button, Modal } from '@mantine/core'
-import React, {useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useMemo, useState} from 'react'
 import { storeTask, taskFormActions } from '../actions/taskActions.js'
 
 import CreateTaskForm from '../components/forms/CreateTaskForm.tsx'
@@ -17,8 +17,10 @@ import UpdateTaskForm from '../components/forms/UpdateTaskForm.tsx'
 import WeekView from '../components/weekView/WeekView.tsx'
 import { getItemFromLocalStorage } from '../utils/localstorage.js'
 import { getTask } from '../services/taskService.js'
+import { storeTaskObj } from '../actions/taskActions.js'
 import { useAppState } from '../store/AppState.jsx'
 import { useDisclosure } from '@mantine/hooks';
+import { useNavigate } from "react-router-dom";
 
 function PersonalLanding() {
   const [taskPanel, setTaskPanel] = useState('list')
@@ -29,28 +31,21 @@ function PersonalLanding() {
   const [error, setError] = useState(null);
   const {state, dispatch} = useAppState()
   const [opened, { open, close }] = useDisclosure(false);
+  const [openedUpdateForm, { openUpdateForm, closeUpdateForm }] = useDisclosure(false);
   const [openForm, setOpenForm] = useState(close)
   const userData = getItemFromLocalStorage('AUTH')
+  const navigate = useNavigate()
   const [updateForm, setUpdateForm] = useState({
     task: null,
     toggle: false
   })
-
-  const loadTasks = async () => {
-    const taskActions = await taskFormActions['get']
-    taskActions(userData).then((data) => {
-      console.log("taskActions data state.user_id", data)
-      setTaskObj(data);
-    })
-  }
-
-  useEffect(() => {
-    if(loading && !taskObj.length){
-      loadTasks()
-      setLoading(false);
-    }
-  }, [loading])
   
+  useEffect(() => {
+    if (loading && state.tasks && !taskObj.length) {
+      setTaskObj(state.tasks);
+      setLoading(false)
+    }
+  }, []);
 
   const deleteTask =  async (taskToDelete, taskObj) => {
     const newTaskObj = taskObj && taskObj.filter((t) => t.id != taskToDelete.id )
@@ -86,22 +81,6 @@ function PersonalLanding() {
     }
   }
 
-  const FormModules = () => {
-    return <>
-    <Modal opened={opened} onClose={close} centered fullScreen={false} size="900px">
-        <CreateTaskForm />
-      </Modal>
-
-      <Modal opened={updateForm.toggle} onClose={() => setUpdateForm({task: null, toggle: false})} centered fullScreen={false} size="900px">
-        <UpdateTaskForm task={updateForm?.task}/>
-      </Modal>
-    </>
-  }
-
-  useEffect(() => {
-    console.log("updateForm", updateForm)
-  }, [setUpdateForm])
-
   useEffect(() => {
     setTaskPanel(togglePannel || "list")
   }, [togglePannel])
@@ -111,19 +90,38 @@ function PersonalLanding() {
       <DefaultContainer className={`${toggleForm? "h-[100vh]" : ""} !shadow-md`}>
         <InnerTopNav setTogglePanel={setTogglePanel}/>
         {taskPanel === 'list' && <DashboardBannerCards taskObj={taskObj}/> }
-        <DashboardDisplay />
+        {state.tasks? <DashboardDisplay /> : 'loading...'}
       </DefaultContainer>
-
+      
       <Button onMouseDown={open} onClose={close} 
         className={`shadow-lg ${classes.button} ${opened? classes.buttonOpen : classes.buttonClose}`}
       >
         <IconPlus size={30} className={`!transition-all !duration-500 ${opened && classes.buttonRotate}  `}/>
       </Button>
 
-      <Modal opened={opened} onClose={close} centered fullScreen={false} size="900px">
+      <Modal 
+        opened={opened} 
+        onClose={close} 
+        centered 
+        fullScreen={false} 
+        size="900px"
+        overlayProps={{
+          backgroundOpacity: 0.55,
+          blur: 3,
+        }}
+      >
         <CreateTaskForm />
       </Modal>
-      <Modal opened={updateForm.toggle} onClose={() => setUpdateForm({task: null, toggle: false})} centered fullScreen={false} size="900px">
+      <Modal 
+        opened={updateForm.toggle} onClose={() => setUpdateForm({task: updateForm?.task , toggle: false})} 
+        centered 
+        fullScreen={false} 
+        size="900px"
+        overlayProps={{
+          backgroundOpacity: 0.55,
+          blur: 3,
+        }}  
+      >
         <UpdateTaskForm task={updateForm?.task}/>
       </Modal>
 

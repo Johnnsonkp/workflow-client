@@ -1,4 +1,5 @@
 import { Button, Group, Input, NumberInput, Select, SimpleGrid, TextInput, Textarea, Title } from '@mantine/core';
+import { DatePickerInput, DateTimePicker, TimeInput } from '@mantine/dates';
 import React, {useEffect, useState} from 'react'
 import {getDateTimeValue, monthsArr, reformatDateInput} from '../../utils/dateUtills.js'
 import {storeTask, taskFormActions} from '../../actions/taskActions.js'
@@ -12,33 +13,62 @@ import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
 
 function CreateTaskForm() {
-  const [value, setValue] = useState<any>(null)
   const [hhMinute, setHhMinute] = useState<Date | string | undefined>()
+  const ref = useRef<HTMLInputElement>(null);
   const navigate = useNavigate()
   const userData = getItemFromLocalStorage('AUTH')
-  let newDate = new Date();
-  let newDateString = getDateTimeValue(newDate)
+  let newDate = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+  let yearDateValue = new Date().toLocaleDateString()
   const {state, dispatch} = useAppState()
+
+  let yyyymmddDf = new Date().toLocaleDateString('default', { year: 'numeric', month: '2-digit', day: '2-digit' })
+  let rxDateFm = yyyymmddDf.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1')
+
+  const [startDateValue, setStartDateValue] = useState<any>(rxDateFm)
+  const [startTime, setStartTime] = useState<any>(newDate)
+  const [finishTime, setFinishTime] = useState<any>(newDate)
+
+  console.log("newDate", newDate)
 
   const form = useForm({
     initialValues: {
       title: '',
       description: '',
       status: '',
-      time_to_start: '04:00 PM',
-      time_to_finish: '05:00 PM',
-      start_date: value,
+      time_to_start: '',
+      time_to_finish: '',
+      start_date: startDateValue,
       order: '',
       // project: '',
     },
     validate: {
       title: (value) => value.trim().length < 2,
-      // start_date: reformatDateInput(value)
     },
   });
+  
+  const convertTo12hrFormat = (timeValue: string) => {
+    console.log(timeValue)
+    let firstValue = timeValue.charAt(0)
+    let secondValue = timeValue.charAt(1)
+    let firstSecondValue = firstValue + secondValue
+    let timeValueToNumber = Number(firstSecondValue)
+
+    if(timeValueToNumber > 12){
+        let timeDiff = timeValueToNumber - 12
+        let timeFormated = timeDiff < 10 ? ('0' + timeDiff) : timeDiff
+
+        let newTime = timeFormated.toString() + timeValue.charAt(2) + timeValue.charAt(3) + timeValue.charAt(4) + ' PM'
+        return newTime
+    }
+
+    return timeValue + " AM"
+  }
 
   const handleFormSubmit = (form: any, userData: any) => {
-    form.values.start_date = reformatDateInput(value)
+
+    form.values.start_date = reformatDateInput(startDateValue)
+    form.values.time_to_start = convertTo12hrFormat(startTime)
+    form.values.time_to_finish = convertTo12hrFormat(finishTime)
     const taskActions = taskFormActions['create']
 
     taskActions(form.values, userData).then((data: any) => {
@@ -49,25 +79,18 @@ function CreateTaskForm() {
   }
 
   return (
-    // <CustomForm 
-    //   form={form} 
-    //   handleFormSubmit={handleFormSubmit} 
-    //   userData={userData}
-    //   newDateString={newDateString}
-    //   value={value}
-    // />
     <form 
       className='flex-row items-center justify-center bg-white w-[93%] h-[530px] m-auto rounded-md '
       onSubmit={form.onSubmit(() => handleFormSubmit(form, userData))}
     >
       <Title
         order={2}
-        size="h3"
+        size="h2"
         style={{ fontFamily: 'Greycliff CF, var(--mantine-font-family)' }}
-        fw={700}
+        fw={600}
         ta="left"
       >
-        New Task
+        Create New Task
       </Title>
       <hr className='mt-2'></hr>
 
@@ -106,15 +129,15 @@ function CreateTaskForm() {
         <SimpleGrid cols={{ base: 1, sm: 1 }} spacing={1} mt="">
           <label 
             className={`m_8fdc1311 mantine-InputWrapper-label mantine-TextInput-label mt-1 ${classes.customInputLabel}`}
-            >Start Date</label>
+            >Start Date
+          </label>
           <input 
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => setStartDateValue(e.target.value)}
               id="effective-date" 
               type="date" 
               name="effective-date"
               pattern="\d{4}-\d{2}-\d{2}"
-              defaultValue={newDateString}
-              value={value || undefined}
+              defaultValue={rxDateFm}
               className='bg-[#F1F3F5] rounded-md text-[12px] px-3 h-8 '
           />
         </SimpleGrid>
@@ -123,70 +146,49 @@ function CreateTaskForm() {
           <label 
             className={`m_8fdc1311 mantine-InputWrapper-label mantine-TextInput-label mt-1 ${classes.customInputLabel}`}
             >Start Time</label>
-          <input 
-              onChange={(e) => setValue(e.target.value)}
-              id="effective-date" 
-              type="date" 
-              name="effective-date"
-              pattern="\d{4}-\d{2}-\d{2}"
-              defaultValue={newDateString}
-              value={value || undefined}
-              className='bg-[#F1F3F5] rounded-md text-[12px] px-3 h-8 '
-          />
+          <TimeInput 
+            onChange={(e) => setStartTime(e.target.value)}
+            value={newDate}
+            variant="filled" 
+            ref={ref} 
+          /> 
         </SimpleGrid>
 
         <SimpleGrid cols={{ base: 1, sm: 1 }} spacing={1} mt="">
           
           <label 
             className={`m_8fdc1311 mantine-InputWrapper-label mantine-TextInput-label mt-1 ${classes.customInputLabel}`}
-            >Finish Time</label>
-          <input 
-              onChange={(e) => setValue(e.target.value)}
-              id="effective-date" 
-              type="date" 
-              name="effective-date"
-              pattern="\d{4}-\d{2}-\d{2}"
-              defaultValue={newDateString}
-              value={value || undefined}
-              className='bg-[#F1F3F5] rounded-md text-[12px] px-3 h-8 '
+            >Finish Time
+          </label>
+          <TimeInput 
+            onChange={(e) => setFinishTime(e.target.value)}
+            value={newDate}
+            variant="filled" 
+            ref={ref} 
           />
         </SimpleGrid>
         
       </SimpleGrid>
       <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
-        {/* <NumberInput
-            {...form.getInputProps('order')}
-            key={form.key('order')}
-            label="Order"
-            placeholder="Order"
-        /> */}
         <Select
             label="Status"
-            placeholder="Task status"
+            placeholder="todo"
             name="status"
             variant="filled"
             data={['todo', 'inprogress', 'complete', 'due']}
             size='md'
-            value={value}
-            // defaultValue={data[0]}
+            defaultValue='todo'
+
             {...form.getInputProps('status')}
         />
-        {/* <TextInput
-            label="Project"
-            placeholder="Project"
-            name="project"
-            variant="filled"
-            size='xs'
-            {...form.getInputProps('project')}
-        /> */}
       </SimpleGrid>
       
       <hr className='mt-7'></hr>
-      <Group justify="left" mt="xl">
-        <Button type="submit" size="md">
+      <Group justify="right" mt="xl">
+        <Button type="submit" size="sm">
           Cancel
         </Button>
-        <Button type="submit" size="md">
+        <Button type="submit" size="sm">
           Save
         </Button>
       </Group>

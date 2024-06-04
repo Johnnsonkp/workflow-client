@@ -1,0 +1,63 @@
+
+.card{
+    height: 88%;
+    background-color: #F9FAFA !important;
+}
+.cardContainer {
+    border-radius: 8px;
+    overflow: hidden;
+    height: 200px;
+    max-height: 200px;
+    padding: 2px;
+    background: #B993D6;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #8CA6DB, #B993D6);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #8CA6DB, #B993D6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+@keyframes slideaway {
+    from { 
+        display: none; 
+    }
+    to { 
+        /* transform: translateX(40px);  */
+        transform: translate(-50px, 0px);
+        opacity: 0;
+    }
+}
+@keyframes rightSlide {
+    from { display: none; }
+    to { 
+        transform: translate(50px, 0px);
+        opacity: 0;
+    }
+}
+
+.dashDisplay{
+    transition: transform 0.8s;
+    /* transition: all 2s linear; */
+    animation: slideaway 200ms;
+    display: none;
+}
+.rightSlideDisplay{
+    transition: all 20s linear;
+    /* transition: transform 0.8s; */
+    animation: rightSlide 200ms;
+    display: none;
+}
+.dashDisplayBlock{
+    display: block;
+    opacity: 1;
+    transition: all 2s linear;
+}
+  
+  .defaultCarousel {
+    transition: all 2s linear;
+  }
+
+.innerCard{
+    color: #fff;
+    margin-bottom: 0px;
+    background: #B993D6;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #8CA6DB, #B993D6);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #8CA6DB, #B993D6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}

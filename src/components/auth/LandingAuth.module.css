@@ -1,15 +1,12 @@
 .wrapper {
-    display: flex;
+    /* display: flex; */
     background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
     border-radius: var(--mantine-radius-lg);
-    /* padding: rem(4px); */
     padding: 4px;
-    /* border: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8)); */
     border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8));
     --dot-bg: white;
-    /* --dot-bg: linear-gradient(-45deg, #f7f7f8, #F4F2EE, #DCC2b6, #DDE1E3); */
-    --dot-color: black;
-    --dot-size: 1px;
+    --dot-color: lightGray;
+    --dot-size: 3px;
     --dot-space: 22px;
     background:
       linear-gradient(90deg, var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
@@ -19,7 +16,13 @@
     @media (max-width: $mantine-breakpoint-sm) {
       flex-direction: column;
     }
-  }
+}
+.innerwrap {
+  opacity: 1;
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.7);
+  
+}
   
   .form {
     flex: 0.3;
@@ -71,17 +74,6 @@
     /* flex: 0 0 rem(280px); */
     flex: 0.6;
     height: 100vh;
-    
-    /* --dot-bg: transparent;
-    --dot-color: black;
-    --dot-size: 1px;
-    --dot-space: 22px;
-    background:
-      linear-gradient(90deg, var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
-      linear-gradient(var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
-      var(--dot-color),
-      linear-gradient(-45deg, #f7f7f8, #F4F2EE, #DCC2b6, #DDE1E3); */
-
     background: linear-gradient(-45deg, #f7f7f8, #F4F2EE, #DCC2b6, #DDE1E3);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite; 

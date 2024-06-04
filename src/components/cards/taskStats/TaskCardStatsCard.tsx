@@ -1,55 +1,101 @@
 import { Card, Group, RingProgress, Text, useMantineTheme } from '@mantine/core';
+import { useEffect, useState } from 'react';
 
 import classes from './StatsRingCard.module.css';
+import { useAppState } from '../../../store/AppState';
 
-const stats = [
-  { value: 447, label: 'Remaining' },
-  { value: 76, label: 'In progress' },
-];
+function StatsRingCard({}) {
+  const {state, dispatch} = useAppState()
+  const [taskObj, setTaskObj] = useState()
 
-function StatsRingCard() {
+  useEffect(() => {
+    if(state.tasks && taskObj === undefined ){
+      setTaskObj(state.tasks)
+    }
+  }, [])
+
+  let counter = []
+  let inProgress = []
+  let overdue = []
+
+  const TaskCount = taskObj?.length || 0   
+
+  taskObj?.forEach((task) => {
+    if(task.status === 'complete'){
+      counter.push(task)
+    }  
+    if(task.status === 'inprogress'){
+      inProgress.push(task)
+    } 
+    if(task.status === 'overdue'){
+      overdue.push(task)
+    } 
+  })
+  
+  let completedTaskCount: number = counter.length
+  let taskCreatedVsTaskCompleted = completedTaskCount + '/' + TaskCount
+  let completionPercentage: number = completedTaskCount / TaskCount * 100
+  completionPercentage = Math.ceil(completionPercentage)
+  
+
+  const data = [
+    { label: 'Completion Rate', stats: taskCreatedVsTaskCompleted, progress: completionPercentage, color: 'teal', icon: 'up' }
+  ]
+
+  const stats = [
+    { value: TaskCount, label: 'Total tasks' },
+    { value: inProgress.length, label: 'In progress' },
+  ];
+
+  
   const theme = useMantineTheme();
-  const completed = 1887;
-  const total = 2334;
   const items = stats.map((stat) => (
     <div key={stat.label}>
-      <Text className={classes.label}>{stat.value}</Text>
-      <Text size="xs" c="dimmed">
+      <Text className={classes.lead}>{stat.value}</Text>
+      <Text size="sm" c="dimmed">
         {stat.label}
       </Text>
     </div>
   ));
 
   return (
-    <Card withBorder p="xl" radius="md" className={classes.card}>
+    <Card withBorder p="lg" radius="md" className={`${classes.card} !border !bg-[#F9FAFA]`}>
       <div className={classes.inner}>
         <div>
-          <Text fz="xl" className={classes.label}>
-            Project tasks
-          </Text>
-          <div>
-            <Text className={classes.lead} mt={30}>
-              1887
-            </Text>
-            <Text fz="xs" c="dimmed">
-              Completed
-            </Text>
-          </div>
+          <Group className='flex justify-between'>
+            <div>
+              <Text className={classes.lead} mt={30}>
+                {completedTaskCount}
+              </Text>
+              <Text fz="sm" c="dimmed">
+                Completed
+              </Text>
+            </div>
+
+            <div>
+              <Text className={classes.lead} mt={30}>
+                {overdue.length}
+              </Text>
+              <Text fz="sm" c="dimmed">
+                Overdue
+              </Text>
+            </div>
+          </Group>
           <Group mt="lg">{items}</Group>
         </div>
 
         <div className={classes.ring}>
           <RingProgress
             roundCaps
-            thickness={6}
-            size={150}
-            sections={[{ value: (completed / total) * 100, color: theme.primaryColor }]}
+            thickness={10}
+            size={140}
+            sections={[{ value: (completedTaskCount / TaskCount) * 100, color: theme.primaryColor }]}
             label={
               <div>
-                <Text ta="center" fz="lg" className={classes.label}>
-                  {((completed / total) * 100).toFixed(0)}%
+                <Text ta="center" fz="md" className={classes.label}>
+                  {((completedTaskCount / TaskCount) * 100).toFixed(0)}%
                 </Text>
-                <Text ta="center" fz="xs" c="dimmed">
+                <Text ta="center" fz="sm" c="dimmed">
                   Completed
                 </Text>
               </div>

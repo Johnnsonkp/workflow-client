@@ -2,15 +2,20 @@
     height: 46px;
     margin-bottom: 15px;
     background-color: var(--mantine-color-body);
-    border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+    /* border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4)); */
+    /* border-bottom: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4)); */
+
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   }
   
   
   .inner {
     height: 46px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0px 20px;
   }
   
   .link {

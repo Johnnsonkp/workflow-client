@@ -4,7 +4,7 @@ import React from 'react'
 import { useDisclosure } from '@mantine/hooks';
 
 export const LoadingContainer = ({children, className, loading}) => {
-  const [visible, { toggle }] = useDisclosure(true);
+  const [visible, { toggle }] = useDisclosure(children? false : true);
   const loadingObj = loading
   // const isLoaded = children? children : <LoadingOverlay visible={true}
   //                                         zIndex={1000}
@@ -16,7 +16,7 @@ export const LoadingContainer = ({children, className, loading}) => {
     <div className={className}>
       {children}
         <LoadingOverlay 
-          visible={children? false : true}
+          visible={visible}
           // visible={true}
           zIndex={1000}
           overlayProps={{ radius: 'sm', blur: 2 }}

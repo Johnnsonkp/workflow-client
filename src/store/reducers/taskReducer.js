@@ -6,6 +6,12 @@ const taskReducer = (state, action) => {
 				task: action.payload
 			}
             break;
+		case "ALL_TASK": 
+			return {
+				...state,
+				tasks: action.payload
+			}
+            break;
 		default:
 			return state;
 	}

@@ -49,14 +49,13 @@
     &[data-active] {
       &,
       &:hover {
-        background-color: var(--mantine-color-blue-light);
-        background-color: #464eeb12;
+        background-color: #fff;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
         border-left: 3px solid #464FEB;
         /* color: var(--mantine-color-blue-light-color); */
         color: #464FEB;
   
         & .linkIcon {
-          /* color: var(--mantine-color-blue-light-color); */
           color: #464FEB;
         }
       }
@@ -112,8 +111,7 @@
   }
 
   .signOut{
-    /* border: 1px solid #333; */
-    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
     background-color: #F2F3F5;
     color: #495057;
     flex: 0.75;
@@ -122,8 +120,7 @@
     background-color: coral;
   }
   .otherBtn{
-    /* border: 1px solid #333; */
-    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
     background-color: #F2F3F5;
     color: #333;
     flex: 0.15;

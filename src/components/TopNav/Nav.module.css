@@ -4,7 +4,18 @@
     margin-bottom: 15px;
     background-color: var(--mantine-color-body);
     border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+    
   }
+
+/* .navRightButton{
+  background-color: blue !important;
+  color: #fff;
+} */
+.navRightButton:hover{
+  background-color: #464FEB !important;
+  color: #fff !important;
+  cursor: pointer;
+}
 .navContainer {
   background-color: #F0F0F0;
   /* border: 1px solid red; */
@@ -14,8 +25,8 @@
   align-items: center;
   position: fixed;
   z-index: 10;
-  padding: 0px 5px;
-  width: 100%;
+  padding: 0px 10px;
+  width: 100%;  
 }  
   .inner {
     height: 46px;

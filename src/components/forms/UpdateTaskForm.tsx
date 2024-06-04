@@ -14,35 +14,9 @@ import { useAppState } from '../../store/AppState.jsx'
 import { useForm } from '@mantine/form';
 import { useNavigate } from 'react-router-dom';
 
-// function Demo() {
-  
-
-//   return (
-//     <TimeInput label="Click icon to show browser picker" ref={ref} rightSection={pickerControl} />
-//   );
-// }
-
 function UpdateTaskForm({task}) {
-  const [value, setValue] = useState<any>(null)
-  const [startTime, setStartTime] = useState<any>(null)
-  const [finishTime, setFinishTime] = useState<any>(null)
-  const [hhMinute, setHhMinute] = useState<Date | string | undefined>(null)
-  const navigate = useNavigate()
-  const userData = getItemFromLocalStorage('AUTH')
-  let newDate = new Date();
-  let newDateString = getDateTimeValue(newDate)
-  const ref = useRef<HTMLInputElement>(null);
-  const {state, dispatch} = useAppState()
-
-  const pickerControl = (
-    <ActionIcon variant="subtle" color="gray" onClick={() => ref.current?.showPicker()}>
-      <IconClock style={{ width: 16, height: 16 }} stroke={1.5} />
-    </ActionIcon>
-  );
-
-  const taskToUpdate = task?.task
-
-  console.log("task to update", taskToUpdate)
+  const taskToUpdate = task?.task || null
+  
   const taskValuePresence = (item: any) => {
     return taskToUpdate && taskToUpdate[item]? taskToUpdate[item] : '' 
   }
@@ -56,13 +30,28 @@ function UpdateTaskForm({task}) {
       time_to_finish: taskValuePresence('time_to_finish'),
       start_date: taskValuePresence('start_date'),
       order: taskValuePresence('order'),
-      // project: '',
     },
     validate: {
       title: (value) => value.trim().length < 2,
     },
   });
+  
+  let start_date_rx = form.values.start_date
+  let yyyymmddDf = new Date(start_date_rx).toLocaleDateString('default', { year: 'numeric', month: '2-digit', day: '2-digit' })
+  let rxDateFm = yyyymmddDf.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1')
+  const [value, setValue] = useState<any>(rxDateFm)
+  const [startTime, setStartTime] = useState<any>(null)
+  const [finishTime, setFinishTime] = useState<any>(null)
+  const [hhMinute, setHhMinute] = useState<Date | string | undefined>(null)
+  const navigate = useNavigate()
+  const userData = getItemFromLocalStorage('AUTH')
+  let newDate = new Date();
+  let newDateString = getDateTimeValue(newDate)
+  const ref = useRef<HTMLInputElement>(null);
+  const {state, dispatch} = useAppState()
 
+  let rxNewDate = taskValuePresence('time_to_start')
+  
   const convertTo12hrFormat = (timeValue: string) => {
     let firstValue = timeValue.charAt(0)
     let secondValue = timeValue.charAt(1)
@@ -90,7 +79,6 @@ function UpdateTaskForm({task}) {
 
     taskActions(form.values, userData, taskValuePresence('id')).then((data: any) => {
       console.log("taskActions data state.user_id", data)
-    //   storeTask(data, dispatch, "CREATE_TASK" )
       navigate('/personal')
     })
   }
@@ -107,7 +95,7 @@ function UpdateTaskForm({task}) {
         fw={700}
         ta="left"
       >
-        update form {taskValuePresence('title')}
+        Update Task: {taskValuePresence('title')}
       </Title>
       <hr className='mt-2'></hr>
 
@@ -144,7 +132,7 @@ function UpdateTaskForm({task}) {
         {...form.getInputProps('description')}
       />
       <SimpleGrid cols={{ base: 3, sm: 3 }} mt="md">
-
+      {/* .replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1') */}
         <SimpleGrid cols={{ base: 1, sm: 1 }} spacing={1} mt="">
           <label 
             className={`m_8fdc1311 mantine-InputWrapper-label mantine-TextInput-label mt-1 ${classes.customInputLabel}`}
@@ -155,33 +143,24 @@ function UpdateTaskForm({task}) {
               type="date" 
               name="effective-date"
               pattern="\d{4}-\d{2}-\d{2}"
-              placeholder={taskValuePresence('start_date')}
-              defaultValue={taskValuePresence('start_date')}
-              value={value || undefined}
+              defaultValue={rxDateFm}
+              value={rxDateFm}
               className='bg-[#F1F3F5] rounded-md text-[12px] px-3 h-8 '
           />
+          
         </SimpleGrid>
-
         <SimpleGrid cols={{ base: 1, sm: 1 }} spacing={1} mt="">
           <label 
             className={`m_8fdc1311 mantine-InputWrapper-label mantine-TextInput-label mt-1 ${classes.customInputLabel}`}
             >Start Time
         </label>
-          {/* <input 
-              onChange={(e) => setValue(e.target.value)}
-              id="effective-date" 
-              type="date" 
-              name="effective-date"
-              pattern="\d{4}-\d{2}-\d{2}"
-              defaultValue={newDateString}
-              value={value || undefined}
-              className='bg-[#F1F3F5] rounded-md text-[12px] px-3 h-8 '
-          /> */}
           <TimeInput 
             onChange={(e) => setStartTime(e.target.value)}
             variant="filled" 
             ref={ref} 
+            defaultValue={rxNewDate}
           />
+
         </SimpleGrid>
 
         <SimpleGrid cols={{ base: 1, sm: 1 }} spacing={1} mt="">
@@ -189,20 +168,12 @@ function UpdateTaskForm({task}) {
           <label 
             className={`m_8fdc1311 mantine-InputWrapper-label mantine-TextInput-label mt-1 ${classes.customInputLabel}`}
             >Finish Time</label>
-          {/* <input 
-              onChange={(e) => setValue(e.target.value)}
-              id="effective-date" 
-              type="date" 
-              name="effective-date"
-              pattern="\d{4}-\d{2}-\d{2}"
-              defaultValue={newDateString}
-              value={value || undefined}
-              className='bg-[#F1F3F5] rounded-md text-[12px] px-3 h-8 '
-          /> */}
           <TimeInput 
             onChange={(e) => setFinishTime(e.target.value)}
             variant="filled" 
             ref={ref} 
+            defaultValue={rxNewDate}
+            // value={taskValuePresence('time_to_finish')}
           />
         </SimpleGrid>
         

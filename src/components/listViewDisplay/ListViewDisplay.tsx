@@ -2,13 +2,14 @@ import { Pagination, Skeleton, Table, Text, ThemeIcon, UnstyledButton, rem } fro
 import React, {MouseEvent, useEffect, useState} from 'react'
 
 import ListViewSingle from './ListViewSingle';
+import classes from './list.module.css'
 import {useAppState} from '../../store/AppState.jsx'
 
 const taskStatus: Record<string, string> = {
   todo: "blue",
   inprogress: "orange",
   complete: "green",
-  overdue: "red"
+  due: "red"
 };
 
 interface Task {
@@ -41,13 +42,6 @@ interface ImageCheckboxProps {
 }
 
 const ListViewDisplay: React.FC<Prop> = ({taskObj, checked, defaultChecked, onChange, deleteTask, setUpdateForm}) => {
-  // const [value, handleChange] = useUncontrolled({
-  //   value: checked,
-  //   defaultValue: defaultChecked,
-  //   finalValue: false,
-  //   onChange,
-  // });
-
   const {state, dispatch} = useAppState()
   const [completedTaskOrd, setCompletedTaskOrd]: any = useState()
   const [sortTaskByOrder, setSortTaskByOrder] = useState(null)
@@ -55,16 +49,15 @@ const ListViewDisplay: React.FC<Prop> = ({taskObj, checked, defaultChecked, onCh
 
   let allCompletedTask = taskObj?.filter((task: any) => task.status === 'complete')
   let unCompletedTask = taskObj?.filter((task) => task.status !== 'complete')
-  let inCompletedTaskInOrder = unCompletedTask?.sort(function(a, b){return a.order - b.order});
+  let inCompletedTaskInOrder = unCompletedTask?.sort(function(a, b){return a.order-b.order});
+
 
   let combineAllTasks = []
   if(inCompletedTaskInOrder){
     combineAllTasks.push(allCompletedTask?.concat(inCompletedTaskInOrder))
   }
-  
 
   const toggleFormModule = (task: Task, toggle: boolean) => {
-    console.log("form toggled", task)
     setUpdateForm(task, toggle)
   }
 
@@ -72,25 +65,8 @@ const ListViewDisplay: React.FC<Prop> = ({taskObj, checked, defaultChecked, onCh
     deleteTask(task, taskObj)
   }
 
-  const [completeTask, setCompleteTask] = useState({
-    task: {},
-    toggle: false
-  })
-  const [toggleTaskComplete, setToggleTaskComplete] = useState({
-    task: {},
-    toggle: false
-  })
+
   const [loadingComponent, setLoadingComponent]: any = useState(true)
-
-  // useEffect(() => {
-  //   if(toggleTaskComplete.toggle){
-  //     setCompleteTask({
-  //       task: toggleTaskComplete.task?.title,
-  //       toggle: toggleTaskComplete.task?.toggle 
-  //     })
-  //   }
-  // }, [toggleTaskComplete])
-
 
   function chunk<T>(array: T[], size: number): T[][] {
     if (!array.length) {
@@ -104,7 +80,7 @@ const ListViewDisplay: React.FC<Prop> = ({taskObj, checked, defaultChecked, onCh
   const data = chunk(
     Array(30)
       .fill(0)
-      .map((_, index) => ({ id: index, task: taskObj || null})),
+      .map((_, index) => ({ id: index, task: taskObj.sort(function(a, b){return a.order-b.order}) || null})),
     7
   );
   const [activePage, setPage] = useState(1);
@@ -121,12 +97,12 @@ const ListViewDisplay: React.FC<Prop> = ({taskObj, checked, defaultChecked, onCh
   ));
 
   const TaskListLoadSkeleton = () => {
-    return <div className='absolute m-[auto] py-3 px-3'>
+    return <Table.Tbody className='absolute m-[auto] py-3 px-3'>
       <Skeleton height={40} radius="sm" width={'80vw'}/>
       <Skeleton height={40} mt={8} radius="sm" />
       <Skeleton height={40} mt={8} radius="sm" />
       <Skeleton height={40} mt={8} radius="sm" />
-    </div>
+    </Table.Tbody>
   }
 
 
@@ -135,37 +111,41 @@ const ListViewDisplay: React.FC<Prop> = ({taskObj, checked, defaultChecked, onCh
       if(items){
         setLoadingComponent(false)
       }
-   }, 1000)
+   }, 500)
 
    return () => clearTimeout(loadingDelay);
-  }, [])
+  }, [taskObj])
   
 
   return (
-    <Table.ScrollContainer minWidth={800}
-      className='cursor-pointer border border-#D1D1D1 bg-white !shadow-xl rounded-md !border-b-[#464FEB] border-b-2'>
-      <Table 
-        verticalSpacing="xs" 
-        striped={true}
-        withColumnBorders={false}
-        className={`${loadingComponent? 'min-h-[250px]' : '' }`}
-      >
-        <Table.Thead className="!bg-[#FAFBFC]">
-          <Table.Tr className="!font-normal text-[12px]" fw={100}>
-            <Table.Th className="!font-normal">Complete</Table.Th>
-            <Table.Th className="!font-normal">Order</Table.Th>
-            <Table.Th className="!font-normal">Name</Table.Th>
-            <Table.Th className="!font-normal">Status</Table.Th>
-            <Table.Th className="!font-normal">Start - Finish Time</Table.Th>
-            <Table.Th className="!font-normal">Project</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-          <Table.Tbody className="bg-[#fff] !border-b-2 transition-all delay-800 ">{loadingComponent? <TaskListLoadSkeleton /> : items }</Table.Tbody>
-        </Table>
-          <div className='px-3'>
-            <Pagination total={paginationCount} value={activePage} onChange={setPage} mt="xl" size="sm"/>
-          </div>
-    </Table.ScrollContainer>
+    <div className={`${classes.listTable} w-[99%] m-[auto] h-[99%] cursor-pointer border border-#D1D1D1 bg-white rounded-md`}>
+      <Table.ScrollContainer minWidth={800}>
+        <Table 
+          verticalSpacing="xs" 
+          striped={true}
+          withColumnBorders={false}
+          className={`${loadingComponent? 'min-h-[250px]' : '' }`}
+        >
+          {/* <Table.Thead className="!bg-[#FAFBFC]"> */}
+          <Table.Thead className="">
+            <Table.Tr className="text-[12px]" fw={600}>
+              <Table.Th className="">Complete</Table.Th>
+              <Table.Th className="">Order</Table.Th>
+              <Table.Th className="">Name</Table.Th>
+              <Table.Th className="">Status</Table.Th>
+              <Table.Th className="">Task Date</Table.Th>
+              <Table.Th className="">Start Time - Finsh Time</Table.Th>
+              {/* <Table.Th className="">Finish Time</Table.Th> */}
+              <Table.Th className="">Project</Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+            {loadingComponent? <TaskListLoadSkeleton /> : <Table.Tbody className="bg-[#fff] !border-b-2 transition-all delay-800 ">{items }</Table.Tbody>}
+          </Table>
+            <div className='px-3'>
+              <Pagination total={paginationCount} value={activePage} onChange={setPage} mt="xl" size="xs" color="#ACB6E0"/>
+            </div>
+      </Table.ScrollContainer>
+    </div>
   );
 }
 

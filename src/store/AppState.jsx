@@ -24,16 +24,17 @@ const initialState = {
         email: ''
     },
     darkTheme: false, 
-    tasks: [{
-        title: "",
-        description: "",
-        status: "",
-        project: "",
-        order: 1,
-        start_date: "",
-        time_to_start: "",
-        time_to_finish: ""
-    }],
+    // tasks: [{
+    //     title: "",
+    //     description: "",
+    //     status: "",
+    //     project: "",
+    //     order: 1,
+    //     start_date: "",
+    //     time_to_start: "",
+    //     time_to_finish: ""
+    // }],
+    tasks: null
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -44,6 +45,10 @@ export const reducer = (state, action) => {
     const {type, payload} = action
     
     switch(action.type){
+        case "DARK_THEME":
+            newState = {...state, darkTheme: action.payload}
+            return newState
+            break;
         case "FORM_TOGGLE":
             newState = {...state, formToggle: action.payload}
             return newState

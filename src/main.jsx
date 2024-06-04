@@ -4,6 +4,7 @@ import '@mantine/core/styles.css';
 import React, {useEffect} from 'react'
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
+import About from './pages/About.jsx';
 import App from './App.jsx'
 import { AppState } from './store/AppState.jsx';
 import Landing from './pages/Landing.jsx';
@@ -11,6 +12,7 @@ import { MantineProvider } from '@mantine/core';
 import PageBoilerPlate from './components/boilerplate/Boilerplate.jsx';
 import PersonalLanding from './pages/PersonalLanding.jsx';
 import ReactDOM from 'react-dom/client'
+import UserXP from './pages/UserXP';
 import WorkLanding from './pages/WorkLanding.jsx';
 
 const router = createBrowserRouter([
@@ -25,6 +27,15 @@ const router = createBrowserRouter([
   {
     path: "/work",
     element: <PageBoilerPlate component={<WorkLanding />} />,
+  },
+  {
+    path: "/userxp",
+    element: <PageBoilerPlate component={<UserXP />} />,
+  },
+  {
+    path: "/about",
+    element:  <About/>,
+    // element:  <PageBoilerPlate component={<About/>} />,
   },
   {
     path: "/personal",

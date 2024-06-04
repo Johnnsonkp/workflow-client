@@ -1,7 +1,10 @@
 .card {
-    background-color: var(--mantine-color-body);
-    /* padding-bottom: 1rem; */
-    /* padding-bottom: 25px; */
+    background-color: #F9FAFA;
+    height: 88%;
+  }
+
+  .inner{
+    height: 100%;
   }
   
   .item {

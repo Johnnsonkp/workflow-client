@@ -1,5 +1,6 @@
 .card {
-    background-color: var(--mantine-color-body);
+    background-color: #F9FAFA;
+    height: 88%;
   }
   
   .label {
@@ -15,7 +16,8 @@
       Greycliff CF,
       var(--mantine-font-family);
     font-weight: 700;
-    font-size: rem(22px);
+    /* font-size: rem(22px); */
+    /* font-size: 20px; */
     line-height: 1;
   }
   

@@ -1,11 +1,14 @@
-import { Center, Group, Paper, RingProgress, Text, rem } from '@mantine/core';
+import { Avatar, Button, Center, Group, Paper, RingProgress, Text, rem } from '@mantine/core';
 import { Container, Grid, Skeleton } from '@mantine/core';
-import { IconArrowDownRight, IconArrowUpRight } from '@tabler/icons-react';
+import { IconArrowAutofitLeft, IconArrowBadgeLeft, IconArrowBadgeLeftFilled, IconArrowBadgeRightFilled } from '@tabler/icons-react';
+import React, {useEffect, useState} from 'react';
 
 import StandUpCardCustom from '../cards/standUpCards/StandUp';
 import StatsRingCard from '../cards/taskStats/TaskCardStatsCard';
 import { TablerIconsProps } from '@tabler/icons-react';
 import TimeLineCardDIsplay from '../timelineCard/TimeLine.jsx'
+import { UserInfoAction } from '../auth/UserCard';
+import classes from './dashboard.module.css'
 
 interface Task {
     title: string;
@@ -32,131 +35,134 @@ interface Icons {
   [key: string]: (props: TablerIconsProps) => JSX.Element
 }
 
-const ProgressCardCustom: React.FC<Props> = ({taskObj}) => {
-  const icons: Icons = {
-    up: IconArrowUpRight ,
-    down: IconArrowDownRight,
-  };
+const CardContainerCx = ({children, title}) => {
+  const child = <Skeleton height={200} radius="md" animate={true} />;
+  const [loadingComponent, setLoadingComponent]: any = useState(true)
 
-  let counter = []
-  let inProgress = []
-  let overdue = []
+  useEffect(() => {
+    let loadingDelay = setTimeout(() => {
+      if(children){
+        setLoadingComponent(false)
+      }
+   }, 800)
 
-  const TaskCount = taskObj?.length || 0   
+   return () => clearTimeout(loadingDelay);
+  }, [])
 
-  taskObj?.forEach((task: Task) => {
-    if(task.status === 'complete'){
-      counter.push(task)
-    }  
-    if(task.status === 'inprogress'){
-      inProgress.push(task)
-    } 
-    if(task.status === 'overdue'){
-      overdue.push(task)
-    } 
-  })
-  
-  let completedTaskCount: number = counter.length
-  let taskCreatedVsTaskCompleted = completedTaskCount + '/' + TaskCount
-  let completionPercentage: number = completedTaskCount / TaskCount * 100
-  completionPercentage = Math.ceil(completionPercentage)
 
-  
-  const data: Data[] = [
-    { label: 'Completion Rate', stats: taskCreatedVsTaskCompleted, progress: completionPercentage, color: 'teal', icon: 'up' }
-  ] 
-
-  const stats = data.map((stat) => {
-    return (
-      <Paper withBorder radius="md" p="sm" key={stat.label} className='!shadow-md !h-[100%] !border !bg-[#F9FAFA]'>
-        <Group className='!justify-center !align-end'>
-          <div>
-              <Text fz="lg" className={''} fw={500}>
-                Project tasks
-              </Text>
-              <Group mt="xl" mb='sm'>
-                <div className=''>
-                  <Text className={'!font-bold'} mt={0}>
-                    {completedTaskCount}
-                  </Text>
-                  <Text fz="xs" c="dimmed" className=''>
-                    Completed
-                  </Text>
-                </div>
-                <div className=''>
-                  <Text className={'!font-bold'} mt={0}>
-                    {TaskCount}
-                  </Text>
-                  <Text fz="xs" c="dimmed" className=''>
-                    Remaining
-                  </Text>
-                </div>
-              </Group>
-
-              <Group mt="sm" mb='sm'>
-                <div className=''>
-                  <Text className={'!font-bold'}>
-                    {inProgress.length}
-                  </Text>
-                  <Text size="xs" c="dimmed" className=''>
-                    In progress
-                  </Text>
-                </div>
-
-                <div className=''>
-                  <Text className={'!font-bold'}>
-                    {overdue.length}
-                  </Text>
-                  <Text size="xs" c="dimmed" className={''}>
-                    Overdue
-                  </Text>
-                </div>
-              </Group>
-          </div>
-          <RingProgress
-            size={150}
-            roundCaps
-            thickness={10}
-            sections={[{ value: stat.progress, color: stat.color }]}
-            label={
-              <Center>
-                <div>
-                  <Text ta="center" fz="lg" className={'!font-bold'}>
-                    {completionPercentage}%
-                  </Text>
-                  <Text ta="center" fz="md" c="dimmed">
-                    Completed
-                  </Text>
-                </div>
-              </Center>
-            }
-          />
-        </Group>
-      </Paper>
-    );
-  });
-
-  return <div>{stats}</div>
+  return (
+    loadingComponent? child : <div className={`${classes.cardContainer}`}>
+        <div className={`${classes.innerCard}`}>
+          <Group mt="0" mb='0' px={'10'}>
+            <Text fz="sm" fw={500}>{title}</Text>
+          </Group>
+        </div>
+        {children}
+    </div>
+  )
 }
 
+const DashboardCardComp = ({title, Comp, className}) => (
+   <Grid.Col span={{ base: 12, lg: 4 }} className={className}>
+    {<CardContainerCx title={title} children={<Comp />} />} 
+  </Grid.Col>
+)
+
+
+const data = [
+  {
+    title: 'UserXP',
+    component: UserInfoAction,
+  },
+  {
+    title: 'Stand up',
+    component: StandUpCardCustom,
+  },
+  {
+    title: 'Stats',
+    component: StatsRingCard,
+  },
+  {
+    title: 'Monthly',
+    component: TimeLineCardDIsplay
+  },
+]
+
+const CustomCarousel = ({position, setPosition, nextPosition, lastPosition, animationClass, rightAnimation, lastHiddenPosition, taskObj}) => (
+  // <div className='flex'>
+  <>
+    {/* <p>lastHiddenPosition: {lastHiddenPosition}</p> */}
+    <DashboardCardComp className={``} title={data[position].title} Comp={data[position].component} />
+    <DashboardCardComp className={`${classes.defaultCarousel}`}   title={data[nextPosition].title} Comp={data[nextPosition].component} />
+    <DashboardCardComp className={`${classes.defaultCarousel}`}  title={data[lastPosition].title} Comp={data[lastPosition].component} />
+    {/* <DashboardCardComp className={``} title={data[lastHiddenPosition]?.title} Comp={data[lastHiddenPosition].component}/> */}
+  </>
+)
 
 
 const DashboardBannerCards: React.FC<Props> = ({taskObj}) => {
-    const child = <Skeleton height={200} radius="md" animate={true} />;
-      return (
-          <Container 
-            className=''
-            fluid={true}
-            my="xl" 
-            px="xs"
-          >
-            <Grid className=''>
-              <Grid.Col span={{ base: 12, lg: 4 }} className=''>{<StandUpCardCustom /> || child}</Grid.Col>
-              <Grid.Col span={{ base: 12, lg: 4 }} className=''>{<ProgressCardCustom taskObj={taskObj}/> || child}</Grid.Col>
-              <Grid.Col span={{ base: 12, lg: 4 }} className=''>{<TimeLineCardDIsplay /> || child}</Grid.Col>
-            </Grid>
-          </Container> 
-      );
+  const [position, setPosition]: any = useState(0)
+  const [nextPosition, setNextPosition]: any = useState(position + 1)
+  const [lastPosition, setLastPosition]: any = useState(position + 2)
+  const [lastHiddenPosition, setLastHiddenPosition]: any = useState(position + 3)
+  const [toggle, setToggle] = useState(false)
+
+
+  const [animationClass, setAnimationClass]: any = useState(false)
+  const [rightAnimation, setRightAnimation]: any = useState(false)
+
+  const leftDirect = () => {
+    // setAnimationClass(!animationClass)
+    // setRightAnimation(!rightAnimation)
+    
+    setPosition((prevState) => prevState < 3? prevState + 1 : prevState - 3)
+    setNextPosition((prevState) => prevState < 3? prevState + 1 : prevState - 3)
+    setLastPosition((prevState) => prevState < 3? prevState + 1 : prevState - 3)
+    setLastHiddenPosition((prevState) => prevState < 3? prevState + 1 : prevState - 3 )
   }
+  const rightDirect = () => {
+    // setRightAnimation(!animationClass)
+    // setAnimationClass(!rightAnimation)
+    
+    setPosition((prevState) => prevState > 0?  prevState - 1 : prevState + 3)
+    setNextPosition((prevState) => prevState > 0?  prevState - 1 : prevState + 3)
+    setLastPosition((prevState) => prevState > 0?  prevState - 1 : prevState + 3)
+    setLastHiddenPosition((prevState) => prevState > 0?  prevState - 1 : prevState + 3)
+  }  
+  
+  return (
+    <>
+      <Container 
+        className='flex-col justify-center'
+        fluid={true}
+        mt="md"
+        mb="xl" 
+        px="xs"
+      >
+        <div className='flex justify-end m-2'>
+          <Button bg={'#F2F3F5'} size="compact-xs" className='mx-1 !text-[#95A2D9] !border-gray-300' onClick={() => leftDirect()}>
+            <IconArrowBadgeLeftFilled />
+          </Button>
+          <Button bg={'#F2F3F5'} size="compact-xs" className='!text-[#95A2D9] !border-gray-300' onClick={() => rightDirect()}>
+            <IconArrowBadgeRightFilled />
+          </Button>
+        </div>
+        
+        <Grid>
+          <CustomCarousel 
+            position={position} 
+            nextPosition={nextPosition} 
+            setPosition={setPosition} 
+            lastPosition={lastPosition}
+            animationClass={animationClass}
+            rightAnimation={rightAnimation}
+            lastHiddenPosition={lastHiddenPosition}
+          />
+        </Grid>
+      </Container> 
+      </>
+    );
+}
+
 
 export default DashboardBannerCards

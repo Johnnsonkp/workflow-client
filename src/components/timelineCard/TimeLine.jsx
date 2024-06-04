@@ -1,29 +1,140 @@
-import { Group, Paper, Text, Timeline } from '@mantine/core';
+import { Button, Card, Group, Modal, Paper, Text, Timeline } from '@mantine/core';
 import { IconGitBranch, IconGitCommit, IconGitPullRequest, IconMessageDots } from '@tabler/icons-react';
+import React, {useState} from 'react'
+
+import { useDisclosure } from '@mantine/hooks';
 
 function TimeLineCardDIsplay() {
+    const [toggleForm, setToggleForm] = useState(false)
+    const [opened, { open, close }] = useDisclosure(toggleForm);
+    
+    const [monthlyGoals, setMonthlyGoals] = useState([ 
+        {title: 'Complete Productivity App', complete: true }, 
+        {title:'Begin shopify dev freelancing',complete: false }, 
+        {title: "Beging making dev content", complete: false }
+    ])
+
+    const [monthly_1, setMonthly_1] = useState(monthlyGoals[0].title)
+    const [monthly_2, setMonthly_2] = useState(monthlyGoals[1].title)
+    const [monthly_3, setMonthly_3] = useState(monthlyGoals[2].title)
+
+    const handleFormSubmit = () => {
+        setToggleForm(close)
+        setMonthlyGoals([ 
+          {title: monthly_1, complete: false},
+          {title: monthly_2, complete: false},
+          {title: monthly_3, complete: false}
+        ])
+    }
+
+
     return (
-        <Paper withBorder radius="md" p="xs" key={1} className='!shadow-md'>
-        <Group className='!justify-center !align-end'>
-        <Timeline active={0} bulletSize={22} lineWidth={1}>
-            {/* <Text fz="lg" className={'!mb-5'} fw={500}>
-                Monthly Targets
-              </Text> */}
-            <Timeline.Item size={'sm'} bullet={<IconGitBranch size={10} />} title="Complete Productivity App">
-                <Text c="dimmed" size="xs">You&apos;ve created new branch</Text>
-            </Timeline.Item>
+        <>
+            <Paper onMouseDown={open} onClose={close} withBorder radius="sm" p="xs" key={1} 
+                className='!shadow-md h-[88%] !bg-[#F9FAFA] cursor-pointer'>
+                <Group className='!justify-center !align-end'>
+                    <Timeline active={0} bulletSize={22} lineWidth={2} className=' w-[95%]' mb="sm" pt='lg'>
 
-            <Timeline.Item bullet={<IconGitCommit size={10} />} title="Begin shopify dev freelancing">
-                <Text c="dimmed" size="xs">You&apos;ve pushed 23 commits to<Text variant="link" component="span" inherit>fix-notifications branch</Text></Text>
-            </Timeline.Item>
+                        <Timeline.Item size={'sm'} 
+                            bullet={<IconGitBranch size={10} />} fz="sm" 
+                            title={monthlyGoals[0].title}>
+                        </Timeline.Item>
 
-            <Timeline.Item title="Beging making dev content" bullet={<IconGitPullRequest size={10} />} lineVariant="dashed">
-                <Text c="dimmed" size="xs">You&apos;ve submitted a pull request</Text>
-            </Timeline.Item>
+                        <Timeline.Item 
+                            bullet={<IconGitCommit size={10} />} fz="sm" 
+                            title={monthlyGoals[1].title}>
+                        </Timeline.Item>
 
-        </Timeline> 
-        </Group>
-        </Paper>
+                        <Timeline.Item fz="sm" 
+                            title={monthlyGoals[2].title} 
+                            bullet={<IconGitPullRequest size={10} />} lineVariant="dashed">
+                        </Timeline.Item>
+
+                    </Timeline> 
+                </Group>
+            </Paper>
+
+            <Modal 
+                opened={opened} 
+                onClose={close} 
+                centered 
+                fullScreen={false} 
+                size="550px"
+                overlayProps={{
+                    backgroundOpacity: 0.55,
+                    blur: 3,
+                }}  
+            > 
+                <Card withBorder radius="md" p="md" className={``} pb="">
+                    Add Daily Stand Up
+                    <div className={` flex-col mt-3`}>
+                        <form>
+                            <Timeline active={0} bulletSize={22} lineWidth={2} className=' w-[95%]' mb="sm" pt='lg'>
+                                <Group 
+                                    // className='flex'
+                                    wrap="nowrap"
+                                    gap="xs"
+                                    justify="space-around" 
+                                >
+                                    {/* <label>1.</label> */}
+                                    <Timeline.Item 
+                                        size={'md'} 
+                                        bullet={<IconGitBranch size={12} />} fz="md" 
+                                        w={'100%'}
+                                    >
+                                        <input 
+                                            defaultValue={monthlyGoals[0].title}
+                                            className='w-[100%]'
+                                            bullet={<IconGitBranch size={10} />} 
+                                            onChange={(e) => setMonthly_1(e.target.value)}
+                                        ></input>
+                                    </Timeline.Item>
+                                </Group>  
+                                <Group justify="space-around" wrap="nowrap" gap="xs">
+                                    {/* <label>2.</label> */}
+                                    <Timeline.Item 
+                                        size={'md'} 
+                                        bullet={<IconGitBranch size={12} />} fz="md" 
+                                        w={'100%'}
+                                    >
+                                        <input 
+                                            defaultValue={monthlyGoals[1].title}
+                                            className='w-[100%]'
+                                            bullet={<IconGitBranch size={10} />}
+                                            onChange={(e) => setMonthly_2(e.target.value)} 
+                                        ></input>
+                                    </Timeline.Item>
+                                </Group>  
+                                <Group justify="space-around" wrap="nowrap" gap="xs">
+                                    {/* <label>3.</label> */}
+                                    <Timeline.Item 
+                                        size={'md'} 
+                                        bullet={<IconGitBranch size={12} />} fz="md" 
+                                        w={'100%'}
+                                    >
+                                        <input 
+                                            defaultValue={monthlyGoals[0].title}
+                                            className='w-[100%]'
+                                            bullet={<IconGitBranch size={10} />}
+                                            onChange={(e) => setMonthly_3(e.target.value)} 
+                                        ></input>
+                                    </Timeline.Item>
+                                </Group> 
+                            </Timeline>
+                        </form>
+                    </div>
+                    <div className='mt-4 w-[100%]'>
+                        <hr className='mb-5'></hr>
+                        <Button onClose={close} className='!w-[100%]' 
+                            onClick={() => {handleFormSubmit()}}
+                        >
+                            Save
+                        </Button>
+                    </div>
+                </Card>
+
+            </Modal>
+        </>
     );   
 }
 

@@ -26,7 +26,6 @@ const SideNav = ({section, urlRedirect}) => {
   }
 
   return (
-    // <nav className={`${classes.navbar} w-56 !pt-16`}>
     <nav className={`${classes.navbar}`}>
         <div className={`${classes.innerSideNav}`}>
             <div>
@@ -39,7 +38,7 @@ const SideNav = ({section, urlRedirect}) => {
                     transitionTimingFunction="ease"
                     fullWidth
                     data={[
-                        { label: 'Work', value: 'Work' },
+                        { label: 'User XP', value: 'Userxp' },
                         { label: 'Personal', value: 'Personal' },
                     ]}
                 />
