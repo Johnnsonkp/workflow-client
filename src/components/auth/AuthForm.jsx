@@ -36,6 +36,29 @@ const formActionData = {
 
   }
 
+  let demoValues =  {
+    username: 'testing123',
+    email: 'testing123@gmail.com',
+    password: '0000',
+  }
+
+  async function handleDemo() {
+    let action = formActionData["Log in"].formAction
+    const loadAction = await userFormActions[action];
+    
+    loadAction(demoValues).then((data) => {
+      if (data && !data.error) {
+        storeUserData(data, dispatch, formActionData["Log in"].action)
+        setUserData(data);
+
+      } else {
+        console.log(`${data.error} please try again !`);
+        alert(`${data.error} please try again !`);
+      }
+    });
+
+  }
+
   const form = useForm({
     initialValues: {
       username: '',
@@ -95,7 +118,7 @@ const formActionData = {
             </Button>
 
             <Button 
-                type="submit" 
+                onClick={() => handleDemo()}
                 className={`${classes.control} !bg-transparent !text-blue-400 !border !border-blue-400`} w={'50%'}>
                     
             {"Demo mode" || <IconLoader className='loader ease-linear animate-spin'/>}

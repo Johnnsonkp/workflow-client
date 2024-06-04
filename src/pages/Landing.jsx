@@ -44,12 +44,6 @@ function Landing() {
         console.error(err);
     });
   }, [])
-
-  const formData = {
-    username: 'test3',
-    email: 'test3@gmail.com',
-    password: "123456789"
-  }
  
   return (
     <LandingAuth />

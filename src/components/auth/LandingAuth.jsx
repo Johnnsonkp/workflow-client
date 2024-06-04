@@ -18,11 +18,18 @@ export function LandingAuth() {
  const [userType, setUserType] = useState()
  const [currentUserSession, setCurrentUserSession] = useState()
  const [toggle, setToggle] = useState(false)
+ const userAuthStatus = getItemFromLocalStorage('AUTH')
+
+ useEffect(() => {
+  if(userAuthStatus){
+    setCurrentUserSession(userAuthStatus)
+  }
+ }, [])
  
 
  useEffect(() => {
   if(userData){ // checks / handles new user sign up + no JWT previous user sign in
-    setUserType("user successefully logined in!!")
+    setUserType(`${userData.user.username || "user"} successfully logged in!`)
     setTimeout(() => {
       navigate("/personal")
     }, 5000);
@@ -35,24 +42,29 @@ export function LandingAuth() {
       <LoadingContainer className={classes.wrapper}>
         <div className={`${classes.innerwrap}`}>
           <LoadingContainer className={`${classes.contacts} bg-[#f7f7f8] `}>
-
-            <AppLogoContainer />
+              <AppLogoContainer />
             <Text fz="lg" fw={700} className={`${classes.title} !mt-8`} c="#333">
               {userType || state.userAuthStatus.error}
             </Text>
 
-            <div className={classes.wrapper}>
+            <div className={classes.heroWrapper}>
               <Container size={700} className={classes.inner}>
                 <HeroSection />
               </Container> 
             </div>
-            </LoadingContainer>
-            {/* {
-            currentUserSession?.jwt ? 
-              "Current User session " : 
-              <AuthForm setUserData={setUserData}/>
-            } */}
-            <AuthForm setUserData={setUserData}/>
+
+            <Text fz="lg" fw={500} className={`w-[90%] m-auto !mt-6 !px-5`} c="#333">
+              Workflows allows you to make progress on the things that matter the most. Prioritize quality in everything you do and reclaim your valuable time back.
+            </Text>
+          </LoadingContainer>
+            {
+              currentUserSession?.token ? 
+              <div className='flex align-middle justify-center'>
+                <Button onClick={() => navigate("/personal")}>Back to work ></Button>
+              </div> : 
+                <AuthForm setUserData={setUserData}/>
+            }
+            {/* <AuthForm setUserData={setUserData}/> */}
         </div>
       </LoadingContainer>
     </Paper>

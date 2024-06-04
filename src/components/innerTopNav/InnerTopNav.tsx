@@ -37,8 +37,6 @@ const InnerTopNav: React.FC<Props> = ({ setTogglePanel, data, value}) => {
 
   return (
     <header className={`${classes.header} border border-#D1D1D1 bg-white rounded-md h-[560px] mt-3 !mb-5`}>
-    {/* // <header className={`${classes.header} shadow-md border border-#D1D1D1 bg-white rounded-sm h-[560px]`}> */}
-    {/* <header className={`${classes.header} bg-white rounded-sm h-[560px]`}> */}
       <DefaultContainer className={classes.inner} >
         <div className='text-[18px] flex w-36 '>
          <IconDashboard color='gray'/> <h3 className='px-1 text-[18px] font-semibold' >Dashboard</h3>
@@ -53,8 +51,8 @@ const InnerTopNav: React.FC<Props> = ({ setTogglePanel, data, value}) => {
             fullWidth
             data={[
                 { label: 'List View', value: 'list' },
-                { label: 'Day View', value: 'week' },
-                { label: 'Week View', value: 'time' }
+                { label: 'Week View', value: 'week' },
+                { label: 'Day View', value: 'time' }
             ]}
         />
 

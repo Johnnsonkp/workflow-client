@@ -109,7 +109,15 @@ const TimeTableDisplay: React.FC<Props> = ({taskObj, task, deleteTask}) => {
           task: []
         }, 
         {
+          time: '08:30 AM',
+          task: []
+        },
+        {
           time: '09:00 AM',
+          task: []
+        },
+        {
+          time: '09:30 AM',
           task: []
         },
         {
@@ -117,7 +125,15 @@ const TimeTableDisplay: React.FC<Props> = ({taskObj, task, deleteTask}) => {
           task: []
         },
         {
+          time: '10:30 AM',
+          task: []
+        },
+        {
           time: '11:00 AM',
+          task: []
+        },
+        {
+          time: '11:30 AM',
           task: []
         }, 
         {
@@ -125,7 +141,15 @@ const TimeTableDisplay: React.FC<Props> = ({taskObj, task, deleteTask}) => {
           task: []
         },
         {
+          time: '12:30 PM',
+          task: []
+        },
+        {
           time: '01:00 PM',
+          task: []
+        },
+        {
+          time: '01:30 PM',
           task: []
         },
         {
@@ -133,11 +157,23 @@ const TimeTableDisplay: React.FC<Props> = ({taskObj, task, deleteTask}) => {
           task: []
         },
         {
+          time: '02:30 PM',
+          task: []
+        },
+        {
           time: '03:00 PM',
           task: []
         },
         {
+          time: '03:30 PM',
+          task: []
+        },
+        {
           time: '04:00 PM',
+          task: []
+        },
+        {
+          time: '04:30 PM',
           task: []
         }, 
         {
@@ -145,7 +181,15 @@ const TimeTableDisplay: React.FC<Props> = ({taskObj, task, deleteTask}) => {
           task: []
         },
         {
+          time: '05:30 PM',
+          task: []
+        },
+        {
           time: '06:00 PM',
+          task: []
+        },
+        {
+          time: '06:30 PM',
           task: []
         },
         {
@@ -153,7 +197,15 @@ const TimeTableDisplay: React.FC<Props> = ({taskObj, task, deleteTask}) => {
           task: []
         },
         {
+          time: '07:30 PM',
+          task: []
+        },
+        {
           time: '08:00 PM',
+          task: []
+        }, 
+        {
+          time: '08:30 PM',
           task: []
         }, 
         {
@@ -161,11 +213,23 @@ const TimeTableDisplay: React.FC<Props> = ({taskObj, task, deleteTask}) => {
           task: []
         },
         {
+          time: '09:30 PM',
+          task: []
+        },
+        {
           time: '10:00 PM',
           task: []
         },
         {
+          time: '10:30 PM',
+          task: []
+        },
+        {
           time: '11:00 PM',
+          task: []
+        },
+        {
+          time: '11:30 PM',
           task: []
         }
     ]

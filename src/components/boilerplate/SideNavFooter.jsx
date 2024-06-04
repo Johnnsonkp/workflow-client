@@ -22,7 +22,7 @@ const SideNav = ({section, urlRedirect}) => {
   const handleSignOut = (item) => {
     userSignOut('AUTH')
     dispatch({type: "LOGGED_OUT"})
-    // navigate("/")
+    navigate("/")
   }
 
   return (

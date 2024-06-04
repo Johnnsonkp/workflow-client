@@ -17,6 +17,16 @@
       flex-direction: column;
     }
 }
+.heroWrapper{
+  background-color: transparent;
+    border-radius: var(--mantine-radius-lg);
+    padding: 4px;
+    /* border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8)); */
+
+    @media (max-width: $mantine-breakpoint-sm) {
+      flex-direction: column;
+    }
+}
 .innerwrap {
   opacity: 1;
   display: flex;
@@ -88,6 +98,7 @@
   
   .title {
     margin-bottom: calc(var(--mantine-spacing-xl) * 1.5);
+    text-align: left;
     font-family:
       Greycliff CF,
       var(--mantine-font-family);
