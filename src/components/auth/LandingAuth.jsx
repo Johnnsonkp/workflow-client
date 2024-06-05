@@ -60,7 +60,7 @@ export function LandingAuth() {
             {
               currentUserSession?.token ? 
               <div className='flex align-middle justify-center'>
-                <Button onClick={() => navigate("/personal")}>Back to work ></Button>
+                <Button onClick={() => navigate("/personal")}>Back to work </Button>
               </div> : 
                 <AuthForm setUserData={setUserData}/>
             }

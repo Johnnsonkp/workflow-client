@@ -121,7 +121,7 @@ const formActionData = {
                 onClick={() => handleDemo()}
                 className={`${classes.control} !bg-transparent !text-blue-400 !border !border-blue-400`} w={'50%'}>
                     
-            {"Demo mode" || <IconLoader className='loader ease-linear animate-spin'/>}
+              {"Demo mode" || <IconLoader className='loader ease-linear animate-spin'/>}
             </Button>
         </Group>
 
