@@ -5,7 +5,7 @@ const token = getItemFromLocalStorage('token')
 export const taskFormActions = ({
     create: (formData, userData) => {  
         // return fetch("http://localhost:3000" + "/tasks", {
-        return fetch("workflow-rails-api.railway.internal" + "/tasks", {
+        return fetch("workflow-rails-api-production.up.railway.app" + "/tasks", {
           method: "post",
           headers: {
             "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export const taskFormActions = ({
     },
     get: (userData) => {
       // return fetch("http://localhost:3000" + "/tasks", {
-      return fetch("workflow-rails-api.railway.internal" + "/tasks", {
+      return fetch("workflow-rails-api-production.up.railway.app" + "/tasks", {
         method: "get",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export const taskFormActions = ({
 
     update: (formData, userData, taskID) => {
       // return fetch("http://localhost:3000" + `/tasks/${taskID}`, {
-      return fetch("workflow-rails-api.railway.internal" + `/tasks/${taskID}`, {
+      return fetch("workflow-rails-api-production.up.railway.app" + `/tasks/${taskID}`, {
         method: "put",
         headers: {
           "Content-Type": "application/json",
@@ -90,7 +90,7 @@ export const taskFormActions = ({
 
     delete: (userData, taskID) => {
         // return fetch("http://localhost:3000" + `/tasks/${taskID}`, {
-        return fetch("workflow-rails-api.railway.internal" + `/tasks/${taskID}`, {
+        return fetch("workflow-rails-api-production.up.railway.app" + `/tasks/${taskID}`, {
           method: "delete",
           headers: {
             "Content-Type": "application/json",
