@@ -126,7 +126,6 @@ const ListViewDisplay: React.FC<Prop> = ({taskObj, checked, defaultChecked, onCh
           withColumnBorders={false}
           className={`${loadingComponent? 'min-h-[250px]' : '' }`}
         >
-          {/* <Table.Thead className="!bg-[#FAFBFC]"> */}
           <Table.Thead className="">
             <Table.Tr className="text-[12px]" fw={600}>
               <Table.Th className="">Complete</Table.Th>
@@ -135,14 +134,13 @@ const ListViewDisplay: React.FC<Prop> = ({taskObj, checked, defaultChecked, onCh
               <Table.Th className="">Status</Table.Th>
               <Table.Th className="">Task Date</Table.Th>
               <Table.Th className="">Start Time - Finsh Time</Table.Th>
-              {/* <Table.Th className="">Finish Time</Table.Th> */}
               <Table.Th className="">Project</Table.Th>
             </Table.Tr>
           </Table.Thead>
             {loadingComponent? <TaskListLoadSkeleton /> : <Table.Tbody className="bg-[#fff] !border-b-2 transition-all delay-800 ">{items }</Table.Tbody>}
           </Table>
             <div className='px-3'>
-              <Pagination total={paginationCount} value={activePage} onChange={setPage} mt="xl" size="xs" color="#ACB6E0"/>
+              <Pagination total={paginationCount} value={activePage} onChange={setPage} mt="xl" size="xs" color="#228be65e"/>
             </div>
       </Table.ScrollContainer>
     </div>

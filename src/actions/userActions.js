@@ -2,7 +2,8 @@ import { removeItemFromLocalStorage, setItemToLocalStorage } from "../utils/loca
 
 export const userFormActions = ({
     signup: (formData) => {  
-        return fetch("http://localhost:3000" + "/signup", {
+        // return fetch("http://localhost:3000" + "/signup", {
+        return fetch("workflow-rails-api.railway.internal" + "/signup", {
           method: "post",
           headers: {
             "Content-Type": "application/json",
@@ -22,7 +23,8 @@ export const userFormActions = ({
         });
     },
     login: (formData) => {
-      return fetch("http://localhost:3000" + "/login", {
+      // return fetch("http://localhost:3000" + "/login", {
+      return fetch("workflow-rails-api.railway.internal" + "/login", {
         method: "post",
         headers: {
           "Content-Type": "application/json",

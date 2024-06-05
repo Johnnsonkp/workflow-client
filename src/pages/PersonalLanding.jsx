@@ -39,11 +39,35 @@ function PersonalLanding() {
     task: null,
     toggle: false
   })
+
+  const reloadTask = useCallback(() => {
+    if (!loading && state.tasks?.length !== taskObj?.length){
+      console.log("useCallback hook")
+      setTaskObj(state.tasks);
+      return state.tasks
+    }
+  }, [state.tasks])
   
+  // useEffect(() => {
+  //   if (loading && state.tasks && !taskObj.length) {
+  //     setTaskObj(state.tasks);
+  //     setLoading(false)
+  //     console.log("useEffect task update hook")
+  //   }
+  // }, []);
+
   useEffect(() => {
-    if (loading && state.tasks && !taskObj.length) {
+    // if (loading && state.tasks) {
+    //   setTaskObj(state.tasks);
+    //   setLoading(false)
+
+    //   console.log("useEffect task update hook")
+    // }
+
+    if (state.tasks?.length !== taskObj?.length) {
       setTaskObj(state.tasks);
       setLoading(false)
+      console.log("useEffect task update hook")
     }
   }, []);
 

@@ -1,10 +1,10 @@
 .taskList{
-    background: linear-gradient(90deg, #D2F8D9 0%, rgba(182, 244, 146, 0.2) 0 20%, rgb(255, 255, 255) 100%);
+    /* background: linear-gradient(90deg, #D2F8D9 0%, rgba(182, 244, 146, 0.2) 0 20%, rgb(255, 255, 255) 100%); */
     border-left: 3px solid rgb(182, 244, 130);
+    background-color: rgba(182, 244, 146, 0.3);
 }
 .defaultTaskList{
-    border-left: 3px solid #E4F0F4;
-    border-left: 3px solid #95a2d9c0;
+    border-left: 3px solid #228be65e;
     background-color: #fff;
 }
 .listTable{
