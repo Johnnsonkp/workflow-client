@@ -34,7 +34,8 @@ const initialState = {
     //     time_to_start: "",
     //     time_to_finish: ""
     // }],
-    tasks: null
+    tasks: null,
+    refreshState: false
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -55,6 +56,10 @@ export const reducer = (state, action) => {
             break;
         case "AUTH":
             newState = {...state, user: action.payload}
+            return newState
+            break;
+        case "STATE_REFRESH":
+            newState = {...state, refreshState: action.payload}
             return newState
             break;
         case "LOGOUT":

@@ -12,7 +12,7 @@ import { useForm } from '@mantine/form';
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
 
-function CreateTaskForm() {
+function CreateTaskForm({setFormValue}) {
   const [hhMinute, setHhMinute] = useState<Date | string | undefined>()
   const ref = useRef<HTMLInputElement>(null);
   const navigate = useNavigate()
@@ -27,8 +27,6 @@ function CreateTaskForm() {
   const [startDateValue, setStartDateValue] = useState<any>(rxDateFm)
   const [startTime, setStartTime] = useState<any>(newDate)
   const [finishTime, setFinishTime] = useState<any>(newDate)
-
-  console.log("newDate", newDate)
 
   const form = useForm({
     initialValues: {
@@ -64,18 +62,24 @@ function CreateTaskForm() {
     return timeValue + " AM"
   }
 
-  const handleFormSubmit = (form: any, userData: any) => {
+  const handleFormSubmit = async (form: any, userData: any) => {
 
     form.values.start_date = reformatDateInput(startDateValue)
     form.values.time_to_start = convertTo12hrFormat(startTime)
     form.values.time_to_finish = convertTo12hrFormat(finishTime)
-    const taskActions = taskFormActions['create']
 
+    const formValuesCreated = form.values
+    setFormValue(formValuesCreated)
+    
+    const taskActions = await taskFormActions['create']
+    
     taskActions(form.values, userData).then((data: any) => {
       console.log("taskActions data state.user_id", data)
-      storeTask(data, dispatch, "CREATE_TASK", )
-      navigate('/personal')
+      storeTask(data, dispatch, "CREATE_TASK" )
+      dispatch({type: "STATE_REFRESH", payload: true})
     })
+
+    // navigate('/personal')
   }
 
   return (
@@ -148,7 +152,7 @@ function CreateTaskForm() {
             >Start Time</label>
           <TimeInput 
             onChange={(e) => setStartTime(e.target.value)}
-            value={newDate}
+            defaultValue={newDate}
             variant="filled" 
             ref={ref} 
           /> 
@@ -162,7 +166,7 @@ function CreateTaskForm() {
           </label>
           <TimeInput 
             onChange={(e) => setFinishTime(e.target.value)}
-            value={newDate}
+            defaultValue={newDate}
             variant="filled" 
             ref={ref} 
           />

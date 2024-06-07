@@ -1,6 +1,7 @@
 import { Pagination, Skeleton, Table, Text, ThemeIcon, UnstyledButton, rem } from '@mantine/core';
 import React, {MouseEvent, useEffect, useState} from 'react'
 
+import { EmptyTaskModal } from '../EmptytTaskModals/EmptyTaskModal';
 import ListViewSingle from './ListViewSingle';
 import classes from './list.module.css'
 import {useAppState} from '../../store/AppState.jsx'
@@ -41,31 +42,29 @@ interface ImageCheckboxProps {
   image: string;
 }
 
-const ListViewDisplay: React.FC<Prop> = ({taskObj, checked, defaultChecked, onChange, deleteTask, setUpdateForm}) => {
+const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onChange, deleteTask, setUpdateForm}) => {
   const {state, dispatch} = useAppState()
   const [completedTaskOrd, setCompletedTaskOrd]: any = useState()
   const [sortTaskByOrder, setSortTaskByOrder] = useState(null)
   const [allTaskInOrder, setAllTaskInOrder]: any  = useState(null)
 
-  let allCompletedTask = taskObj?.filter((task: any) => task.status === 'complete')
-  let unCompletedTask = taskObj?.filter((task) => task.status !== 'complete')
-  let inCompletedTaskInOrder = unCompletedTask?.sort(function(a, b){return a.order-b.order});
+  // taskObj = state.tasks || taskObj
 
+  // let allCompletedTask = taskObj?.filter((task: any) => task.status === 'complete')
+  // let unCompletedTask = taskObj?.filter((task) => task.status !== 'complete')
+  // let inCompletedTaskInOrder = unCompletedTask?.sort(function(a, b){return a.order-b.order})
 
-  let combineAllTasks = []
-  if(inCompletedTaskInOrder){
-    combineAllTasks.push(allCompletedTask?.concat(inCompletedTaskInOrder))
-  }
+  // let combineAllTasks = []
+  // if(inCompletedTaskInOrder){
+  //   combineAllTasks.push(allCompletedTask?.concat(inCompletedTaskInOrder))
+  // }
 
   const toggleFormModule = (task: Task, toggle: boolean) => {
     setUpdateForm(task, toggle)
   }
-
   const handleDeleteTask = (task: Task) => {
     deleteTask(task, taskObj)
   }
-
-
   const [loadingComponent, setLoadingComponent]: any = useState(true)
 
   function chunk<T>(array: T[], size: number): T[][] {
@@ -80,7 +79,7 @@ const ListViewDisplay: React.FC<Prop> = ({taskObj, checked, defaultChecked, onCh
   const data = chunk(
     Array(30)
       .fill(0)
-      .map((_, index) => ({ id: index, task: taskObj.sort(function(a, b){return a.order-b.order}) || null})),
+      .map((_, index) => ({ id: index, task: taskObj.sort(function(a, b){return a.order-b.order})})),
     7
   );
   const [activePage, setPage] = useState(1);
@@ -105,18 +104,15 @@ const ListViewDisplay: React.FC<Prop> = ({taskObj, checked, defaultChecked, onCh
     </Table.Tbody>
   }
 
-
   useEffect(() => {
     let loadingDelay = setTimeout(() => {
       if(items){
         setLoadingComponent(false)
       }
    }, 500)
-
    return () => clearTimeout(loadingDelay);
-  }, [taskObj])
+  }, [])
   
-
   return (
     <div className={`${classes.listTable} w-[99%] m-[auto] h-[99%] cursor-pointer border border-#D1D1D1 bg-white rounded-md`}>
       <Table.ScrollContainer minWidth={800}>
@@ -124,7 +120,7 @@ const ListViewDisplay: React.FC<Prop> = ({taskObj, checked, defaultChecked, onCh
           verticalSpacing="xs" 
           striped={true}
           withColumnBorders={false}
-          className={`${loadingComponent? 'min-h-[250px]' : '' }`}
+          className={`${taskObj && taskObj.length > 0? 'min-h-[150px]' : 'min-h-[250px]' }`}
         >
           <Table.Thead className="">
             <Table.Tr className="text-[12px]" fw={600}>
@@ -136,12 +132,21 @@ const ListViewDisplay: React.FC<Prop> = ({taskObj, checked, defaultChecked, onCh
               <Table.Th className="">Start Time - Finsh Time</Table.Th>
               <Table.Th className="">Project</Table.Th>
             </Table.Tr>
-          </Table.Thead>
-            {loadingComponent? <TaskListLoadSkeleton /> : <Table.Tbody className="bg-[#fff] !border-b-2 transition-all delay-800 ">{items }</Table.Tbody>}
-          </Table>
-            <div className='px-3'>
-              <Pagination total={paginationCount} value={activePage} onChange={setPage} mt="xl" size="xs" color="#228be65e"/>
-            </div>
+          </Table.Thead>{
+              <Table.Tbody className="bg-[#fff] !border-b-2 transition-all delay-100">{ loadingComponent? <TaskListLoadSkeleton /> : taskObj && taskObj.length > 0?   items : <EmptyTaskModal />}
+          </Table.Tbody>}
+        </Table>
+        <div className='px-3'>
+          {!loadingComponent &&
+            <Pagination 
+              total={paginationCount} 
+              value={activePage} 
+              onChange={setPage} 
+              mt="xl" size="xs" 
+              color="#228a"
+            />
+          }
+        </div>
       </Table.ScrollContainer>
     </div>
   );

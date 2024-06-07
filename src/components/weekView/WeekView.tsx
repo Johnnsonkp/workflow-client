@@ -4,6 +4,7 @@ import { IconSubtask } from '@tabler/icons-react';
 import ShiftCard from '../cards/ShiftCard.js';
 import WeekViewTab from './WeekViewTab.js';
 import {calculateWeek} from '../../utils/dateUtills.js';
+import { useAppState } from '../../store/AppState.jsx';
 
 interface Task {
     title: string;
@@ -36,9 +37,14 @@ const AddTaskToDateDisplay = (DateDisplay: DateObj[], taskObj: Task[]) => {
       dateObj['task'] = []
       for(let i=0; i < taskObj.length; i++){
         if(taskObj[i].start_date){
-          if (dateObj.full_date === taskObj[i].start_date){
-            dateObj['task'].push(taskObj[i])
+
+          if(taskObj[i].start_date.charAt(0) === '0'){
+            
+            if (dateObj.full_date === taskObj[i].start_date.slice(1, taskObj[i].start_date.length)){
+              dateObj['task'].push(taskObj[i])
+            }
           }
+          
         }
       }
     })
@@ -66,6 +72,9 @@ const GetDays = (formattedToday: string, days: string[], months: string[]) => {
 }
 
 const WeekView: React.FC<Props> = ({taskObj, dateObj, deleteTask}) => {
+    const {state, dispatch} = useAppState()
+    const stateTasks = state.tasks
+
     var months= ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var today = new Date();
@@ -77,7 +86,8 @@ const WeekView: React.FC<Props> = ({taskObj, dateObj, deleteTask}) => {
     if (mm < 10) mm = 0 + mm;
     var formattedToday = mm + '/' + dd + '/' + yyyy;
     const DateDisplay = GetDays(formattedToday, days, months)
-    const dateDisplayObjWithTask = AddTaskToDateDisplay(DateDisplay, taskObj)
+    // const dateDisplayObjWithTask = AddTaskToDateDisplay(DateDisplay, taskObj)
+    const dateDisplayObjWithTask = AddTaskToDateDisplay(DateDisplay, stateTasks)
 
     let taskCounter = 0
     const [toggleDelete, setToggleDelete] = useState({
@@ -103,7 +113,8 @@ const WeekView: React.FC<Props> = ({taskObj, dateObj, deleteTask}) => {
 
     useEffect(() => {
       if(toggleDelete.toggle){
-        toggleDelete.task && deleteTask(toggleDelete.task, taskObj)
+        // toggleDelete.task && deleteTask(toggleDelete.task, taskObj)
+        toggleDelete.task && deleteTask(toggleDelete.task, stateTasks)
 
         setToggleDelete({
           task: undefined,

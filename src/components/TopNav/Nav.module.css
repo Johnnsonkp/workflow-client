@@ -7,12 +7,14 @@
     
   }
 
-/* .navRightButton{
-  background-color: blue !important;
-  color: #fff;
-} */
+.navRightButton{
+  /* background-color: blue !important;
+  color: #fff; */
+  /* border: 1px solid white; */
+}
 .navRightButton:hover{
-  background-color: #464FEB !important;
+  /* background-color: #464FEB !important; */
+  background-color: #ffff !important;
   color: #fff !important;
   cursor: pointer;
 }

@@ -13,6 +13,7 @@ function AuthForm({setUserData}) {
  const [section, setSection] = useState('Log in');
  const [btnDisplay, setBtnDisplay] = useState(null);
  const {state, dispatch} = useAppState()
+ const [loginSuccess, setLoginSuccess] = useState()
 
 const formActionData = {
   "Sign up": { formAction: 'signup', action: 'SIGNUP_SUCCESS'},
@@ -27,10 +28,11 @@ const formActionData = {
       if (data && !data.error) {
         storeUserData(data, dispatch, formActionData[section].action)
         setUserData(data);
-
+        setLoginSuccess(true)
       } else {
-        console.log(`${data.error} please try again !`);
-        alert(`${data.error} please try again !`);
+        // console.log(`${data.error} please try again !`);
+        // alert(`Please try again !`);
+        location.reload()
       }
     });
 

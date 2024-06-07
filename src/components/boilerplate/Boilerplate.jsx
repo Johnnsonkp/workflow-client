@@ -15,6 +15,7 @@ function PageBoilerPlate({ component }) {
     const navigate = useNavigate()
     const [section, setSection] = useState('Personal');
     const {state, dispatch} = useAppState()
+    const [prevStateTask, setPrevStateTask] = useState(state.tasks);
     const userAuthorised = getItemFromLocalStorage('AUTH')
 
     const AuthToken = userAuthorised? userAuthorised.token : null
@@ -25,29 +26,25 @@ function PageBoilerPlate({ component }) {
       return navigate(`/${value}`);
     }
 
-    const loadTasks = useCallback(async () => {
-      try {
-        const taskActions = await taskFormActions['get'];
-        const data = await taskActions(userAuthorised);
-        return data
-      } catch (error) {
-        console.error('Error fetching task list:', error);
-      }
-    }, []);
+    const loadTasks = async () => {
+      const taskActions = await taskFormActions['get'];
+      const data = await taskActions(userAuthorised);
 
-    // useEffect(() => {
-    //   setSection(`${window.location.pathname.replace('/', '')}`)
-    // }, [])
+      if(data){
+        dispatch({type: "ALL_TASK", payload: data})
+        setPrevStateTask(data)
+      }
+    }
+
+    useEffect(() => { // On mount fetch request for tasks
+      if(userAuthorised){
+        loadTasks()
+      } else{
+        navigate('/')
+      }
+    }, [])
 
     const CustomLayout = () => {
-      useEffect(() => {
-        if(userAuthorised && state.tasks === null){
-          loadTasks().then((data) => {
-            dispatch({type: "ALL_TASK", payload: data})
-          });
-        }
-      }, [userAuthorised])
-
 
       return (
         <>

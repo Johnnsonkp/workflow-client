@@ -25,11 +25,12 @@ import { useNavigate } from "react-router-dom";
 function PersonalLanding() {
   const [taskPanel, setTaskPanel] = useState('list')
   const [togglePannel, setTogglePanel] = useState('')
-  const [taskObj, setTaskObj] = useState([])
+  const {state, dispatch} = useAppState()
+  const [taskObj, setTaskObj] = useState(state.tasks || [])
+  const [formValue, setFormValue] = useState([])
   const [toggleForm, setToggleForm] = useState(false)
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const {state, dispatch} = useAppState()
   const [opened, { open, close }] = useDisclosure(false);
   const [openedUpdateForm, { openUpdateForm, closeUpdateForm }] = useDisclosure(false);
   const [openForm, setOpenForm] = useState(close)
@@ -40,36 +41,31 @@ function PersonalLanding() {
     toggle: false
   })
 
-  const reloadTask = useCallback(() => {
-    if (!loading && state.tasks?.length !== taskObj?.length){
-      console.log("useCallback hook")
-      setTaskObj(state.tasks);
-      return state.tasks
+  const loadTasks = async () => {
+    const taskActions = await taskFormActions['get']
+    taskActions(userData).then((data) => {
+      setTaskObj(data);
+    })
+  }
+
+  const refreshTask = useCallback(() => {
+    if(state.refreshState){
+      console.log("usecallback")
+      loadTasks()
+      // dispatch({type: "STATE_REFRESH", payload: false})
     }
-  }, [state.tasks])
-  
-  // useEffect(() => {
-  //   if (loading && state.tasks && !taskObj.length) {
-  //     setTaskObj(state.tasks);
-  //     setLoading(false)
-  //     console.log("useEffect task update hook")
-  //   }
-  // }, []);
+    return 
+  }, [state.refreshState, taskObj, state.tasks])
 
   useEffect(() => {
-    // if (loading && state.tasks) {
-    //   setTaskObj(state.tasks);
-    //   setLoading(false)
-
-    //   console.log("useEffect task update hook")
-    // }
-
-    if (state.tasks?.length !== taskObj?.length) {
+    if(loading && !taskObj.length && state.tasks){
+      console.log("useEffect loading")
       setTaskObj(state.tasks);
-      setLoading(false)
-      console.log("useEffect task update hook")
+      setLoading(false);
     }
-  }, []);
+    refreshTask()
+    
+  }, [loading])
 
   const deleteTask =  async (taskToDelete, taskObj) => {
     const newTaskObj = taskObj && taskObj.filter((t) => t.id != taskToDelete.id )
@@ -110,11 +106,13 @@ function PersonalLanding() {
   }, [togglePannel])
 
   return (
-    <LoadingContainer className='relative !overflow-hidden' loading={taskObj}>
+    // <LoadingContainer className='relative !overflow-hidden' loading={taskObj}>
+    <DefaultContainer className='relative !overflow-hidden'>
       <DefaultContainer className={`${toggleForm? "h-[100vh]" : ""} !shadow-md`}>
         <InnerTopNav setTogglePanel={setTogglePanel}/>
         {taskPanel === 'list' && <DashboardBannerCards taskObj={taskObj}/> }
-        {state.tasks? <DashboardDisplay /> : 'loading...'}
+        {/* {state.tasks? <DashboardDisplay /> : 'loading...'} */}
+        <DashboardDisplay />
       </DefaultContainer>
       
       <Button onMouseDown={open} onClose={close} 
@@ -134,7 +132,7 @@ function PersonalLanding() {
           blur: 3,
         }}
       >
-        <CreateTaskForm />
+        <CreateTaskForm setFormValue={setFormValue}/>
       </Modal>
       <Modal 
         opened={updateForm.toggle} onClose={() => setUpdateForm({task: updateForm?.task , toggle: false})} 
@@ -148,8 +146,9 @@ function PersonalLanding() {
       >
         <UpdateTaskForm task={updateForm?.task}/>
       </Modal>
+    </ DefaultContainer>
 
-    </LoadingContainer>
+    // </LoadingContainer>
   );
 }
 

@@ -1,11 +1,12 @@
 import { getItemFromLocalStorage, removeItemFromLocalStorage, setItemToLocalStorage } from "../utils/localstorage";
 
 const token = getItemFromLocalStorage('token')
+const baseURL = import.meta.env.VITE_API_KEY;
 
 export const taskFormActions = ({
     create: (formData, userData) => {  
         // return fetch("http://localhost:3000" + "/tasks", {
-        return fetch("workflow-rails-api-production.up.railway.app" + "/tasks", {
+        return fetch(baseURL + "tasks", {
           method: "post",
           headers: {
             "Content-Type": "application/json",
@@ -38,7 +39,7 @@ export const taskFormActions = ({
     },
     get: (userData) => {
       // return fetch("http://localhost:3000" + "/tasks", {
-      return fetch("workflow-rails-api-production.up.railway.app" + "/tasks", {
+      return fetch(baseURL + "tasks", {
         method: "get",
         headers: {
           "Content-Type": "application/json",
@@ -58,8 +59,8 @@ export const taskFormActions = ({
     },
 
     update: (formData, userData, taskID) => {
-      // return fetch("http://localhost:3000" + `/tasks/${taskID}`, {
-      return fetch("workflow-rails-api-production.up.railway.app" + `/tasks/${taskID}`, {
+      return fetch(baseURL + `/tasks/${taskID}`, {
+      // return fetch("workflow-rails-api-production.up.railway.app" + `/tasks/${taskID}`, {
         method: "put",
         headers: {
           "Content-Type": "application/json",
@@ -90,7 +91,7 @@ export const taskFormActions = ({
 
     delete: (userData, taskID) => {
         // return fetch("http://localhost:3000" + `/tasks/${taskID}`, {
-        return fetch("workflow-rails-api-production.up.railway.app" + `/tasks/${taskID}`, {
+        return fetch(baseURL + `tasks/${taskID}`, {
           method: "delete",
           headers: {
             "Content-Type": "application/json",
@@ -112,8 +113,8 @@ export const taskFormActions = ({
 })
 
 export const storeTask = (data, dispatch, action) => {
-  console.log("storing task", data, action)
     // if(dispatch){
+      console.log("dispatch")
       dispatch({ type: action, payload: {
         id: data.id,
         title: data.title,
@@ -125,6 +126,8 @@ export const storeTask = (data, dispatch, action) => {
         time_to_finish: data.time_to_finish,
         user_id: data.user_id
       }})
+
+      dispatch({type: "STATE_REFRESH", payload: true})
     // }
   
     // if(data){
