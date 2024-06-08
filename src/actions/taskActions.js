@@ -116,7 +116,7 @@ export const storeTask = (data, dispatch, action) => {
     // if(dispatch){
       console.log("dispatch")
       dispatch({ type: action, payload: {
-        id: data.id,
+        id: data.id || null,
         title: data.title,
         description: data.description,
         status: data.status,

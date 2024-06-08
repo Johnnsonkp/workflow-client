@@ -69,11 +69,14 @@ function CreateTaskForm() {
     form.values.time_to_finish = convertTo12hrFormat(finishTime)
     
     const taskActions = await taskFormActions['create']
+    console.log("form values:", form.values)
+    console.log("userData:", userData)
+    
+    // taskActions(form.values, userData)
     
     taskActions(form.values, userData).then((data: any) => {
       console.log("taskActions data state.user_id", data)
       storeTask(data, dispatch, "CREATE_TASK" )
-      // dispatch({type: "STATE_REFRESH", payload: true})
     })
     // navigate('/personal')
   }
