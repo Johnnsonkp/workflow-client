@@ -75,7 +75,7 @@ function CreateTaskForm() {
       storeTask(data, dispatch, "CREATE_TASK" )
       // dispatch({type: "STATE_REFRESH", payload: true})
     })
-    navigate('/personal')
+    // navigate('/personal')
   }
 
   return (
