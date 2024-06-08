@@ -26,7 +26,24 @@ function Nav() {
     if(window.location.pathname !== `/${value}`){
       return navigate(`/${value}`);
     }
-  }  
+  }
+
+  function handleClick() {
+    if (localStorage.theme === "dark" || !("theme" in localStorage)) {
+      //add class=dark in html element
+      document.documentElement.classList.add("dark");
+    } else {
+      //remove class=dark in html element
+      document.documentElement.classList.remove("dark");
+    }
+
+    if (localStorage.theme === "dark") {
+      localStorage.theme = "light";
+    } 
+    if(localStorage.theme === "light") {
+      localStorage.theme = "dark";
+    }
+  }
 
   useEffect(() => {
     setSection(window.location.pathname.slice(1))
@@ -51,7 +68,7 @@ function Nav() {
 
               <Menu.Target className={`${classes.navRightButton} `}>
                 <div className='cursor-pointer my-[auto] !bg-[transparent] !text-[#fff] uppercase p-3'>
-                    <CustomSwitch /> 
+                    <CustomSwitch onClick={() => handleClick()}/> 
                 </div>
               </Menu.Target>
 
