@@ -132,7 +132,7 @@ function PersonalLanding() {
           blur: 3,
         }}
       >
-        <CreateTaskForm setFormValue={setFormValue}/>
+        <CreateTaskForm />
       </Modal>
       <Modal 
         opened={updateForm.toggle} onClose={() => setUpdateForm({task: updateForm?.task , toggle: false})} 

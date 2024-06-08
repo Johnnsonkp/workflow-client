@@ -30,7 +30,7 @@ export const taskFormActions = ({
         .then((data) => {
           if (data.error) {
             console.log("task error", data.error)
-            alert(data.error);
+            // alert(data.error);
           } else {
             console.log("task created", data)
             return data

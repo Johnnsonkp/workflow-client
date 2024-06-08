@@ -12,7 +12,7 @@ import { useForm } from '@mantine/form';
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
 
-function CreateTaskForm({setFormValue}) {
+function CreateTaskForm() {
   const [hhMinute, setHhMinute] = useState<Date | string | undefined>()
   const ref = useRef<HTMLInputElement>(null);
   const navigate = useNavigate()
@@ -67,19 +67,15 @@ function CreateTaskForm({setFormValue}) {
     form.values.start_date = reformatDateInput(startDateValue)
     form.values.time_to_start = convertTo12hrFormat(startTime)
     form.values.time_to_finish = convertTo12hrFormat(finishTime)
-
-    const formValuesCreated = form.values
-    setFormValue(formValuesCreated)
     
     const taskActions = await taskFormActions['create']
     
     taskActions(form.values, userData).then((data: any) => {
       console.log("taskActions data state.user_id", data)
       storeTask(data, dispatch, "CREATE_TASK" )
-      dispatch({type: "STATE_REFRESH", payload: true})
+      // dispatch({type: "STATE_REFRESH", payload: true})
     })
-
-    // navigate('/personal')
+    navigate('/personal')
   }
 
   return (
