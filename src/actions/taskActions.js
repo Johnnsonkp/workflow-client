@@ -114,7 +114,6 @@ export const taskFormActions = ({
 })
 
 export const storeTask = (data, dispatch, action) => {
-    // if(dispatch){
       console.log("dispatch", data)
       if(data){
         console.log("if data is true", data)
@@ -130,19 +129,9 @@ export const storeTask = (data, dispatch, action) => {
           time_to_finish: data.time_to_finish,
           user_id: data.user_id
         }})
+
+        dispatch({type: "STATE_REFRESH", payload: true})
       }
-      // dispatch({type: "STATE_REFRESH", payload: true})
-    // }
-  
-    // if(data){
-    //   setItemToLocalStorage("AUTH", {
-    //     token: jwt, 
-    //     isUserLoggedIn: true, 
-    //     user_id: user.id, 
-    //     username: user.username, 
-    //     email: user.email
-    //   })
-    // }
 }
 
 export const storeTaskObj = (data, dispatch, action) => {
