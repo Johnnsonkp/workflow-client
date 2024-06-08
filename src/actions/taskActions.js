@@ -116,21 +116,22 @@ export const taskFormActions = ({
 export const storeTask = (data, dispatch, action) => {
     // if(dispatch){
       console.log("dispatch", data)
-      
-      dispatch({ type: action, payload: {
-        // id: data.id || null,
-        id: 0,
-        title: data.title,
-        description: data.description,
-        status: data.status,
-        order: data.order,
-        start_date: data.start_date,
-        time_to_start: data.time_to_start,
-        time_to_finish: data.time_to_finish,
-        user_id: data.user_id
-      }})
-
-      dispatch({type: "STATE_REFRESH", payload: true})
+      if(data){
+        console.log("if data is true", data)
+        
+        dispatch({ type: action, payload: {
+          id: data.id,
+          title: data.title,
+          description: data.description,
+          status: data.status,
+          order: data.order,
+          start_date: data.start_date,
+          time_to_start: data.time_to_start,
+          time_to_finish: data.time_to_finish,
+          user_id: data.user_id
+        }})
+      }
+      // dispatch({type: "STATE_REFRESH", payload: true})
     // }
   
     // if(data){
