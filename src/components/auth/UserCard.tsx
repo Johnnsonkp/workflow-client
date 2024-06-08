@@ -24,7 +24,7 @@ export function UserInfoAction() {
     return (
      <Container my="" pl={0} pr={10} pb={9} className='bg-[#F9FAFA] rounded-lg' onClick={() => NavigateToUserPage()}>
         {/* <a href="/userxp"> */}
-            <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="" className='pt-3'>
+            <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="" className='pt-3 pb-1'>
                 <Avatar
                     src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png"
                     size={AVATAR_HEIGHT}

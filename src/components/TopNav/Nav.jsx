@@ -2,6 +2,7 @@ import {Avatar, Group, Menu, SegmentedControl, rem} from '@mantine/core';
 import { IconMenu, IconMenu2 } from '@tabler/icons-react';
 import React, {useEffect, useState} from 'react'
 
+import { CustomSwitch } from '../customSwitch/CustomSwitch';
 import { IconQuestionMark } from '@tabler/icons-react';
 import { IconSwitch } from '@tabler/icons-react';
 import { SwitchGroup } from '@mantine/core';
@@ -32,12 +33,10 @@ function Nav() {
   }, [])
   
   return (
-    // <div className={` ${classes.navContainer} px-3 flex justify-between !align-bottom fixed w-[100%] z-10 `}>
    <div className={` ${classes.navContainer} overflow-hidden`}>
         <div className='flex !align-middle z-30 px-2'>
-          {/* <div className='mt-3 pr-5 '><IconMenu2 color='#999' size={30} className='cursor-pointer'/></div> */}
           <a href="/" className='w-[200px] h-[50px]'>
-            <img src={logo} className='w-[130px] h-[55px]' />
+            <img src={logo} className='w-[145px] h-[60px]' />
           </a>
         </div>
         <Menu
@@ -50,18 +49,20 @@ function Nav() {
           > 
             <div className='flex align-middle'>
 
-              {/* <Menu.Target className={`${classes.navRightButton} `}>
+              <Menu.Target className={`${classes.navRightButton} `}>
                 <div className='cursor-pointer my-[auto] !bg-[transparent] !text-[#fff] uppercase p-3'>
-                    <IconSwitch size={23} color='#999'/>
+                    <CustomSwitch /> 
                 </div>
-              </Menu.Target> */}
+              </Menu.Target>
 
               <Menu.Target className={`${classes.navRightButton} border-2 border-white-500`}>
-                <a className='cursor-pointer my-[auto] !bg-[transparent] !text-[#fff] uppercase p-3'
-                  href="/about"
-                >
-                    <IconQuestionMark size={23} color='#999'/>
-                </a>
+                <Group justify="center" p="xs">
+                  <a className='cursor-pointer my-[auto] !bg-[transparent] !text-[#fff] uppercase p-3'
+                    href="/about"
+                  >
+                      <IconQuestionMark size={23} color='#999'/>
+                  </a>
+                </Group>
               </Menu.Target>
 
               <div className={`${classes.navRightButton} w-[100%] flex px-3`}>

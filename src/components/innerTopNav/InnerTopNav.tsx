@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 
 import { DefaultContainer } from '../boilerplate/DefaultContainer';
 import { IconDashboard } from '@tabler/icons-react';
+import SingleDate from '../weekView/SingleDate';
+import { Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 export interface Link {               // interface describes the structure of the variable, Array or obj
@@ -38,8 +40,10 @@ const InnerTopNav: React.FC<Props> = ({ setTogglePanel, data, value}) => {
   return (
     <header className={`${classes.header} border border-#D1D1D1 bg-white rounded-md h-[560px] mt-3 !mb-5`}>
       <DefaultContainer className={classes.inner} >
-        <div className='text-[18px] flex w-36 '>
-         <IconDashboard color='gray'/> <h3 className='px-1 text-[18px] font-semibold' >Dashboard</h3>
+        <div className='flex !align-middle w-80 '>
+          <Text className='flex align-middle my-[auto]'><IconDashboard className='my-[auto]' color='gray'/> </Text>
+          <Text fz="xl" fw={400} px={'3'} className=' font-semibold' >Dashboard</Text>
+          <SingleDate />
         </div>
 
         <SegmentedControl

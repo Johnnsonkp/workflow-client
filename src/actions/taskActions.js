@@ -1,7 +1,7 @@
 import { getItemFromLocalStorage, removeItemFromLocalStorage, setItemToLocalStorage } from "../utils/localstorage";
 
 const token = getItemFromLocalStorage('token')
-const baseURL = import.meta.env.VITE_API_KEY;
+const baseURL = import.meta.env.VITE_API_KEY
 
 export const taskFormActions = ({
     create: (formData, userData) => {  

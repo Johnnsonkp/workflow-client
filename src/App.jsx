@@ -10,37 +10,6 @@ function App() {
   const [count, setCount] = useState(0)
   const [data, setData] = useState()
 
-  // useEffect(() => {
-  //   loadData()
-  // }, [data])
-
-  
-  // async function loadData() {
-  //   const fetchData = await getData(
-  //     "http://localhost:4000",
-  //     "GET"
-  //   );
-  //   setData(fetchData);
-  // }
-
-  // async function getData(url, method) {
-  //   try {
-  //     const res = await fetch(url, {
-  //       method: method,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Accept: "application/json",
-  //       },
-  //     });
-  //     if (res.ok) {
-  //       console.log("res.ok", res.ok);
-  //       return res.json();
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   }
-  // }
-  // border: 1px solid rgba(111, 111, 111, 0.5);
   return (
     <>
       <div className='flex justify-between'>

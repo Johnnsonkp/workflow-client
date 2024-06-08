@@ -1,3 +1,4 @@
+import { IconArrowsSort, IconSort09, IconSortAscending } from '@tabler/icons-react';
 import { Pagination, Skeleton, Table, Text, ThemeIcon, UnstyledButton, rem } from '@mantine/core';
 import React, {MouseEvent, useEffect, useState} from 'react'
 
@@ -114,7 +115,7 @@ const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onC
   }, [])
   
   return (
-    <div className={`${classes.listTable} w-[99%] m-[auto] h-[99%] cursor-pointer border border-#D1D1D1 bg-white rounded-md`}>
+    <div className={`${classes.listTable} w-[99%] m-[auto] h-[] cursor-pointer border border-#D1D1D1 bg-white rounded-md mt-10 mb-5`}>
       <Table.ScrollContainer minWidth={800}>
         <Table 
           verticalSpacing="xs" 
@@ -127,7 +128,7 @@ const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onC
               <Table.Th className="">Complete</Table.Th>
               <Table.Th className="">Order</Table.Th>
               <Table.Th className="">Name</Table.Th>
-              <Table.Th className="">Status</Table.Th>
+              <Table.Th className="flex"><IconArrowsSort size={18} className='mx-1'/>Status</Table.Th>
               <Table.Th className="">Task Date</Table.Th>
               <Table.Th className="">Start Time - Finsh Time</Table.Th>
               <Table.Th className="">Project</Table.Th>
