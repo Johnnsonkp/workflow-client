@@ -51,7 +51,8 @@ export const taskFormActions = ({
       })
       .then((data) => {
         if (data.error) {
-          alert(data.error);
+          console.log("task error", data.error)
+          // alert(data.error);
         } else {
           return data
         }
@@ -114,9 +115,11 @@ export const taskFormActions = ({
 
 export const storeTask = (data, dispatch, action) => {
     // if(dispatch){
-      console.log("dispatch")
+      console.log("dispatch", data)
+      
       dispatch({ type: action, payload: {
-        id: data.id || null,
+        // id: data.id || null,
+        id: 0,
         title: data.title,
         description: data.description,
         status: data.status,
