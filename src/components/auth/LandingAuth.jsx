@@ -7,6 +7,7 @@ import AuthForm from './AuthForm';
 import { DefaultContainer } from '../boilerplate/DefaultContainer';
 import HeroSection from '../hero/HeroSection';
 import { LoadingContainer } from '../boilerplate/LoadingContainer';
+import { UserCardInfo } from '../cards/userCardInfo/UserCardInfo';
 import classes from './LandingAuth.module.css';
 import { useAppState } from '../../store/AppState';
 import {useNavigate} from 'react-router-dom'
@@ -26,7 +27,6 @@ export function LandingAuth() {
   }
  }, [])
  
-
  useEffect(() => {
   if(userData){ // checks / handles new user sign up + no JWT previous user sign in
     setUserType(`${userData.user.username || "user"} successfully logged in!`)
@@ -59,10 +59,11 @@ export function LandingAuth() {
           </LoadingContainer>
             {
               currentUserSession?.token ? 
-              <div className='flex align-middle justify-center'>
-                <Button onClick={() => navigate("/personal")}>Back to work </Button>
+              <div className='flex align-middle justify-center relative top-24 left-40'>
+                <UserCardInfo state={state} user={userAuthStatus} navigate={navigate}/>
+                {/* <Button onClick={() => navigate("/personal")}>Back to work </Button> */}
               </div> : 
-                <AuthForm setUserData={setUserData}/>
+                <AuthForm setUserData={setUserData} userData={userData}/>
             }
             {/* <AuthForm setUserData={setUserData}/> */}
         </div>

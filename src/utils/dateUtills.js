@@ -20,8 +20,6 @@ export const getDateTimeValue = (calendarInput) => {
 }
 
 export const reformatDateInput = (dateStr) => {
-  console.log("dateSTring", dateStr)
-
   let newDateToString = dateStr.toString()
   
   let parts = newDateToString?.split("-");

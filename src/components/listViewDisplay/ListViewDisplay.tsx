@@ -6,6 +6,7 @@ import { EmptyTaskModal } from '../EmptytTaskModals/EmptyTaskModal';
 import ListViewSingle from './ListViewSingle';
 import classes from './list.module.css'
 import {useAppState} from '../../store/AppState.jsx'
+import { useDisclosure } from '@mantine/hooks';
 
 const taskStatus: Record<string, string> = {
   todo: "blue",
@@ -48,17 +49,7 @@ const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onC
   const [completedTaskOrd, setCompletedTaskOrd]: any = useState()
   const [sortTaskByOrder, setSortTaskByOrder] = useState(null)
   const [allTaskInOrder, setAllTaskInOrder]: any  = useState(null)
-
-  // taskObj = state.tasks || taskObj
-
-  // let allCompletedTask = taskObj?.filter((task: any) => task.status === 'complete')
-  // let unCompletedTask = taskObj?.filter((task) => task.status !== 'complete')
-  // let inCompletedTaskInOrder = unCompletedTask?.sort(function(a, b){return a.order-b.order})
-
-  // let combineAllTasks = []
-  // if(inCompletedTaskInOrder){
-  //   combineAllTasks.push(allCompletedTask?.concat(inCompletedTaskInOrder))
-  // }
+  const [opened, { open, close }] = useDisclosure(false);
 
   const toggleFormModule = (task: Task, toggle: boolean) => {
     setUpdateForm(task, toggle)
@@ -93,6 +84,9 @@ const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onC
         taskStatus={taskStatus} 
         handleDeleteTask={handleDeleteTask}
         toggleFormModule={toggleFormModule}
+        opened={opened}
+        open={open}
+        close={close}
       /> 
   ));
 

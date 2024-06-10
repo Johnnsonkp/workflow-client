@@ -30,8 +30,6 @@ const formActionData = {
         setUserData(data);
         setLoginSuccess(true)
       } else {
-        // console.log(`${data.error} please try again !`);
-        // alert(`Please try again !`);
         location.reload()
       }
     });

@@ -1,5 +1,4 @@
 export const setItemToLocalStorage = (name, item) => {
-    console.log("set locastorag", name, item)
     window.localStorage.setItem( 
         name, 
         JSON.stringify(item) 

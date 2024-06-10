@@ -30,7 +30,6 @@ export const taskFormActions = ({
         .then((data) => {
           if (data.error) {
             console.log("task error", data.error)
-            // alert(data.error);
           } else {
             console.log("task created", data)
             return data
@@ -114,10 +113,7 @@ export const taskFormActions = ({
 })
 
 export const storeTask = (data, dispatch, action) => {
-      console.log("dispatch", data)
       if(data){
-        console.log("if data is true", data)
-        
         dispatch({ type: action, payload: {
           id: data.id,
           title: data.title,

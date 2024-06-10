@@ -1,11 +1,15 @@
-import { ActionIcon, Badge, Group, Table, Text, ThemeIcon, rem } from '@mantine/core';
+import { ActionIcon, Badge, Button, Group, Modal, Table, Text, ThemeIcon, rem } from '@mantine/core';
 import { IconCalendar, IconPencil, IconTrash } from '@tabler/icons-react';
 import { IconCircleCheck, IconCircleDashed, IconCircleFilled, IconTimeDuration0 } from '@tabler/icons-react';
 
 import React from 'react'
 import classes from './list.module.css'
+import { useDisclosure } from '@mantine/hooks';
 
-const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule}) => (
+// const [opened, { open, close }] = useDisclosure(false);
+
+const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, opened, open, close}) => (
+  
     <Table.Tr 
       // onClick={() => toggleFormModule( {task: task, toggle: true})}
       key={task?.title} 
@@ -43,7 +47,6 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule}) 
       <Table.Td className='w-10'
         onClick={() => toggleFormModule( {task: task, toggle: true})}
       > 
-        {/* <Badge color={taskStatus[task.status]} variant="light" className='!flex'> */}
         <Badge color={'black'} variant="light" className='!flex '>
           <div className='!flex !justify-between !align-middle'>
             <ThemeIcon color={taskStatus[task.status]} size={15} radius="xl" variant="light">
@@ -81,14 +84,38 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule}) 
         <Text fz="xs">General Task</Text>
       </Table.Td>
 
+      {/* <Modal 
+        opened={opened} 
+        onClose={close} 
+        centered 
+        fullScreen={false} 
+        size="450px"
+        overlayProps={{
+          backgroundOpacity: 0.1,
+          blur: 1,
+        }}
+      >
+        <div>
+          <Text fz="lg" fw={600}>Delete task?</Text>
+          <div className='mt-3 text-center w-[100%] border border-lightGray-500'>
+            <Button className='!m-3' onClick={() => handleDeleteTask(task)}>
+              <IconTrash style={{ width: rem(18), height: rem(18) }} stroke={1.5} /> 
+              <Text fz="sm" fw={600} px={3}>Yes</Text>
+            </Button>
+            <Button>
+            <Text fz="sm" fw={600} px={3}>No</Text>
+            </Button>
+          </div>
+        </div>
+      </Modal> */}
+
       <Table.Td className='w-13'>
         <Group gap={0} justify="flex-end">
           <ActionIcon variant="subtle" color="gray">
             <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
           </ActionIcon>
-          <ActionIcon variant="subtle" color="red"
-            onClick={() => handleDeleteTask(task)}
-          >
+          {/* <ActionIcon variant="subtle" color="red" onClick={open} > */}
+          <ActionIcon variant="subtle" color="red" onClick={() => handleDeleteTask(task)} >
             <IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
           </ActionIcon>
         </Group>

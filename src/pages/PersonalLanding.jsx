@@ -50,16 +50,13 @@ function PersonalLanding() {
 
   const refreshTask = useCallback(() => {
     if(state.refreshState){
-      console.log("usecallback")
       loadTasks()
-      // dispatch({type: "STATE_REFRESH", payload: false})
     }
     return 
   }, [state.refreshState, taskObj, state.tasks])
 
   useEffect(() => {
     if(loading && !taskObj.length && state.tasks){
-      console.log("useEffect loading")
       setTaskObj(state.tasks);
       setLoading(false);
     }

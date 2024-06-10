@@ -39,10 +39,11 @@ const AddTaskToDateDisplay = (DateDisplay: DateObj[], taskObj: Task[]) => {
         if(taskObj[i].start_date){
 
           if(taskObj[i].start_date.charAt(0) === '0'){
-            
             if (dateObj.full_date === taskObj[i].start_date.slice(1, taskObj[i].start_date.length)){
               dateObj['task'].push(taskObj[i])
             }
+          }else if (dateObj.full_date === taskObj[i].start_date) {
+            dateObj['task'].push(taskObj[i])
           }
           
         }
@@ -88,6 +89,9 @@ const WeekView: React.FC<Props> = ({taskObj, dateObj, deleteTask}) => {
     const DateDisplay = GetDays(formattedToday, days, months)
     // const dateDisplayObjWithTask = AddTaskToDateDisplay(DateDisplay, taskObj)
     const dateDisplayObjWithTask = AddTaskToDateDisplay(DateDisplay, stateTasks)
+
+    console.log("DateDisplay:", DateDisplay)
+    console.log("stateTasks:", stateTasks)
 
     let taskCounter = 0
     const [toggleDelete, setToggleDelete] = useState({
