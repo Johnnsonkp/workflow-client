@@ -19,7 +19,7 @@ function Feature({ imgSrc, title }) {
         <div className={classes.content}>
             <img 
                 src={imgSrc} 
-                className={`${title == 'React'? classes.AppLogo  : ''} w-30 h-14`}
+                className={`${title == 'React'? classes.AppLogo  : ''} w-24 h-12`}
             />
         </div>
       </div>
@@ -45,7 +45,7 @@ export function ReactRailsFeatures() {
   const items = techStack.map((item) => <Feature {...item} key={item.title} />);
 
   return (
-    <Container mt={90} mb={30} size="lg">
+    <Container mt={120} mb={30} size="lg">
       <SimpleGrid cols={{ base: 1, sm: 3 }} spacing={50} className={classes.container}>
         {items}
       </SimpleGrid>

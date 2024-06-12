@@ -7,18 +7,15 @@
     /* border: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8)); */
     border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8));
   
-    @media (max-width: $mantine-breakpoint-sm) {
+    @media (max-width: 48em) {
       flex-direction: column;
     }
   }
   .container {
-    /* height: rem(700px); */
-    /* height: 300px; */
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
-    /* padding-bottom: calc(var(--mantine-spacing-xl) * 6); */
     z-index: 1;
     position: relative;
   
@@ -52,7 +49,6 @@
   }
 
   .description {
-    /* color: var(--mantine-color-white); */
     color: #333;
     max-width: rem(600px);
   
@@ -69,7 +65,7 @@
     border-left: 0;
     margin: auto;
   
-    @media (max-width: $mantine-breakpoint-sm) {
+    @media (max-width: 48em) {
       padding: var(--mantine-spacing-md);
       padding-left: var(--mantine-spacing-md);
     }
@@ -86,7 +82,7 @@
     & + & {
       margin-left: var(--mantine-spacing-md);
   
-      @media (max-width: $mantine-breakpoint-sm) {
+      @media (max-width: 48em) {
         margin-left: 0;
         margin-top: var(--mantine-spacing-md);
       }
@@ -96,7 +92,7 @@
   .fieldsGroup {
     display: flex;
   
-    @media (max-width: $mantine-breakpoint-sm) {
+    @media (max-width: 48em) {
       flex-direction: column;
     }
   }
@@ -113,7 +109,7 @@
     flex: 0.6;
     height: 100vh;
   
-    @media (max-width: $mantine-breakpoint-sm) {
+    @media (max-width: 48em) {
       margin-bottom: var(--mantine-spacing-sm);
       padding-left: var(--mantine-spacing-md);
     }
@@ -125,14 +121,14 @@
       Greycliff CF,
       var(--mantine-font-family);
   
-    @media (max-width: $mantine-breakpoint-sm) {
+    @media (max-width: 48em) {
       margin-bottom: var(--mantine-spacing-xl);
     } */
   /* } */
   
   .control {
     margin-top: 13px;
-    @media (max-width: $mantine-breakpoint-sm) {
+    @media (max-width: 48em) {
       flex: 1;
     }
   } 
