@@ -12,9 +12,9 @@ interface FeatureProps extends React.ComponentPropsWithoutRef<'div'> {
   description: string;
 }
 
-function Feature({ imgSrc, title, description, className, ...others }) {
+function Feature({ imgSrc, title }) {
     return (
-      <div className={classes.feature} {...others}>
+      <div className={classes.feature}>
   
         <div className={classes.content}>
             <img 
@@ -28,8 +28,8 @@ function Feature({ imgSrc, title, description, className, ...others }) {
 
 const techStack = [
     {
-        imgSrc: reactLogo,
-        title: 'React',
+      imgSrc: reactLogo,
+      title: 'React',
     },
     {
       imgSrc: railsLogo,
