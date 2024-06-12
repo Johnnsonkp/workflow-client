@@ -6,8 +6,6 @@ import React from 'react'
 import classes from './list.module.css'
 import { useDisclosure } from '@mantine/hooks';
 
-// const [opened, { open, close }] = useDisclosure(false);
-
 const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, opened, open, close}) => (
   
     <Table.Tr 

@@ -35,6 +35,7 @@ const initialState = {
     //     time_to_finish: ""
     // }],
     tasks: null,
+    latestTask: null,
     refreshState: false
 }
 

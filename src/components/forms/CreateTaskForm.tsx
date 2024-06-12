@@ -57,7 +57,6 @@ function CreateTaskForm() {
         let newTime = timeFormated.toString() + timeValue.charAt(2) + timeValue.charAt(3) + timeValue.charAt(4) + ' PM'
         return newTime
     }
-
     return timeValue + " AM"
   }
 
@@ -69,7 +68,9 @@ function CreateTaskForm() {
     
     const taskActions = await taskFormActions['create']
     taskActions(form.values, userData).then((data: any) => {
+      // console.log("task created", data)
       storeTask(data, dispatch, "CREATE_TASK" )
+      // storeTask(data, dispatch, "GETTASKS" )
     })
   }
 

@@ -20,6 +20,8 @@ export function UserInfoAction() {
     const NavigateToUserPage = () => {
         return navigate("/userxp")
     }
+
+    let completedTasksCount = state.tasks?.filter? state.tasks?.filter((task) => task.status === 'complete').length : 0;
     
     return (
      <Container my="" pl={0} pr={10} pb={9} className='bg-[#F9FAFA] rounded-lg' onClick={() => NavigateToUserPage()}>
@@ -51,7 +53,7 @@ export function UserInfoAction() {
                     </Grid.Col>
                     <Grid.Col span={6}>
                         <Text ta="left" fz="xs" fw={400} mt="" className='bg-[#F9FAFA] mt-1 rounded-sm !p-1'>
-                            Completed {state.tasks?.filter((task) => task.status === 'complete'  ).length || 0}
+                            Completed {completedTasksCount}
                         </Text>
                     </Grid.Col>
 

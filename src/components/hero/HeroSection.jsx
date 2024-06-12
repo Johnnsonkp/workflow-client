@@ -1,23 +1,39 @@
-import React from 'react'
-import { Text } from '@mantine/core'
-import classes from './hero.module.css'
+import { Container, Text, Title } from '@mantine/core'
+
+import classes from './Hero.module.css'
 
 function HeroSection() {
   return (
-    <div className={`${classes.title} !flex justify-start`}>
-        <Text component="span" variant="gradient"
+    <Container className={classes.container} size="md">
+      <Title 
+          variant="gradient"
           fw={600} 
           gradient={{ from: 'black', to: 'gray' }} inherit 
-          className='!flex-col !text-6xl '
+          className={`${classes.title} flex`}
         >
-            <h1>/ Do fewer things</h1>{' '}
-            <h1>/ Work at a natural pace</h1>
-            <h1>/ Obsess over quality</h1>
-        </Text>
+            / Do fewer things{' '}
+      </Title>
+      <Title 
+          variant="gradient"
+          fw={600} 
+          gradient={{ from: 'black', to: 'gray' }} inherit 
+          className={`${classes.title} flex`}
+        >
+            / Work at a natural pace
+      </Title>
+      <Title 
+          variant="gradient"
+          fw={600} 
+          gradient={{ from: 'black', to: 'gray' }} inherit 
+          className={`${classes.title} flex`}
+        >
+            / Obsess over quality
+      </Title>
+      <Text className={classes.description} size="xl" mt="xl">
+        Workflows allows you to make progress on the things that matter the most. Prioritize quality in everything you do and reclaim your valuable time back.
+      </Text>
 
-    </div>
-
-    
+    </Container>
   )
 }
 

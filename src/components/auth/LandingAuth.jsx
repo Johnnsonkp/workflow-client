@@ -7,6 +7,7 @@ import AuthForm from './AuthForm';
 import { DefaultContainer } from '../boilerplate/DefaultContainer';
 import HeroSection from '../hero/HeroSection';
 import { LoadingContainer } from '../boilerplate/LoadingContainer';
+import { ReactRailsFeatures } from '../featuresDisplay/ReactRailsFeacture';
 import { UserCardInfo } from '../cards/userCardInfo/UserCardInfo';
 import classes from './LandingAuth.module.css';
 import { useAppState } from '../../store/AppState';
@@ -38,34 +39,32 @@ export function LandingAuth() {
 
  
   return (
-    <Paper shadow="md" radius="lg">
-      <LoadingContainer className={classes.wrapper}>
+    <Paper shadow="md" radius="lg" className='overflow-y-hidden'>
+      <LoadingContainer className={`${classes.wrapper} overflow-y-hidden`}>
         <div className={`${classes.innerwrap}`}>
           <LoadingContainer className={`${classes.contacts} bg-[#f7f7f8] `}>
-              <AppLogoContainer />
+            <div className='w-[25%] px-4 rounded-xl bg-[#a2a3a54f]'>
+              <AppLogoContainer 
+                height={'300px'}
+              />
+            </div>
             <Text fz="lg" fw={700} className={`${classes.title} !mt-8`} c="#333">
               {userType || state.userAuthStatus.error}
             </Text>
 
             <div className={classes.heroWrapper}>
-              <Container size={700} className={classes.inner}>
                 <HeroSection />
-              </Container> 
+                <ReactRailsFeatures />
             </div>
-
-            <Text fz="lg" fw={500} className={`w-[90%] m-auto !mt-6 !px-5`} c="#333">
-              Workflows allows you to make progress on the things that matter the most. Prioritize quality in everything you do and reclaim your valuable time back.
-            </Text>
+            
           </LoadingContainer>
             {
               currentUserSession?.token ? 
-              <div className='flex align-middle justify-center relative top-24 left-40'>
+              <div className='flex align-middle justify-center relative top-24 left-40 '>
                 <UserCardInfo state={state} user={userAuthStatus} navigate={navigate}/>
-                {/* <Button onClick={() => navigate("/personal")}>Back to work </Button> */}
               </div> : 
                 <AuthForm setUserData={setUserData} userData={userData}/>
             }
-            {/* <AuthForm setUserData={setUserData}/> */}
         </div>
       </LoadingContainer>
     </Paper>

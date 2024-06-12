@@ -1,9 +1,11 @@
+import { Button, Pagination, Skeleton, Table, Text, ThemeIcon, UnstyledButton, rem } from '@mantine/core';
 import { IconArrowsSort, IconSort09, IconSortAscending } from '@tabler/icons-react';
-import { Pagination, Skeleton, Table, Text, ThemeIcon, UnstyledButton, rem } from '@mantine/core';
 import React, {MouseEvent, useEffect, useState} from 'react'
 
 import { EmptyTaskModal } from '../EmptytTaskModals/EmptyTaskModal';
 import ListViewSingle from './ListViewSingle';
+// import TaskListSkeleton from './TaskListLoadSkeleton';
+import TaskListLoadSkeleton from './TaskListLoadSkeleton';
 import classes from './list.module.css'
 import {useAppState} from '../../store/AppState.jsx'
 import { useDisclosure } from '@mantine/hooks';
@@ -16,6 +18,7 @@ const taskStatus: Record<string, string> = {
 };
 
 interface Task {
+    id?: number;
     title: string;
     description: string;
     time_to_start: string;
@@ -35,29 +38,34 @@ interface Prop {
     setUpdateForm: (task: Task, toggle: boolean) => void;
 }
 
-interface ImageCheckboxProps {
-  checked?: boolean;
-  defaultChecked?: boolean;
-  onChange?: any;
-  title: string;
-  description: string;
-  image: string;
-}
-
 const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onChange, deleteTask, setUpdateForm}) => {
   const {state, dispatch} = useAppState()
-  const [completedTaskOrd, setCompletedTaskOrd]: any = useState()
-  const [sortTaskByOrder, setSortTaskByOrder] = useState(null)
-  const [allTaskInOrder, setAllTaskInOrder]: any  = useState(null)
   const [opened, { open, close }] = useDisclosure(false);
+  const [loading, setLoading] = useState(true)
+  const [listTasks, setListTasks] = useState(taskObj)
 
   const toggleFormModule = (task: Task, toggle: boolean) => {
     setUpdateForm(task, toggle)
   }
+  
   const handleDeleteTask = (task: Task) => {
-    deleteTask(task, taskObj)
+    const newTaskObj = listTasks && listTasks.filter((t) => t.id != task.id )
+    setListTasks(newTaskObj)
+    deleteTask(task, listTasks)
   }
   const [loadingComponent, setLoadingComponent]: any = useState(true)
+
+  useEffect(() => {
+    if(state.latestTask !== null && listTasks.length > 0 && taskObj.length > 0){
+      let newArr = []
+      listTasks.forEach((item) => item.id !== state.latestTask.id?  newArr.push(item) : '')
+      newArr.push(state.latestTask)
+      // return setListTasks((prevState: Task[] | any) => listTasks.filter((item) => item.id !== state.latestTask.id).push(state.latestTask) || state.latestTask)
+      return setListTasks(newArr)
+    }else{
+      return
+    }
+  }, [state.latestTask])
 
   function chunk<T>(array: T[], size: number): T[][] {
     if (!array.length) {
@@ -71,11 +79,15 @@ const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onC
   const data = chunk(
     Array(30)
       .fill(0)
-      .map((_, index) => ({ id: index, task: taskObj.sort(function(a, b){return a.order-b.order})})),
+      .map((_, index) => ({ 
+        id: index, 
+        task: Array.isArray(listTasks)? 
+          listTasks.sort(function(a, b){return a.order-b.order}) : listTasks
+      })),
     7
   );
   const [activePage, setPage] = useState(1);
-  const paginationCount =  Math.ceil(taskObj?.length / 7) 
+  const paginationCount =  Math.ceil(listTasks?.length / 7) 
   const items = data[activePage - 1].map((item) => (
     item.task[item.id] &&
       <ListViewSingle 
@@ -90,23 +102,23 @@ const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onC
       /> 
   ));
 
-  const TaskListLoadSkeleton = () => {
-    return <Table.Tbody className='absolute m-[auto] py-3 px-3'>
-      <Skeleton height={40} radius="sm" width={'80vw'}/>
-      <Skeleton height={40} mt={8} radius="sm" />
-      <Skeleton height={40} mt={8} radius="sm" />
-      <Skeleton height={40} mt={8} radius="sm" />
-    </Table.Tbody>
+  const taskListRefresh = () => {
+    setListTasks(taskObj)
+    setLoading(!loading)
+    setLoadingComponent(!loadingComponent)
   }
 
   useEffect(() => {
-    let loadingDelay = setTimeout(() => {
-      if(items){
-        setLoadingComponent(false)
-      }
-   }, 500)
-   return () => clearTimeout(loadingDelay);
-  }, [])
+    if(loading){
+      let loadingDelay = setTimeout(() => {
+        if(items){
+          setLoadingComponent(false)
+          setLoading(false)
+        }
+      }, 200)
+      return () => clearTimeout(loadingDelay);
+    }
+  }, [loading])
   
   return (
     <div className={`${classes.listTable} w-[99%] m-[auto] h-[] cursor-pointer border border-#D1D1D1 bg-white rounded-md mt-10 mb-5`}>
@@ -115,21 +127,24 @@ const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onC
           verticalSpacing="xs" 
           striped={true}
           withColumnBorders={false}
-          className={`${taskObj && taskObj.length > 0? 'min-h-[150px]' : 'min-h-[250px]' }`}
+          className={`${listTasks && listTasks.length > 2? 'min-h-[250px]' : listTasks && listTasks.length <= 1 && 'min-h-[150px]' }`}
         >
           <Table.Thead className="">
             <Table.Tr className="text-[12px]" fw={600}>
               <Table.Th className="">Complete</Table.Th>
               <Table.Th className="">Order</Table.Th>
               <Table.Th className="">Name</Table.Th>
-              <Table.Th className="flex"><IconArrowsSort size={18} className='mx-1'/>Status</Table.Th>
+              {/* <Table.Th className="flex"><IconArrowsSort size={18} className='mx-1'/>Status</Table.Th> */}
+              <Table.Th className="">Status</Table.Th>
               <Table.Th className="">Task Date</Table.Th>
               <Table.Th className="">Start Time - Finsh Time</Table.Th>
               <Table.Th className="">Project</Table.Th>
+              <Table.Th className=""><Button size='xs' onClick={() => taskListRefresh()}>Refresh</Button></Table.Th>
             </Table.Tr>
           </Table.Thead>{
-              <Table.Tbody className="bg-[#fff] !border-b-2 transition-all delay-100">{ loadingComponent? <TaskListLoadSkeleton /> : taskObj && taskObj.length > 0?   items : <EmptyTaskModal />}
-          </Table.Tbody>}
+              <Table.Tbody className="bg-[#fff] !border-b-2 transition-all delay-100">{ 
+                loadingComponent? <TaskListLoadSkeleton /> : listTasks && listTasks.length > 0? items : <EmptyTaskModal />}
+              </Table.Tbody>}
         </Table>
         <div className='px-3'>
           {!loadingComponent &&

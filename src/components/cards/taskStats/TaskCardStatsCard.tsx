@@ -30,7 +30,7 @@ function StatsRingCard({}) {
 
   const TaskCount = taskObj?.length || 0   
 
-  taskObj?.forEach((task) => {
+  taskObj?.length && taskObj?.forEach((task) => {
     if(task.status === 'complete'){
       counter.push(task)
     }  

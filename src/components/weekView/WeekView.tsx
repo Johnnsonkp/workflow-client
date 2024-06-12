@@ -90,30 +90,11 @@ const WeekView: React.FC<Props> = ({taskObj, dateObj, deleteTask}) => {
     // const dateDisplayObjWithTask = AddTaskToDateDisplay(DateDisplay, taskObj)
     const dateDisplayObjWithTask = AddTaskToDateDisplay(DateDisplay, stateTasks)
 
-    console.log("DateDisplay:", DateDisplay)
-    console.log("stateTasks:", stateTasks)
-
     let taskCounter = 0
     const [toggleDelete, setToggleDelete] = useState({
       task: undefined,
       toggle: false
     })
-
-    // const TaskCountForWeek = () => {
-    //   dateDisplayObjWithTask.forEach((obj: DateObj) => {
-    //     if(obj.task && obj.task?.length > 1){ // task object array is greater than 1
-    //       obj.task?.forEach((task: Task) => {
-    //         task.status && task.status !== 'complete' && taskCounter++
-    //       })
-    //     } 
-    //     if(obj.task && obj.task?.length === 1){ // task object array === 1
-    //         if(obj.task[0]?.status && obj.task[0]?.status !== 'complete'){
-    //           taskCounter++
-    //         }
-    //     }
-    // })
-    //   return taskCounter;
-    // }
 
     useEffect(() => {
       if(toggleDelete.toggle){

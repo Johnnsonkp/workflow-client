@@ -65,7 +65,6 @@ function UpdateTaskForm({task}) {
         let newTime = timeFormated.toString() + timeValue.charAt(2) + timeValue.charAt(3) + timeValue.charAt(4) + ' PM'
         return newTime
     }
-
     return timeValue + " AM"
   }
 
@@ -79,7 +78,9 @@ function UpdateTaskForm({task}) {
 
     taskActions(form.values, userData, taskValuePresence('id')).then((data: any) => {
       console.log("taskActions data state.user_id", data)
-      navigate('/personal')
+      storeTask(data, dispatch, "CREATE_TASK" )
+      // dispatch({type: "STATE_REFRESH", payload: true})
+      // navigate('/personal')
     })
   }
 

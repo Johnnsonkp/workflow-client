@@ -31,7 +31,7 @@ export function UserCardInfo({state, user, navigate}) {
   return (
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section className={classes.imageSection}>
-        <Image src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png" alt="Tesla Model S" />
+        <Image src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png" alt="User deisplay picture" />
       </Card.Section>
 
       <Group justify="space-between" mt="md">
@@ -56,11 +56,11 @@ export function UserCardInfo({state, user, navigate}) {
 
       <Card.Section className={classes.section}>
         <Group gap={10}>
-          <div>
+          {/* <div>
             <Button onClick={ () => handleSignOut()} radius="sm" style={{ flex: 1 }}>
                 Signout
             </Button>
-          </div>
+          </div> */}
 
           <Button onClick={() => navigate("/personal")} radius="sm" style={{ flex: 1 }}>
             Back to work

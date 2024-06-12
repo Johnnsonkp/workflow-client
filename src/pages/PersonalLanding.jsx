@@ -27,6 +27,7 @@ function PersonalLanding() {
   const [togglePannel, setTogglePanel] = useState('')
   const {state, dispatch} = useAppState()
   const [taskObj, setTaskObj] = useState(state.tasks || [])
+  // const [taskObj, setTaskObj] = useState([])
   const [formValue, setFormValue] = useState([])
   const [toggleForm, setToggleForm] = useState(false)
   const [loading, setLoading] = useState(true);
@@ -40,34 +41,33 @@ function PersonalLanding() {
     task: null,
     toggle: false
   })
-
-  const loadTasks = async () => {
-    const taskActions = await taskFormActions['get']
-    taskActions(userData).then((data) => {
-      setTaskObj(data);
-    })
-  }
-
-  const refreshTask = useCallback(() => {
-    if(state.refreshState){
-      loadTasks()
-    }
-    return 
-  }, [state.refreshState, taskObj, state.tasks])
-
-  useEffect(() => {
+  
+  const initialTaskLoad = useCallback(() => {
     if(loading && !taskObj.length && state.tasks){
+      console.log("loading", loading)
       setTaskObj(state.tasks);
-      setLoading(false);
     }
-    refreshTask()
-    
+    return () => {setLoading(false)} 
   }, [loading])
 
-  const deleteTask =  async (taskToDelete, taskObj) => {
-    const newTaskObj = taskObj && taskObj.filter((t) => t.id != taskToDelete.id )
-    setTaskObj(newTaskObj)
+  useEffect( () => {
+    (async () => {
+      if(state.refreshState){
+        const taskActions = await taskFormActions['get']
+        const taskRefreshed = await taskActions(userData)
 
+        setTaskObj(taskRefreshed);
+        dispatch({type: "STATE_REFRESH", payload: false})
+      }
+    })();
+    return () => {}
+  }, [state.refreshState, taskObj])
+
+  useEffect(() => {
+    initialTaskLoad()
+  }, [])
+
+  const deleteTask =  async (taskToDelete, taskObj) => {
     const deleteTaskAction = await taskFormActions['delete']
       deleteTaskAction(userData, taskToDelete.id).then((data) => {
         console.log("taskActions data state.user_id", taskToDelete)
@@ -103,12 +103,10 @@ function PersonalLanding() {
   }, [togglePannel])
 
   return (
-    // <LoadingContainer className='relative !overflow-hidden' loading={taskObj}>
     <DefaultContainer className='relative !overflow-hidden'>
       <DefaultContainer className={`${toggleForm? "h-[100vh]" : ""} !shadow-md`}>
         <InnerTopNav setTogglePanel={setTogglePanel}/>
         {taskPanel === 'list' && <DashboardBannerCards taskObj={taskObj}/> }
-        {/* {state.tasks? <DashboardDisplay /> : 'loading...'} */}
         <DashboardDisplay />
       </DefaultContainer>
       
@@ -132,7 +130,8 @@ function PersonalLanding() {
         <CreateTaskForm />
       </Modal>
       <Modal 
-        opened={updateForm.toggle} onClose={() => setUpdateForm({task: updateForm?.task , toggle: false})} 
+        opened={updateForm.toggle} 
+        onClose={() => setUpdateForm({task: updateForm?.task , toggle: false})} 
         centered 
         fullScreen={false} 
         size="900px"
@@ -144,8 +143,6 @@ function PersonalLanding() {
         <UpdateTaskForm task={updateForm?.task}/>
       </Modal>
     </ DefaultContainer>
-
-    // </LoadingContainer>
   );
 }
 
