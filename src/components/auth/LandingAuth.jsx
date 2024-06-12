@@ -5,7 +5,7 @@ import { getItemFromLocalStorage, setItemToLocalStorage } from '../../utils/loca
 import AppLogoContainer from '../appLogo/AppLogoContainer';
 import AuthForm from './AuthForm';
 import { DefaultContainer } from '../boilerplate/DefaultContainer';
-import HeroSection from '../hero/HeroSection';
+import HeroSection from '../hero/HeroSection.tsx';
 import { LoadingContainer } from '../boilerplate/LoadingContainer';
 import { ReactRailsFeatures } from '../featuresDisplay/ReactRailsFeacture';
 import { UserCardInfo } from '../cards/userCardInfo/UserCardInfo';
