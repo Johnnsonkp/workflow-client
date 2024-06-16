@@ -46,6 +46,7 @@ function PersonalLanding() {
     if(loading && !taskObj.length && state.tasks){
       console.log("loading", loading)
       setTaskObj(state.tasks);
+      // setLoading(false)
     }
     return () => {setLoading(false)} 
   }, [loading])
@@ -53,10 +54,13 @@ function PersonalLanding() {
   useEffect( () => {
     (async () => {
       if(state.refreshState){
+        console.log("state_refresh", state.refreshState)
+        
         const taskActions = await taskFormActions['get']
         const taskRefreshed = await taskActions(userData)
 
         setTaskObj(taskRefreshed);
+        dispatch({type: "ALL_TASK", payload: taskRefreshed})
         dispatch({type: "STATE_REFRESH", payload: false})
       }
     })();
@@ -71,7 +75,18 @@ function PersonalLanding() {
     const deleteTaskAction = await taskFormActions['delete']
       deleteTaskAction(userData, taskToDelete.id).then((data) => {
         console.log("taskActions data state.user_id", taskToDelete)
+        setTaskObj((prevState) => prevState.filter((t) => t.id != taskToDelete.id ))
       })
+  }
+
+  const handleTaskArchive = async (taskToUpdate) => {
+    const updateActions = await taskFormActions['update']
+    updateActions(taskToUpdate, state?.user, taskToUpdate.id).then((data) => {
+
+      console.log("taskActions update", data)
+      setTaskObj((prevState) => prevState.filter((t) => t.id != data.id ).concat(data))
+
+    })
   }
 
   const updateFormData = (task) => {
@@ -86,7 +101,12 @@ function PersonalLanding() {
     {
       switch(taskPanel){
         case "list":
-          return <ListViewDisplay taskObj={taskObj} deleteTask={deleteTask} setUpdateForm={updateFormData}/>
+          return <ListViewDisplay 
+            taskObj={taskObj} 
+            deleteTask={deleteTask} 
+            setUpdateForm={updateFormData} 
+            handleTaskArchive={handleTaskArchive}
+          />
           break;
         case "time":
           return <TimeTableDisplay taskObj={taskObj} deleteTask={deleteTask}/>

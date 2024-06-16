@@ -1,7 +1,12 @@
+import { Container, Grid, SimpleGrid, Skeleton, rem } from '@mantine/core';
 import React, {useEffect, useState} from 'react'
 
+import { CustomCalendar } from '../calendar/customerCalendar.js';
+import { DefaultContainer } from '../boilerplate/DefaultContainer.jsx';
 import { IconSubtask } from '@tabler/icons-react';
 import ShiftCard from '../cards/ShiftCard.js';
+import StaticCalendar from '../../utils/StaticCalendar.js';
+import TopTabs from './TopTabs.js';
 import WeekViewTab from './WeekViewTab.js';
 import {calculateWeek} from '../../utils/dateUtills.js';
 import { useAppState } from '../../store/AppState.jsx';
@@ -75,6 +80,8 @@ const GetDays = (formattedToday: string, days: string[], months: string[]) => {
 const WeekView: React.FC<Props> = ({taskObj, dateObj, deleteTask}) => {
     const {state, dispatch} = useAppState()
     const stateTasks = state.tasks
+    const PRIMARY_COL_HEIGHT = rem(300);
+    const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 1 - var(--mantine-spacing-md) / 6)`;
 
     var months= ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -98,7 +105,6 @@ const WeekView: React.FC<Props> = ({taskObj, dateObj, deleteTask}) => {
 
     useEffect(() => {
       if(toggleDelete.toggle){
-        // toggleDelete.task && deleteTask(toggleDelete.task, taskObj)
         toggleDelete.task && deleteTask(toggleDelete.task, stateTasks)
 
         setToggleDelete({
@@ -110,36 +116,29 @@ const WeekView: React.FC<Props> = ({taskObj, dateObj, deleteTask}) => {
 
     return (
       <>
-        <div className='p-2 text-[13px] flex align-middle'>
-          <div className='mr-1 inline-flex border border-blue-200 bg-blue-100 text-blue-500 font-bold rounded-sm mb-4'>
-            <p className='px-2'>{dateDisplayObjWithTask[0].date} {dateDisplayObjWithTask[0].month}</p> -
-            <p className='px-2'>{dateDisplayObjWithTask[dateDisplayObjWithTask.length - 1].date} {dateDisplayObjWithTask[dateDisplayObjWithTask.length - 1].month}</p>
-          </div>
-
-          <div className='ml-1 inline-flex border border-blue-200 bg-blue-100 text-blue-500 font-bold rounded-sm mb-4'>
-            {/* <p className='px-3 inline-flex align-middle justify-around'> <TaskCountForWeek /> Up coming tasks</p> */}
-          </div>
-          
-          <div className='ml-1 inline-flex border border-blue-200 bg-blue-100 text-blue-500 font-bold rounded-sm mb-4'> 
-            <p className='px-3 inline-flex'>Weekly Total: 32 hours</p>
-          </div>
-          
-        </div>
-        <div className='flex'>
-          {dateDisplayObjWithTask.map((obj, index) => (
-            <>
-            <div className={`flex-col m-1 text-[13px] `} key={index}>
-              {/* <WeekViewTab obj={obj} todaysDate={todaysDate} key={index + obj.day + todaysDate}/> */}
-              <WeekViewTab obj={obj} todaysDate={todaysDate} />
-              {/* <ShiftCard obj={obj} todaysDate={todaysDate} toggleDelete={toggleDelete} 
-                setToggleDelete={setToggleDelete} index={index + obj.day} key={index + obj.day + todaysDate + index}
-              /> */}
-              <ShiftCard obj={obj} todaysDate={todaysDate} toggleDelete={toggleDelete} 
-                setToggleDelete={setToggleDelete} index={index + obj.day} />
-            </div>
-            </>
-          ))}
-        </div>
+        <TopTabs dateDisplayObjWithTask={dateDisplayObjWithTask}/>
+          <Grid w={'100%'} className=''>
+            <Grid.Col span={{ base: 12, xs: 9.2}} className='overflow-hidden mr-4'>
+              {dateDisplayObjWithTask?
+                  <DefaultContainer className='flex'>
+                    {dateDisplayObjWithTask.map((obj, index) => (
+                      <>
+                        <DefaultContainer className={`flex-col m-1 text-[13px] `} key={index}>
+                          <WeekViewTab obj={obj} todaysDate={todaysDate} key={index + 1}/>
+                          <ShiftCard obj={obj} todaysDate={todaysDate} toggleDelete={toggleDelete} 
+                            setToggleDelete={setToggleDelete} index={index + obj.day} key={index + 2} uniqueID={index + 3}/>
+                        </DefaultContainer>
+                      </>
+                    ))}
+                  </DefaultContainer> 
+                  : 
+                <Skeleton height={PRIMARY_COL_HEIGHT} radius="md" animate={true} />}
+            </Grid.Col>
+            <Grid.Col span={{ base: 12, xs: 2.6 }} className='flex justify-end overflow-hidden'>
+              {<CustomCalendar/> ||
+              <Skeleton height={PRIMARY_COL_HEIGHT} radius="md" animate={true} />}
+            </Grid.Col>
+          </Grid>
       </>
     )
   }

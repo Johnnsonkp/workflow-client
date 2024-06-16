@@ -114,7 +114,7 @@ const formActionData = {
                 className={`${classes.control}`} w={'45%'}
                 onClick={() => setBtnDisplay(<IconLoader className='loader ease-linear animate-spin'/>)}    
             > 
-            {btnDisplay === null? section : btnDisplay }
+              {btnDisplay === null? section : btnDisplay }
             </Button>
 
             <Button 
@@ -125,7 +125,7 @@ const formActionData = {
             </Button>
         </Group>
 
-        <Link to="/personal">Personal Page</Link>
+        {/* <Link to="/personal">Personal Page</Link> */}
         </div>
     </form>
   )

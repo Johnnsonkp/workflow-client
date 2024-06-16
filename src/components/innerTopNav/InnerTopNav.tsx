@@ -51,7 +51,7 @@ const InnerTopNav: React.FC<Props> = ({ setTogglePanel, data, value}) => {
             value={section}
             onChange={(value) => urlRedirect(value)}
             transitionTimingFunction="ease"
-            color='#333'
+            className='text-[#333]'
             fullWidth
             data={[
                 { label: 'List View', value: 'list' },

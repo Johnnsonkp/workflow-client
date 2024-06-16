@@ -44,7 +44,7 @@ const CardContainerCx = ({children, title}) => {
       if(children){
         setLoadingComponent(false)
       }
-   }, 800)
+   }, 200)
 
    return () => clearTimeout(loadingDelay);
   }, [])

@@ -1,10 +1,11 @@
 import { Button, Pagination, Skeleton, Table, Text, ThemeIcon, UnstyledButton, rem } from '@mantine/core';
-import { IconArrowsSort, IconSort09, IconSortAscending } from '@tabler/icons-react';
-import React, {MouseEvent, useEffect, useState} from 'react'
+import React, {MouseEvent, useCallback, useEffect, useState} from 'react'
 
+import { ActionIcon } from '@mantine/core';
+import { CustomSwitch } from '../customSwitch/CustomSwitch';
 import { EmptyTaskModal } from '../EmptytTaskModals/EmptyTaskModal';
+import { IconArchive } from '@tabler/icons-react';
 import ListViewSingle from './ListViewSingle';
-// import TaskListSkeleton from './TaskListLoadSkeleton';
 import TaskListLoadSkeleton from './TaskListLoadSkeleton';
 import classes from './list.module.css'
 import {useAppState} from '../../store/AppState.jsx'
@@ -26,6 +27,7 @@ interface Task {
     time_to_complete: string;
     order: number;
     project?: string;
+    number?: string
 }
 
 interface Prop {
@@ -35,14 +37,17 @@ interface Prop {
     onChange?(checked: boolean): void;
     task: Task;
     deleteTask: (task: Task, deleteTask: Task[] | undefined) => void;
+    handleTaskArchive: (task: Task) => void;
     setUpdateForm: (task: Task, toggle: boolean) => void;
 }
 
-const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onChange, deleteTask, setUpdateForm}) => {
+
+const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onChange, deleteTask, setUpdateForm, handleTaskArchive}) => {
   const {state, dispatch} = useAppState()
   const [opened, { open, close }] = useDisclosure(false);
   const [loading, setLoading] = useState(true)
   const [listTasks, setListTasks] = useState(taskObj)
+  const [showArchive, setArchieve] = useState(null)
 
   const toggleFormModule = (task: Task, toggle: boolean) => {
     setUpdateForm(task, toggle)
@@ -50,23 +55,16 @@ const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onC
   
   const handleDeleteTask = (task: Task) => {
     const newTaskObj = listTasks && listTasks.filter((t) => t.id != task.id )
-    setListTasks(newTaskObj)
-    deleteTask(task, listTasks)
+    setListTasks((prevState) => prevState.filter((t) => t.id != task.id ))
+    deleteTask(task, newTaskObj)
   }
+  
+  const handleUpdateTask = (task: Task) => {
+    setListTasks((prevState) => prevState.filter((t) => t.id != task.id ).concat(task))
+    handleTaskArchive(task)
+  }
+  
   const [loadingComponent, setLoadingComponent]: any = useState(true)
-
-  useEffect(() => {
-    if(state.latestTask !== null && listTasks.length > 0 && taskObj.length > 0){
-      let newArr = []
-      listTasks.forEach((item) => item.id !== state.latestTask.id?  newArr.push(item) : '')
-      newArr.push(state.latestTask)
-      // return setListTasks((prevState: Task[] | any) => listTasks.filter((item) => item.id !== state.latestTask.id).push(state.latestTask) || state.latestTask)
-      return setListTasks(newArr)
-    }else{
-      return
-    }
-  }, [state.latestTask])
-
   function chunk<T>(array: T[], size: number): T[][] {
     if (!array.length) {
       return [];
@@ -76,13 +74,20 @@ const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onC
     return [head, ...chunk(tail, size)];
   }
 
+  const listItems = (listTasks, showArchive) => {
+    let sortedList = Array.isArray(listTasks)? listTasks.sort(function(a, b){return a.order-b.order}) : listTasks
+    let showHideArchive = showArchive? sortedList.filter((task) => task.number == null).concat(sortedList) 
+    : sortedList.filter((task) => task.number == showArchive)
+    
+    return showHideArchive
+  }
+
   const data = chunk(
     Array(30)
       .fill(0)
       .map((_, index) => ({ 
         id: index, 
-        task: Array.isArray(listTasks)? 
-          listTasks.sort(function(a, b){return a.order-b.order}) : listTasks
+        task: listItems(listTasks, showArchive)
       })),
     7
   );
@@ -96,29 +101,23 @@ const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onC
         taskStatus={taskStatus} 
         handleDeleteTask={handleDeleteTask}
         toggleFormModule={toggleFormModule}
-        opened={opened}
-        open={open}
-        close={close}
+        handleUpdateTask={handleUpdateTask}
       /> 
   ));
 
-  const taskListRefresh = () => {
-    setListTasks(taskObj)
-    setLoading(!loading)
-    setLoadingComponent(!loadingComponent)
-  }
 
   useEffect(() => {
-    if(loading){
       let loadingDelay = setTimeout(() => {
         if(items){
+          console.log("listViewTask")
           setLoadingComponent(false)
           setLoading(false)
         }
       }, 200)
-      return () => clearTimeout(loadingDelay);
-    }
-  }, [loading])
+      return () => {
+        clearTimeout(loadingDelay)
+      }
+  }, [])
   
   return (
     <div className={`${classes.listTable} w-[99%] m-[auto] h-[] cursor-pointer border border-#D1D1D1 bg-white rounded-md mt-10 mb-5`}>
@@ -127,24 +126,30 @@ const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onC
           verticalSpacing="xs" 
           striped={true}
           withColumnBorders={false}
-          className={`${listTasks && listTasks.length > 2? 'min-h-[250px]' : listTasks && listTasks.length <= 1 && 'min-h-[150px]' }`}
+          className={`${listTasks && listTasks.filter((task) => task.number == null).length > 2? 'min-h-[250px]' : 
+          listTasks && listTasks.filter((task) => task.number == null).length == 1 && 'min-h-[130px]'} 
+            ${listTasks.filter((task) => task.number == null).length < 1 && 'h-[240px]'}`}
         >
           <Table.Thead className="">
-            <Table.Tr className="text-[12px]" fw={600}>
+            <Table.Tr p={'xs'} className="text-[12px]" fw={600}>
               <Table.Th className="">Complete</Table.Th>
-              <Table.Th className="">Order</Table.Th>
               <Table.Th className="">Name</Table.Th>
-              {/* <Table.Th className="flex"><IconArrowsSort size={18} className='mx-1'/>Status</Table.Th> */}
               <Table.Th className="">Status</Table.Th>
               <Table.Th className="">Task Date</Table.Th>
               <Table.Th className="">Start Time - Finsh Time</Table.Th>
               <Table.Th className="">Project</Table.Th>
-              <Table.Th className=""><Button size='xs' onClick={() => taskListRefresh()}>Refresh</Button></Table.Th>
+              <Table.Th className="">
+                <button 
+                  className='!m-[0px] border border-#1C7ED6-500 rounded-[4px] py-[0.4rem] px-3 text-[#fff] font-medium text-[11px] bg-[#1C7ED6]' 
+                  onClick={() => setArchieve((prevState) => prevState === null? "archive" : null)}>
+                    {showArchive? 'Hide' : 'Show'} Archive
+                </button>
+              </Table.Th>
             </Table.Tr>
-          </Table.Thead>{
-              <Table.Tbody className="bg-[#fff] !border-b-2 transition-all delay-100">{ 
-                loadingComponent? <TaskListLoadSkeleton /> : listTasks && listTasks.length > 0? items : <EmptyTaskModal />}
-              </Table.Tbody>}
+          </Table.Thead>
+          <Table.Tbody className="!border-b-2">
+            { loadingComponent? <TaskListLoadSkeleton /> : listTasks && listTasks.length > 0? items : <EmptyTaskModal />}
+          </Table.Tbody>
         </Table>
         <div className='px-3'>
           {!loadingComponent &&
@@ -152,7 +157,8 @@ const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onC
               total={paginationCount} 
               value={activePage} 
               onChange={setPage} 
-              mt="xl" size="xs" 
+              mt="md" 
+              size="xs" 
               color="#228a"
             />
           }

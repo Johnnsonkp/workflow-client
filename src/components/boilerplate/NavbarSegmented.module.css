@@ -1,9 +1,15 @@
 .navbar {
     height: 100%;
     width: 225px;
-    padding: var(--mantine-spacing-md);
+    width: 210px;
+    width: 90%;
+    margin: auto;
+
+    /* padding: var(--mantine-spacing-md); */
+    padding: 4px;
     display: flex;
     flex-direction: column;
+    align-items:center;
   }
   .controller{
     border: 1px solid #e5e7eb;
@@ -11,11 +17,14 @@
 
   .innerSideNav{
     padding-top: 60px;
-    height: 40rem;
+    /* height: 40rem; */
     position: fixed;
     display: flex;
     flex-direction: column;
-    width: 200px;
+    width: 100%;
+    max-width: 190px;
+    margin: auto;
+    /* width: 200px; */
   }
   .navbarMain {
     flex: 1;
@@ -33,7 +42,7 @@
     text-decoration: none;
     font-size: var(--mantine-font-size-sm);
     color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-1));
-    padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+    padding: var(--mantine-spacing-xs) var(--mantine-spacing-xs);
     border-radius: var(--mantine-radius-sm);
     font-weight: 500;
   
@@ -108,6 +117,8 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    position: relative;
+    top: 41vh;
   }
 
   .signOut{
@@ -117,7 +128,7 @@
     flex: 0.75;
   }
   .signOut:hover{
-    background-color: coral;
+    background-color: red;
   }
   .otherBtn{
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;

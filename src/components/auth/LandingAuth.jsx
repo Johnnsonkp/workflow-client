@@ -33,7 +33,7 @@ export function LandingAuth() {
     setUserType(`${userData.user.username || "user"} successfully logged in!`)
     setTimeout(() => {
       navigate("/personal")
-    }, 5000);
+    }, 1000);
   }
 }, [userData])
 

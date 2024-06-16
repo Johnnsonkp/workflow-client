@@ -61,16 +61,17 @@ function CreateTaskForm() {
   }
 
   const handleFormSubmit = async (form: any, userData: any) => {
-
     form.values.start_date = reformatDateInput(startDateValue)
     form.values.time_to_start = convertTo12hrFormat(startTime)
     form.values.time_to_finish = convertTo12hrFormat(finishTime)
     
     const taskActions = await taskFormActions['create']
     taskActions(form.values, userData).then((data: any) => {
-      // console.log("task created", data)
-      storeTask(data, dispatch, "CREATE_TASK" )
-      // storeTask(data, dispatch, "GETTASKS" )
+      console.log("task created", data)
+      // storeTask(data, dispatch, "CREATE_TASK" )
+      // storeTask(data, dispatch, "CREATE_TASK_OBJ" )
+      // storeTask(true, dispatch, "STATE_REFRESH" )
+      dispatch({type: "STATE_REFRESH", payload: true})
     })
   }
 

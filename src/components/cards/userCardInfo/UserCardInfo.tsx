@@ -12,10 +12,11 @@ const mockdata = [
   { label: 'Automatic gearbox', icon: IconManualGearbox },
   { label: 'Electric', icon: IconGasStation },
 ];
-// const {sate, dispatch} = useAppState()
 
 const handleSignOut = () => {
+    alert("Signing out now, goodbye")
     userSignOut('AUTH')
+    window.location.reload()
     // dispatch({type: "LOGGED_OUT"})
 }
 
@@ -44,23 +45,13 @@ export function UserCardInfo({state, user, navigate}) {
         {/* <Badge variant="outline">25% off</Badge> */}
       </Group>
 
-      {/* <Card.Section className={classes.section} mt="md">
-        <Text fz="sm" c="dimmed" className={classes.label}>
-          Basic configuration
-        </Text>
-
-        <Group gap={8} mb={-8}>
-          {features}
-        </Group>
-      </Card.Section> */}
-
       <Card.Section className={classes.section}>
-        <Group gap={10}>
-          {/* <div>
-            <Button onClick={ () => handleSignOut()} radius="sm" style={{ flex: 1 }}>
+        <Group gap={4}>
+          <div>
+            <Button bg={'red'} onClick={ () => handleSignOut()} radius="sm" style={{ flex: 1 }}>
                 Signout
             </Button>
-          </div> */}
+          </div>
 
           <Button onClick={() => navigate("/personal")} radius="sm" style={{ flex: 1 }}>
             Back to work

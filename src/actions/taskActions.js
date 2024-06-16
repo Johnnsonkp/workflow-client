@@ -18,6 +18,7 @@ export const taskFormActions = ({
             description: formData.description,
             status: formData.status,
             order: formData.order,
+            number: formData.number || null,
             start_date: formData.start_date,
             time_to_start: formData.time_to_start,
             time_to_finish: formData.time_to_finish,
@@ -59,6 +60,8 @@ export const taskFormActions = ({
     },
 
     update: (formData, userData, taskID) => {
+      console.log("update formData", formData)
+      
       return fetch(baseURL + `/tasks/${taskID}`, {
       // return fetch("workflow-rails-api-production.up.railway.app" + `/tasks/${taskID}`, {
         method: "put",
@@ -72,6 +75,7 @@ export const taskFormActions = ({
           description: formData.description,
           status: formData.status,
           order: formData.order,
+          number: formData.number,
           start_date: formData.start_date,
           time_to_start: formData.time_to_start,
           time_to_finish: formData.time_to_finish,
@@ -84,6 +88,7 @@ export const taskFormActions = ({
         if (data.error) {
           alert(data.error);
         } else {
+          console.log("task updated", data)
           return data
         }
       });
@@ -113,17 +118,18 @@ export const taskFormActions = ({
 })
 
 export const storeTask = (data, dispatch, action) => {
-      if(data){
+      if(data && dispatch){
         dispatch({ type: action, payload: {
           id: data.id,
           title: data.title,
           description: data.description,
+          number: data.number,
           status: data.status,
           order: data.order,
           start_date: data.start_date,
           time_to_start: data.time_to_start,
           time_to_finish: data.time_to_finish,
-          user_id: data.user_id
+          // user_id: data.user_id
         }})
 
         dispatch({type: "STATE_REFRESH", payload: true})

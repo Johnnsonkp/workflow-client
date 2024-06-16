@@ -24,18 +24,9 @@ const initialState = {
         email: ''
     },
     darkTheme: false, 
-    // tasks: [{
-    //     title: "",
-    //     description: "",
-    //     status: "",
-    //     project: "",
-    //     order: 1,
-    //     start_date: "",
-    //     time_to_start: "",
-    //     time_to_finish: ""
-    // }],
     tasks: null,
     latestTask: null,
+    deletedTask: null,
     refreshState: false
 }
 

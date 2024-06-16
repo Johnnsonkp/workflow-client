@@ -1,7 +1,7 @@
 .card {
     background-color: var(--mantine-color-body);
-    max-width: 200px;
-    max-height: 360px;
+    max-width: 270px;
+    max-height: 400px;
   }
   
   .imageSection {
