@@ -1,7 +1,12 @@
-import { Avatar, Container, Overlay, SimpleGrid, Text, Title, UnstyledButton } from '@mantine/core';
+import { Avatar, Button, Container, Overlay, SimpleGrid, Text, Title, UnstyledButton } from '@mantine/core';
+import React, {useState} from 'react';
 
 import { ContactIconsList } from './ContactIcons';
 import classes from './FaqWithHeader.module.css';
+import displayPic from '../../assets/aboutPic.png'
+import { getItemFromLocalStorage } from '../../utils/localstorage';
+import { useAppState } from '../../store/AppState';
+import { userFormActions } from '../../actions/userActions';
 
 const categories = [
   {
@@ -22,6 +27,15 @@ const categories = [
 ];
 
 export function FaqWithHeader() {
+  const {state} = useAppState()
+  const LSdata = getItemFromLocalStorage('AUTH')
+  const [sessionInfo, setSessionInfo] = useState({
+    id: '',
+    username: '',
+    email: '',
+    password_digest: ''
+  })
+
   const items = categories.map((category) => (
     <UnstyledButton
       style={{ backgroundImage: `url(${category.image})` }}
@@ -34,6 +48,15 @@ export function FaqWithHeader() {
       </Text>
     </UnstyledButton>
   ));
+
+  const displayUserInfo = async (LSdata) => {
+    const loadUserInfo = userFormActions['show']
+    const userData = await loadUserInfo(LSdata)
+
+    console.log("userData", userData)
+    setSessionInfo(userData)
+  }
+  
 
   return (
     <Container className={classes.wrapper} size="lg">
@@ -48,17 +71,33 @@ export function FaqWithHeader() {
         <div className={classes.contact}>
           <div className='flex justify-between mb-4'>
             <Text size="xl" fw={500} className={classes.contactTitle}>
-            About
+              About
             </Text>
-            <Avatar className='border border-red-500 !p-14'></Avatar>
+            <Avatar className={classes.pic} size={'xl'} src={displayPic} />
           </div>
           <hr className='mb-4'></hr>
 
           <ContactIconsList />
         </div>
       </div>
+      
 
-      <SimpleGrid cols={{ base: 1, sm: 3 }}>{items}</SimpleGrid>
+      {/* <SimpleGrid cols={{ base: 1, sm: 3 }}>{items}</SimpleGrid> */}
+      <SimpleGrid cols={{ base: 1, sm: 3 }}>
+        <Button onClick={() => displayUserInfo(LSdata)}>Load User Info</Button>
+
+        <div className='border border-gray-400 p-3 rounded-sm w-[700px]'>
+          {
+            sessionInfo && 
+              <>
+                <div>ID: {sessionInfo.id}</div>
+                <div>Username: {sessionInfo.username}</div>
+                <div>Email: {sessionInfo.email}</div>
+                <div>Password: {sessionInfo.password_digest}</div>
+              </>
+          }
+        </div>
+      </SimpleGrid>
     </Container>
   );
 }

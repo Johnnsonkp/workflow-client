@@ -44,6 +44,30 @@ export const userFormActions = ({
         }
       });
     },
+
+    show: (formData) => {
+      console.log("formData", formData)
+
+      return fetch(baseURL + `users/${formData.user_id}`, {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+				  Authorization: formData.token
+        }
+      }).then((response) => {
+        return response.json()
+      })
+      .then((data) => {
+        if (data.error) {
+          alert(data.error);
+        } else {
+
+          console.log("show route", data)
+          return data
+        }
+      });
+    },
 })
 
 export const storeUserData = (data, dispatch, action) => {

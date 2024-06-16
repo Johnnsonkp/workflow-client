@@ -6,6 +6,8 @@ const baseURL = import.meta.env.VITE_API_KEY
 export const taskFormActions = ({
     create: (formData, userData) => {  
         // return fetch("http://localhost:3000" + "/tasks", {
+
+        console.log("userData", userData)
         return fetch(baseURL + "tasks", {
           method: "post",
           headers: {

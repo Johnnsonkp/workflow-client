@@ -20,3 +20,7 @@
   .description {
     color: var(--mantine-color-black);
   }
+
+  .pic{
+    width: 100px !important;
+  }
