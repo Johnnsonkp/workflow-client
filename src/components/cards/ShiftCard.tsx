@@ -40,11 +40,11 @@ const ShiftCard: React.FC<Props>  = ({obj, todaysDate, toggleDelete, setToggleDe
     // ${obj?.date === todaysDate? '!bg-[#D2F8D9] !border-green-500' : "bg-[#F9F9FB] border-gray-200"}`}
 
     return (
-        obj.task && obj.task?.length > 0? obj.task?.map((task: any, index) => (
+        Array.isArray(obj.task) && obj.task?.length > 0? obj.task?.map((task: any, index) => (
             <div key={index + task.title} 
                 className={`relative cursor-pointer border ${task ? 'border-gray-300' : 'border-gray-200'} flex-col mt-2 text-[12px] h-[120px] w-28 rounded-md  p-1 
                     ${obj?.date === todaysDate? 'bg-[#DBEAFE] border-[#60A5FA]' : "bg-[#F9F9FB] border-gray-200"}
-                    ${task.status == 'complete' && 'bg-[#D2F8D9] !border-green-500' }`
+                    ${task.status == 'complete' && '!bg-[#D2F8D9] !border-green-500' }`
                 }
             >
                 <div className='flex-col align-middle'>

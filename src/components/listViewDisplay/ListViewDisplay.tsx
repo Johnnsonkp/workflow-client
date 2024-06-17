@@ -76,8 +76,12 @@ const ListViewDisplay: React.FC<Prop> = ({ taskObj, checked, defaultChecked, onC
 
   const listItems = (listTasks, showArchive) => {
     let sortedList = Array.isArray(listTasks)? listTasks.sort(function(a, b){return a.order-b.order}) : listTasks
-    let showHideArchive = showArchive? sortedList.filter((task) => task.number == null).concat(sortedList) 
-    : sortedList.filter((task) => task.number == showArchive)
+
+    let archiveTasks = sortedList.filter((task) => task.number == 'archive')
+    let nonArchiveTasks = sortedList.filter((task) => task.number !== 'archive')
+
+    let showHideArchive = showArchive? archiveTasks.concat(nonArchiveTasks) 
+    : nonArchiveTasks
     
     return showHideArchive
   }

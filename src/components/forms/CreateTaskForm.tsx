@@ -68,9 +68,6 @@ function CreateTaskForm() {
     const taskActions = await taskFormActions['create']
     taskActions(form.values, userData).then((data: any) => {
       console.log("task created", data)
-      // storeTask(data, dispatch, "CREATE_TASK" )
-      // storeTask(data, dispatch, "CREATE_TASK_OBJ" )
-      // storeTask(true, dispatch, "STATE_REFRESH" )
       dispatch({type: "STATE_REFRESH", payload: true})
     })
   }
@@ -152,7 +149,6 @@ function CreateTaskForm() {
         </SimpleGrid>
 
         <SimpleGrid cols={{ base: 1, sm: 1 }} spacing={1} mt="">
-          
           <label 
             className={`m_8fdc1311 mantine-InputWrapper-label mantine-TextInput-label mt-1 ${classes.customInputLabel}`}
             >Finish Time
@@ -166,17 +162,26 @@ function CreateTaskForm() {
         </SimpleGrid>
         
       </SimpleGrid>
-      <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
+      <SimpleGrid cols={{ base: 6, sm: 2, md: 2 }} mt="lg" w={'80%'}>
         <Select
             label="Status"
             placeholder="todo"
             name="status"
             variant="filled"
             data={['todo', 'inprogress', 'complete', 'due']}
-            size='md'
+            size='sm'
             defaultValue='todo'
 
             {...form.getInputProps('status')}
+        />
+
+        <Select
+          label="User ID"
+          variant="filled"
+          size='sm'
+          disabled
+          placeholder={`${state.user.user_id || 'User not found'}`}
+          defaultValue={`${state.user.user_id || 'User not found'}`}
         />
       </SimpleGrid>
       

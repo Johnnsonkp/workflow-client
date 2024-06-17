@@ -109,14 +109,15 @@ function UpdateTaskForm({task}) {
           size='md'
           {...form.getInputProps('title')}
         />
-         <NumberInput
-            {...form.getInputProps('order')}
-            key={form.key('order')}
-            label="Order"
-            placeholder={taskValuePresence('order')}
-            defaultValue={taskValuePresence('order')}
-            variant="filled"
-            size='md'
+        <NumberInput
+          {...form.getInputProps('order')}
+          key={form.key('order')}
+          label="Order"
+          placeholder={taskValuePresence('order')}
+          defaultValue={taskValuePresence('order')}
+          variant="filled"
+          size='md'
+          min={0}
         />
       </SimpleGrid>
       <Textarea
@@ -133,7 +134,6 @@ function UpdateTaskForm({task}) {
         {...form.getInputProps('description')}
       />
       <SimpleGrid cols={{ base: 3, sm: 3 }} mt="md">
-      {/* .replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1') */}
         <SimpleGrid cols={{ base: 1, sm: 1 }} spacing={1} mt="">
           <label 
             className={`m_8fdc1311 mantine-InputWrapper-label mantine-TextInput-label mt-1 ${classes.customInputLabel}`}
@@ -174,22 +174,29 @@ function UpdateTaskForm({task}) {
             variant="filled" 
             ref={ref} 
             defaultValue={rxNewDate}
-            // value={taskValuePresence('time_to_finish')}
           />
         </SimpleGrid>
         
       </SimpleGrid>
-      <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
+      <SimpleGrid cols={{ base: 6, sm: 2, md: 2 }} mt="lg" w={'80%'}>
         <Select
             label="Status"
             placeholder={taskValuePresence('status')}
             name="status"
             variant="filled"
             data={['todo', 'inprogress', 'complete', 'due']}
-            size='md'
+            size='sm'
             value={value}
             defaultValue={taskValuePresence('status')}
             {...form.getInputProps('status')}
+        />
+        <Select
+          label="User ID"
+          variant="filled"
+          size='sm'
+          disabled
+          placeholder={`${state.user.user_id || 'User not found'}`}
+          defaultValue={`${state.user.user_id || 'User not found'}`}
         />
       </SimpleGrid>
       
