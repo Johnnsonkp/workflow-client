@@ -39,8 +39,10 @@ interface DateObj {
 
 const AddTaskToDateDisplay = (DateDisplay: DateObj[], taskObj: Task[]) => {
     DateDisplay.forEach((dateObj) => {
+      let counter = Array.isArray(taskObj) && taskObj.length > 0? taskObj.length : 0
+
       dateObj['task'] = []
-      for(let i=0; i < taskObj.length; i++){
+      for(let i=0; i < counter; i++){
         if(taskObj[i].start_date){
 
           if(taskObj[i].start_date.charAt(0) === '0'){
