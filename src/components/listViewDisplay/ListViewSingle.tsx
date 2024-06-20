@@ -45,6 +45,7 @@ const emptyTask: Task = {
 
 const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, handleUpdateTask}) => {
   const taskObj: Task = task || emptyTask
+  const {state} = useAppState()
   const toggleTaskArchive = (task) => {
     task.number = !task.number && "archive" || task.number && null
     const updatedTask = task
@@ -52,14 +53,15 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
     handleUpdateTask(updatedTask)
   }
 
+  console.log("task", task)
   return <>
     <Table.Tr 
       key={task?.id} 
       className={`hover:!bg-[#f4f4f4] border border-gray-50 ${taskObj.title == "" && 'h-[50px]'}
         rounded-lg ${taskObj?.status === 'complete'? classes.taskList : classes.defaultTaskList }`}
     >
-      {taskObj.title !== "" &&  
-      <>
+      {/* {taskObj.title !== "" &&  
+      <> */}
       <Table.Td className='w-1 m-auto'>
         <Group gap="[0px]">
           {taskObj.status === 'complete'? 
@@ -75,6 +77,7 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
 
       <Table.Td className='w-[35%]'onClick={() => toggleFormModule( {task: task, toggle: true})}>
         <Group gap="" className='min-w-64'>
+          <Text fz="xs" className='!text-[red]'>{state && state?.user?.user_id}</Text>
           <Text fz="xs">{taskObj.order}</Text>
           <Text fz="xs" fw={500} className=''>
           {taskObj.title}
@@ -137,8 +140,8 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
           </ActionIcon>
         </Group>
       </Table.Td>
-      </>
-    }
+      {/* </> */}
+    {/* } */}
     </Table.Tr>
   </>
 }

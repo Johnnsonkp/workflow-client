@@ -48,7 +48,8 @@ export const userFormActions = ({
     show: (formData) => {
       console.log("formData", formData)
 
-      return fetch(baseURL + `users/${formData.user_id}`, {
+      // return fetch(baseURL + `users/${formData.user_id}`, {
+      return fetch(baseURL + `authorized`, {
         method: "get",
         headers: {
           "Content-Type": "application/json",

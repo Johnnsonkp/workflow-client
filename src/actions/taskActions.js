@@ -121,6 +121,8 @@ export const taskFormActions = ({
 
 export const storeTask = (data, dispatch, action) => {
       if(data && dispatch){
+        console.log("data", data) 
+        
         dispatch({ type: action, payload: {
           id: data.id,
           title: data.title,

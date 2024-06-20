@@ -24,7 +24,7 @@
     width: 100%;
     max-width: 190px;
     margin: auto;
-    /* width: 200px; */
+    /* height: 100%; */
   }
   .navbarMain {
     flex: 1;
@@ -117,8 +117,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    position: relative;
-    top: 41vh;
+    margin-top: 290px;
   }
 
   .signOut{
