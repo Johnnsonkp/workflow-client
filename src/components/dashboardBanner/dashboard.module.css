@@ -51,7 +51,7 @@
 }
   
   .defaultCarousel {
-    transition: all 2s linear;
+    /* transition: all 2s linear; */
   }
 
 .innerCard{
@@ -60,4 +60,15 @@
     background: #B993D6;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #8CA6DB, #B993D6);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #8CA6DB, #B993D6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.tab{
+    /* background-color: #F9FAFA; */
+    background-color: lightgray;
+    color: #333;
+    min-width: 50px;
+    max-width: 100px;
+    padding: 0px 5px;
+    /* border: 1px solid #F9FAFA; */
+    border-radius: 3px;
+    cursor: pointer;
 }

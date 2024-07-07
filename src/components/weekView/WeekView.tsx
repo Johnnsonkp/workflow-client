@@ -1,4 +1,5 @@
 import { Container, Grid, SimpleGrid, Skeleton, rem } from '@mantine/core';
+import { DateObj, Task } from '../../types/GlobalTypes.js';
 import React, {useEffect, useState} from 'react'
 
 import { CustomCalendar } from '../calendar/customerCalendar.js';
@@ -11,26 +12,7 @@ import WeekViewTab from './WeekViewTab.js';
 import {calculateWeek} from '../../utils/dateUtills.js';
 import { useAppState } from '../../store/AppState.jsx';
 
-interface Task {
-    title: string;
-    description: string;
-    time_to_start: string;
-    status: string;
-    time_to_complete: string;
-    order: number;
-    start_date: string;
-    project?: string;
-}
-interface DateObj {
-    day: string;
-    date: number;
-    month: string;
-    year: number;
-    full_date?: string | undefined;
-    task?: Task[] | undefined;
- }
-
- interface Props {
+interface Props {
     dateObj: DateObj;
     taskObj: Task[] | undefined;
     todaysDate: number;
@@ -96,10 +78,8 @@ const WeekView: React.FC<Props> = ({taskObj, dateObj, deleteTask}) => {
     if (mm < 10) mm = 0 + mm;
     var formattedToday = mm + '/' + dd + '/' + yyyy;
     const DateDisplay = GetDays(formattedToday, days, months)
-    // const dateDisplayObjWithTask = AddTaskToDateDisplay(DateDisplay, taskObj)
     const dateDisplayObjWithTask = AddTaskToDateDisplay(DateDisplay, stateTasks)
 
-    let taskCounter = 0
     const [toggleDelete, setToggleDelete] = useState({
       task: undefined,
       toggle: false
@@ -117,7 +97,7 @@ const WeekView: React.FC<Props> = ({taskObj, dateObj, deleteTask}) => {
     }, [toggleDelete])
 
     return (
-      <>
+      <div className='min-h-[70vh]'>
         <TopTabs dateDisplayObjWithTask={dateDisplayObjWithTask}/>
           <Grid w={'100%'} className=''>
             <Grid.Col span={{ base: 12, xs: 9.2}} className='overflow-hidden mr-4'>
@@ -141,7 +121,7 @@ const WeekView: React.FC<Props> = ({taskObj, dateObj, deleteTask}) => {
               <Skeleton height={PRIMARY_COL_HEIGHT} radius="md" animate={true} />}
             </Grid.Col>
           </Grid>
-      </>
+      </div>
     )
   }
 

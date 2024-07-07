@@ -2,35 +2,14 @@ import { ActionIcon, Badge, Button, Group, Modal, Table, Text, ThemeIcon, rem } 
 import { IconArchive, IconCalendar, IconPencil, IconTrash } from '@tabler/icons-react';
 import { IconCircleCheck, IconCircleDashed, IconCircleFilled, IconTimeDuration0 } from '@tabler/icons-react';
 
+import ListActionsComp from './ListActionsComp';
 import React from 'react'
+import { Task } from '../../types/GlobalTypes';
+import TaskListLoadSkeleton from './TaskListLoadSkeleton';
 import classes from './list.module.css'
 import { taskFormActions } from '../../actions/taskActions';
 import { useAppState } from '../../store/AppState';
-import { useDisclosure } from '@mantine/hooks';
 
-// ody: JSON.stringify({
-//   title: formData.title,
-//   description: formData.description,
-//   status: formData.status,
-//   order: formData.order,
-//   start_date: formData.start_date,
-//   time_to_start: formData.time_to_start,
-//   time_to_finish: formData.time_to_finish,
-//   user_id: userData.user_id
-// })
-
-interface Task {
-  id?: number;
-  title: string;
-  description: string;
-  time_to_start: string;
-  status: string;
-  time_to_finish: string;
-  start_date: string;
-  order: number;
-  project?: string;
-  number? : number;
-}
 const emptyTask: Task = {
   title: '',
   status: '',
@@ -41,27 +20,22 @@ const emptyTask: Task = {
   time_to_finish: '',
 }
 
-
-
 const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, handleUpdateTask}) => {
   const taskObj: Task = task || emptyTask
   const {state} = useAppState()
+  
   const toggleTaskArchive = (task) => {
     task.number = !task.number && "archive" || task.number && null
     const updatedTask = task
-
     handleUpdateTask(updatedTask)
   }
 
-  console.log("task", task)
-  return <>
+  return <> 
     <Table.Tr 
       key={task?.id} 
       className={`hover:!bg-[#f4f4f4] border border-gray-50 ${taskObj.title == "" && 'h-[50px]'}
         rounded-lg ${taskObj?.status === 'complete'? classes.taskList : classes.defaultTaskList }`}
     >
-      {/* {taskObj.title !== "" &&  
-      <> */}
       <Table.Td className='w-1 m-auto'>
         <Group gap="[0px]">
           {taskObj.status === 'complete'? 
@@ -77,7 +51,6 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
 
       <Table.Td className='w-[35%]'onClick={() => toggleFormModule( {task: task, toggle: true})}>
         <Group gap="" className='min-w-64'>
-          <Text fz="xs" className='!text-[red]'>{state && state?.user?.user_id}</Text>
           <Text fz="xs">{taskObj.order}</Text>
           <Text fz="xs" fw={500} className=''>
           {taskObj.title}
@@ -85,16 +58,20 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
         </Group>
       </Table.Td>
 
-      <Table.Td className='w-10'
+      <Table.Td 
+        className='w-10'
         onClick={() => toggleFormModule( {task: taskObj, toggle: true})}
       > 
         <Badge color={'black'} variant="light" className='!flex '>
-          <div className='!flex !justify-between !align-middle'>
+          <ThemeIcon bg="transparent" variant='light' w={'100%'} className='!flex !justify-between !align-middle'>
             <ThemeIcon color={taskStatus[taskObj.status]} size={15} radius="xl" variant="light">
               <IconCircleFilled color="transparent" style={{ width: rem(13), height: rem(8) }} /> 
             </ThemeIcon>
-            <Text fw={600} className='!text-[9px] !px-1 '>{taskObj.status}</Text>
-          </div>
+            <Text fw={600} 
+              className={`!text-[9px] !px-1 !text-[#333]`}>
+                {taskObj.status}
+              </Text>
+          </ThemeIcon>
         </Badge>
       </Table.Td>
 
@@ -102,10 +79,11 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
         onClick={() => toggleFormModule( {task: taskObj, toggle: true})}
       >
         <Badge color={'black'} variant="light">
-          <div className='!flex !justify-between !align-middle'>
+          <ThemeIcon bg="transparent" variant='light' w={'100%'} 
+          className='!flex !justify-between !align-middle'>
             <IconCalendar size={15} style={{ marginRight: rem(2) }}/>
-            <Text fw={600} className='!text-[10px]'>{taskObj?.start_date}</Text>
-          </div>
+            <Text fw={600} className='!text-[10px] !text-[#111]'>{taskObj?.start_date}</Text>
+          </ThemeIcon>
         </Badge>
       </Table.Td>
 
@@ -114,10 +92,11 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
         onClick={() => toggleFormModule( {task: taskObj, toggle: true})}
       >
         <Badge color={'black'} variant="light">
-          <div className='!flex !justify-between !align-middle'>
+        <ThemeIcon bg="transparent" variant='light' w={'100%'} 
+          className='!flex !justify-between !align-middle'>
             <IconTimeDuration0 size={15} style={{ marginRight: rem(2) }}/>
-            <Text fw={600} className='!text-[10px]'>{taskObj?.time_to_start} - {taskObj?.time_to_finish || taskObj.time_to_start}</Text>
-          </div>
+            <Text fw={600} className='!text-[10px] !text-[#111]'>{taskObj?.time_to_start} - {taskObj?.time_to_finish || taskObj.time_to_start}</Text>
+          </ThemeIcon>
         </Badge>
       </Table.Td>
 
@@ -125,23 +104,12 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
         <Text fz="xs">General Task</Text>
       </Table.Td>
       
-      <Table.Td className='w-13'>
-        <Group gap={0} justify="flex-end">
-          <ActionIcon onClick={() => toggleTaskArchive(task)} variant="subtle" 
-            color={`${task.number? 'blue' : 'gray'}`}>
-            <IconArchive style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-          </ActionIcon>
-          <ActionIcon variant="subtle" color="gray">
-            <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-          </ActionIcon>
-          {/* <ActionIcon variant="subtle" color="red" onClick={open} > */}
-          <ActionIcon variant="subtle" color="red" onClick={() => handleDeleteTask(taskObj)} >
-            <IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-          </ActionIcon>
-        </Group>
-      </Table.Td>
-      {/* </> */}
-    {/* } */}
+      <ListActionsComp 
+        taskObj={taskObj}
+        task={task}
+        toggleTaskArchive={toggleTaskArchive}
+        handleDeleteTask={handleDeleteTask}
+      />
     </Table.Tr>
   </>
 }

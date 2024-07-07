@@ -27,11 +27,9 @@ function PersonalLanding() {
   const [togglePannel, setTogglePanel] = useState('')
   const {state, dispatch} = useAppState()
   const [taskObj, setTaskObj] = useState(state.tasks || [])
-  // const [taskObj, setTaskObj] = useState([])
   const [formValue, setFormValue] = useState([])
   const [toggleForm, setToggleForm] = useState(false)
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [opened, { open, close }] = useDisclosure(false);
   const [openedUpdateForm, { openUpdateForm, closeUpdateForm }] = useDisclosure(false);
   const [openForm, setOpenForm] = useState(close)
@@ -42,41 +40,44 @@ function PersonalLanding() {
     toggle: false
   })
   
-  const initialTaskLoad = useCallback(() => {
-    if(loading && !taskObj.length && state.tasks){
-      console.log("loading", loading)
-      setTaskObj(state.tasks);
-      // setLoading(false)
-    }
-    return () => {setLoading(false)} 
-  }, [loading])
+  // const initialTaskLoad = useCallback(() => {
+  //   if(loading && !taskObj.length && state.tasks){
+  //     console.log("loading", loading)
+  //     setTaskObj(state.tasks);
+  //     // setLoading(false)
+  //   }
+  //   return () => {setLoading(false)} 
+  // }, [loading])
 
-  useEffect( () => {
-    (async () => {
-      if(state.refreshState){
-        console.log("state_refresh", state.refreshState)
+  // useEffect( () => {
+  //   (async () => {
+  //     if(state.refreshState){
+  //       console.log("state_refresh", state.refreshState)
         
-        const taskActions = await taskFormActions['get']
-        const taskRefreshed = await taskActions(userData)
+  //       const taskActions = await taskFormActions['get']
+  //       const taskRefreshed = await taskActions(userData)
 
-        setTaskObj(taskRefreshed);
-        dispatch({type: "ALL_TASK", payload: taskRefreshed})
-        dispatch({type: "STATE_REFRESH", payload: false})
-      }
-    })();
-    return () => {}
-  }, [state.refreshState, taskObj])
+  //       setTaskObj(taskRefreshed);
+  //       dispatch({type: "ALL_TASK", payload: taskRefreshed})
+  //       dispatch({type: "STATE_REFRESH", payload: false})
+  //     }
+  //   })();
+  //   return () => {}
+  // }, [state.refreshState, taskObj])
 
-  useEffect(() => {
-    initialTaskLoad()
-  }, [])
+  // useEffect(() => {
+  //   initialTaskLoad()
+  // }, [])
+
+  // useEffect(() => {
+  //   setTaskObj(state.tasks || [])
+  // }, [taskObj])
 
   const deleteTask =  async (taskToDelete, taskObj) => {
     const deleteTaskAction = await taskFormActions['delete']
-      deleteTaskAction(userData, taskToDelete.id).then((data) => {
-        console.log("taskActions data state.user_id", taskToDelete)
-        setTaskObj((prevState) => prevState.filter((t) => t.id != taskToDelete.id ))
-      })
+    deleteTaskAction(userData, taskToDelete.id)
+    setTaskObj((prevState) => prevState.filter((t) => t.id != taskToDelete.id ))
+    dispatch({type: "STATE_REFRESH", payload: true})
   }
 
   const handleTaskArchive = async (taskToUpdate) => {
@@ -124,7 +125,7 @@ function PersonalLanding() {
 
   return (
     <DefaultContainer className='relative !overflow-hidden'>
-      <DefaultContainer className={`${toggleForm? "h-[100vh]" : ""} !shadow-md`}>
+      <DefaultContainer className={`${toggleForm? "h-[100vh]" : ""} !shadow-md max-w-[1400px]`}>
         <InnerTopNav setTogglePanel={setTogglePanel}/>
         {taskPanel === 'list' && <DashboardBannerCards taskObj={taskObj}/> }
         <DashboardDisplay />

@@ -23,6 +23,7 @@ const initialState = {
         username: '',
         email: ''
     },
+    standup: '',
     darkTheme: false, 
     tasks: null,
     latestTask: null,
@@ -38,6 +39,10 @@ export const reducer = (state, action) => {
     const {type, payload} = action
     
     switch(action.type){
+        case "LATEST_STAND_UP":
+            newState = {...state, standup: action.payload}
+            return newState
+            break;
         case "DARK_THEME":
             newState = {...state, darkTheme: action.payload}
             return newState

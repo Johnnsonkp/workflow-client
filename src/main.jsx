@@ -12,6 +12,7 @@ import Landing from './pages/Landing.jsx';
 import PageBoilerPlate from './components/boilerplate/Boilerplate.jsx';
 import PersonalLanding from './pages/PersonalLanding.jsx';
 import ReactDOM from 'react-dom/client'
+import StandupPage from './pages/StandupPage';
 import UserXP from './pages/UserXP';
 import WorkLanding from './pages/WorkLanding.jsx';
 
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/userxp",
     element: <PageBoilerPlate component={<UserXP />} />,
+  },
+  {
+    path: "/standups",
+    element: <PageBoilerPlate component={<StandupPage />} />,
   },
   {
     path: "/about",

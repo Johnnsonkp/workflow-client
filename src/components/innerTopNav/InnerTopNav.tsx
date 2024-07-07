@@ -43,7 +43,7 @@ const InnerTopNav: React.FC<Props> = ({ setTogglePanel, data, value}) => {
         <div className='flex !align-middle w-80 '>
           <Text className='flex align-middle my-[auto]'><IconDashboard className='my-[auto]' color='gray'/> </Text>
           <Text fz="xl" fw={400} px={'3'} className=' font-semibold' >Dashboard</Text>
-          <SingleDate />
+          <SingleDate fz={'sm'}/>
         </div>
 
         <SegmentedControl

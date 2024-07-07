@@ -43,14 +43,14 @@ function UpdateTaskForm({task}) {
   const [startTime, setStartTime] = useState<any>(null)
   const [finishTime, setFinishTime] = useState<any>(null)
   const [hhMinute, setHhMinute] = useState<Date | string | undefined>(null)
-  const navigate = useNavigate()
   const userData = getItemFromLocalStorage('AUTH')
   let newDate = new Date();
   let newDateString = getDateTimeValue(newDate)
   const ref = useRef<HTMLInputElement>(null);
   const {state, dispatch} = useAppState()
 
-  let rxNewDate = taskValuePresence('time_to_start')
+  let rxNewDate = taskValuePresence('time_to_start').replace('AM', '').replace('PM', '').trim()
+  let timeToFinish = taskValuePresence('time_to_finish').replace('AM', '').replace('PM', '').trim()
   
   const convertTo12hrFormat = (timeValue: string) => {
     let firstValue = timeValue.charAt(0)
@@ -59,11 +59,11 @@ function UpdateTaskForm({task}) {
     let timeValueToNumber = Number(firstSecondValue)
 
     if(timeValueToNumber > 12){
-        let timeDiff = timeValueToNumber - 12
-        let timeFormated = timeDiff < 10 ? ('0' + timeDiff) : timeDiff
+      let timeDiff = timeValueToNumber - 12
+      let timeFormated = timeDiff < 10 ? ('0' + timeDiff) : timeDiff
 
-        let newTime = timeFormated.toString() + timeValue.charAt(2) + timeValue.charAt(3) + timeValue.charAt(4) + ' PM'
-        return newTime
+      let newTime = timeFormated.toString() + timeValue.charAt(2) + timeValue.charAt(3) + timeValue.charAt(4) + ' PM'
+      return newTime
     }
     return timeValue + " AM"
   }
@@ -71,16 +71,14 @@ function UpdateTaskForm({task}) {
 
   const handleFormSubmit = (form: any, userData: any) => {
     form.values.start_date = reformatDateInput(value)
-    form.values.time_to_start = convertTo12hrFormat(startTime)
-    form.values.time_to_finish = convertTo12hrFormat(finishTime)
+    form.values.time_to_start = convertTo12hrFormat(startTime || rxNewDate)
+    form.values.time_to_finish = convertTo12hrFormat(finishTime || timeToFinish)
     
     const taskActions = taskFormActions['update']
 
     taskActions(form.values, userData, taskValuePresence('id')).then((data: any) => {
       console.log("taskActions data state.user_id", data)
-      storeTask(data, dispatch, "CREATE_TASK" )
-      // dispatch({type: "STATE_REFRESH", payload: true})
-      // navigate('/personal')
+      dispatch({type: "STATE_REFRESH", payload: true})
     })
   }
 
@@ -173,7 +171,7 @@ function UpdateTaskForm({task}) {
             onChange={(e) => setFinishTime(e.target.value)}
             variant="filled" 
             ref={ref} 
-            defaultValue={rxNewDate}
+            defaultValue={timeToFinish}
           />
         </SimpleGrid>
         
@@ -186,7 +184,7 @@ function UpdateTaskForm({task}) {
             variant="filled"
             data={['todo', 'inprogress', 'complete', 'due']}
             size='sm'
-            value={value}
+            // value={value}
             defaultValue={taskValuePresence('status')}
             {...form.getInputProps('status')}
         />

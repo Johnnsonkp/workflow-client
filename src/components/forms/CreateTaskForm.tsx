@@ -104,6 +104,8 @@ function CreateTaskForm() {
             placeholder="Order"
             variant="filled"
             size='md'
+            min={0}
+            value={1}
         />
       </SimpleGrid>
       <Textarea
@@ -165,13 +167,13 @@ function CreateTaskForm() {
       <SimpleGrid cols={{ base: 6, sm: 2, md: 2 }} mt="lg" w={'80%'}>
         <Select
             label="Status"
-            placeholder="todo"
             name="status"
             variant="filled"
             data={['todo', 'inprogress', 'complete', 'due']}
             size='sm'
-            defaultValue='todo'
-
+            // searchValue='todo'
+            value='todo'
+            defaultSearchValue='todo'
             {...form.getInputProps('status')}
         />
 
