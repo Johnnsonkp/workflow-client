@@ -77,7 +77,7 @@ function PersonalLanding() {
     const deleteTaskAction = await taskFormActions['delete']
     deleteTaskAction(userData, taskToDelete.id)
     setTaskObj((prevState) => prevState.filter((t) => t.id != taskToDelete.id ))
-    dispatch({type: "STATE_REFRESH", payload: true})
+    // dispatch({type: "STATE_REFRESH", payload: true})
   }
 
   const handleTaskArchive = async (taskToUpdate) => {
