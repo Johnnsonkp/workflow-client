@@ -113,6 +113,7 @@ function UpdateTaskForm({task}) {
           label="Order"
           placeholder={taskValuePresence('order')}
           defaultValue={taskValuePresence('order')}
+          value={taskValuePresence('order')}
           variant="filled"
           size='md'
           min={0}
@@ -143,7 +144,7 @@ function UpdateTaskForm({task}) {
               name="effective-date"
               pattern="\d{4}-\d{2}-\d{2}"
               defaultValue={rxDateFm}
-              value={rxDateFm}
+              value={value || rxDateFm}
               className='bg-[#F1F3F5] rounded-md text-[12px] px-3 h-8 '
           />
           

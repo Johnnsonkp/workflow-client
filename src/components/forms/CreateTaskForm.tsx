@@ -37,7 +37,6 @@ function CreateTaskForm() {
       time_to_finish: '',
       start_date: startDateValue,
       order: '',
-      // project: '',
     },
     validate: {
       title: (value) => value.trim().length < 2,
@@ -69,6 +68,7 @@ function CreateTaskForm() {
     taskActions(form.values, userData).then((data: any) => {
       console.log("task created", data)
       dispatch({type: "STATE_REFRESH", payload: true})
+      navigate('/personal')
     })
   }
 
@@ -172,8 +172,10 @@ function CreateTaskForm() {
             data={['todo', 'inprogress', 'complete', 'due']}
             size='sm'
             // searchValue='todo'
-            value='todo'
-            defaultSearchValue='todo'
+            value={'todo'}
+            defaultValue={'todo'}
+            defaultSearchValue={'todo'}
+            defaultChecked={true}
             {...form.getInputProps('status')}
         />
 

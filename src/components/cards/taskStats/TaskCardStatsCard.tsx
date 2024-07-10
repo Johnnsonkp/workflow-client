@@ -20,7 +20,7 @@ function StatsRingCard({}) {
 
   useEffect(() => {
     if(state.tasks && taskObj === undefined ){
-      setTaskObj(state.tasks)
+      setTaskObj(state.tasks.filter((task) => task.number === null ) || state.tasks)
     }
   }, [])
 
@@ -56,6 +56,19 @@ function StatsRingCard({}) {
     { value: TaskCount, label: 'Total tasks' },
     { value: inProgress.length, label: 'In progress' },
   ];
+
+  const ringStatusColor = (completePercentage) => {    
+    if(completePercentage <= 30){
+      return 'red'
+    }
+    if(completePercentage > 30 && completePercentage < 60){
+      return 'orange'
+    }
+    if(completePercentage > 60){
+      return 'green'
+    }
+
+  }
 
   
   const theme = useMantineTheme();
@@ -99,7 +112,8 @@ function StatsRingCard({}) {
             roundCaps
             thickness={10}
             size={140}
-            sections={[{ value: (completedTaskCount / TaskCount) * 100, color: theme.primaryColor }]}
+            // sections={[{ value: (completedTaskCount / TaskCount) * 100, color: theme.primaryColor }]}
+            sections={[{ value: (completedTaskCount / TaskCount) * 100, color: ringStatusColor((completedTaskCount / TaskCount) * 100) }]}
             label={
               <div>
                 <Text ta="center" fz="md" className={classes.label}>

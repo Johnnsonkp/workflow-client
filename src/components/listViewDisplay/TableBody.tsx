@@ -6,15 +6,15 @@ function TableBody({loadingComponent, listTasks, items}) {
 
   const TBody = () => (
     loadingComponent? <TaskListLoadSkeleton /> : 
-    listTasks && listTasks.length > 0 ?
+    listTasks && listTasks.length > 0 &&
         <Table.Tbody className="!border-b-2 border-purple-400">
             {items} 
-        </Table.Tbody> : <EmptyTaskModal />
+        </Table.Tbody> 
   
   )
 
   return (
-    <TBody />
+    listTasks && listTasks.length > 0? <TBody /> : <EmptyTaskModal />
   )
 }
 

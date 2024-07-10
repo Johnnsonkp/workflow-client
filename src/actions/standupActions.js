@@ -72,6 +72,39 @@ export const standupFormActions = ({
       });
     },
 
+    // update: (formData, userData) => {
+    //   console.log("update formData", formData)
+      
+    //   return fetch(baseURL + `standups/${formData.id}`, {
+    //     method: "put",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Accept: "application/json",
+    //       Authorization: userData.token
+    //     },
+    //     body: JSON.stringify({
+    //       date: formData.date,
+    //       id: formData.id,
+    //       user_id: userData.user_id,
+    //       standup_tasks:[
+    //           {id_1: formData.standup_tasks[0].id, title: formData.standup_tasks[0].title, complete: formData.standup_tasks[0].complete},
+    //           {id_2: formData.standup_tasks[1].id, title: formData.standup_tasks[1].title, complete: formData.standup_tasks[1].complete},
+    //           {id_3: formData.standup_tasks[2].id, title: formData.standup_tasks[2].title, complete: formData.standup_tasks[2].complete},
+    //       ],
+    //     }),
+    //   }).then((response) => {
+    //     return response.json()
+    //   })
+    //   .then((data) => {
+    //     if (data.error) {
+    //       alert(data.error);
+    //     } else {
+    //       console.log("task updated", data)
+    //       return data
+    //     }
+    //   });
+    // },
+
     update: (formData, userData) => {
       console.log("update formData", formData)
       
@@ -83,14 +116,10 @@ export const standupFormActions = ({
           Authorization: userData.token
         },
         body: JSON.stringify({
-          date: formData.date,
-          id: formData.id,
-          user_id: userData.user_id,
-          standup_tasks:[
-              {id_1: formData.standup_tasks[0].id, title: formData.standup_tasks[0].title, complete: formData.standup_tasks[0].complete},
-              {id_2: formData.standup_tasks[1].id, title: formData.standup_tasks[1].title, complete: formData.standup_tasks[1].complete},
-              {id_3: formData.standup_tasks[2].id, title: formData.standup_tasks[2].title, complete: formData.standup_tasks[2].complete},
-          ],
+          id: formData.id, 
+          title: formData.title, 
+          complete: formData.complete,
+          standup_id: formData.standup_id
         }),
       }).then((response) => {
         return response.json()

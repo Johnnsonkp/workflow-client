@@ -15,6 +15,7 @@ const StandUpCardCustom = () => {
   const [opened, { open, close }] = useDisclosure(toggleForm);
   const {state, dispatch} = useAppState()
   const [updateStandup, setUpdateStandup] = useState(false)
+  const [refreshStandUP, setRefreshStandUP] = useState(false)
   const [formTitle, setFormTitle] = useState('')
 
   var today = new Date();
@@ -36,26 +37,26 @@ const StandUpCardCustom = () => {
   const [standUpObj, setStandUpObj] = useState({
     id: state?.standup?.id || ddmmyyyy,
     date: state?.standup.date || dummyStanUpObj.date,
-    standup_tasks: state.standup.standup_tasks || dummyStanUpObj.standup_tasks
+    standup_tasks: state.standup.standup_tasks && state.standup.standup_tasks?.sort((a,b) => b.complete - a.complete) || dummyStanUpObj.standup_tasks
   });
+
 
   const [standUP_1, setStandUp_1] = useState(standUpObj?.standup_tasks[0]?.title)
   const [standUP_2, setStandUp_2] = useState(standUpObj?.standup_tasks[1]?.title)
   const [standUP_3, setStandUp_3] = useState(standUpObj?.standup_tasks[2]?.title)
 
+
+  async function updateFormAction(standUp){
+    const formActions = await standupFormActions['update']
+    console.log("updated standUp", standUp)
+    formActions(standUp, state.user).then((data) => {
+      setRefreshStandUP(true)
+    })
+  }
+
   const completeStandup = async (standUp, index) => {
-    console.log("before", standUp.complete)
     standUp.complete = !standUp.complete
-    console.log("after", standUp.complete)
-    console.log("after", standUp.complete)
-
-    // setStandUpObj(newArr)
-
-    // const formActions = await standupFormActions['update']
-    // formActions(newArr, state.user, ).then((data) => {
-    //   console.log("data posted", data)
-    // })
-
+    updateFormAction(standUp)
   }
 
   const handleFormSubmit = async (e) => {
@@ -65,7 +66,7 @@ const StandUpCardCustom = () => {
     setToggleForm(close)
     const newTaskObj = {
       id: standUpObj.id, 
-      date: standUpObj.date,
+      date: ddmmyyyy,
       standup_tasks: [
         {id: standUpObj.standup_tasks[0].id, title: standUP_1, complete: standUpObj?.standup_tasks[0].complete},
         {id: standUpObj.standup_tasks[1].id, title: standUP_2, complete: standUpObj?.standup_tasks[1].complete},
@@ -94,10 +95,22 @@ const StandUpCardCustom = () => {
     }
 
     if(updateStandup && standUpObj){
+      console.log("fetching stand up")
       postStandUp()
       setUpdateStandup(!updateStandup)
     }
   }, [updateStandup, standUpObj])  
+
+  useEffect(() => {
+    if(refreshStandUP === true){
+        // setStandUpObj({
+        //   id: state?.standup?.id,
+        //   date: state?.standup.date,
+        //   standup_tasks: state.standup.standup_tasks.sort((a,b) => b.complete - a.complete)
+        // });
+      setRefreshStandUP(false)
+    }
+  }, [refreshStandUP, standUpObj])
 
   const Items = () => (
     standUpObj.standup_tasks.map((standUp, index) => (
@@ -106,6 +119,9 @@ const StandUpCardCustom = () => {
         <Switch 
           onLabel="UNCHECK" offLabel="CHECK" className={`${classes.switch} !z-50`} size="xs" 
           onClick={() => completeStandup(standUp, index)}
+          checked={standUp.complete}
+          translate={'yes'}
+          
          />
       </Group>
     )) 
