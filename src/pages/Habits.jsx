@@ -1,23 +1,18 @@
 import { ActionIcon, Button, Group, ScrollArea, SimpleGrid, Table, TextInput, Textarea, Title } from '@mantine/core';
-import { IconActivity, IconCheck, IconCircleCheck } from '@tabler/icons-react';
+import { IconActivity, IconCircleCheck } from '@tabler/icons-react';
 import { ThemeIcon, rem } from '@mantine/core';
 import { useEffect, useState } from 'react';
 
-import CreateTaskForm from '../components/forms/CreateTaskForm';
 import { IconPlus } from '@tabler/icons-react';
 import { IconTrash } from '@tabler/icons-react'
 import InnerTopNav from '../components/innerTopNav/InnerTopNav';
 import { Modal } from '@mantine/core';
-import { Tab } from '@mui/material';
-import { TimeInput } from '@mantine/dates';
-import WeekViewTab from '../components/weekView/WeekViewTab';
 import { calculateWeek } from '../utils/dateUtills';
 import { habitFormActions } from '../actions/habitActions';
 import { useAppState } from '../store/AppState';
 import { useDisclosure } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import { useNavigate } from 'react-router-dom';
-import { useRef } from 'react';
 
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -33,7 +28,6 @@ const todaysDate = today.getDate();
 if (dd < 10) dd = 0 + dd;
 if (mm < 10) mm = 0 + mm;
 var formattedToday = mm + '/' + dd + '/' + yyyy;
-let newDate = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
 
 
 
