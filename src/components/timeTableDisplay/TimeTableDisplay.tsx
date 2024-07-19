@@ -28,6 +28,9 @@ const TimeTableDisplay: React.FC<Props> = ({taskObj, task, deleteTask}) => {
       toggle: false
     })
 
+    const [showRedLine, setShowRedLine] = useState(false)
+
+
     useEffect(() => {
       if(toggleDelete.toggle){
         toggleDelete.task && deleteTask(toggleDelete.task, taskObj)
@@ -38,6 +41,7 @@ const TimeTableDisplay: React.FC<Props> = ({taskObj, task, deleteTask}) => {
         })
       }
     }, [toggleDelete])
+
 
     const timeView: TimeView[] = [
         {
@@ -234,6 +238,46 @@ const TimeTableDisplay: React.FC<Props> = ({taskObj, task, deleteTask}) => {
         }
     ]
 
+    // let timeViewArr = []
+    // let num = 29
+
+    // timeView.forEach((timeTaskObj) => {
+    //   timeViewArr.push(timeTaskObj)
+
+    //   for(let i = 0; i < 29; i++){
+    //     // timeTaskObj.time.replace('AM', '')
+    //     // timeTaskObj.time.replace('PM', '')
+    //     timeTaskObj.time.replace(':', '')
+    //     let timeToNum = Number(timeTaskObj.time)
+    //     let addToTime = timeToNum++
+
+    //     console.log("timeTaskObj", timeTaskObj)
+    //     console.log("timeToNum", timeToNum)
+    //     console.log("addToTime", addToTime)
+    //     console.log("i", i)
+    //   }
+    // })
+
+    const convertTo12hrFormat = (timeValue: string) => {
+      let firstValue = timeValue.charAt(0)
+      let secondValue = timeValue.charAt(1)
+      let firstSecondValue = firstValue + secondValue
+      let timeValueToNumber = Number(firstSecondValue)
+  
+      if(timeValueToNumber > 12){
+          let timeDiff = timeValueToNumber - 12
+          let timeFormated = timeDiff < 10 ? ('0' + timeDiff) : timeDiff
+  
+          let newTime = timeFormated.toString() + timeValue.charAt(2) + timeValue.charAt(3) + timeValue.charAt(4) + ' PM'
+          return newTime
+      }
+      return timeValue + " AM"
+    }
+
+    let newDate = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+    let timeNowFirstTwoDigits = convertTo12hrFormat(newDate).charAt(0) + convertTo12hrFormat(newDate).charAt(1)
+    let timeNowLastTwoDigits = convertTo12hrFormat(newDate).charAt(6) + convertTo12hrFormat(newDate).charAt(7)
+
     const rows = timeView.map((row) => {
         taskObj?.forEach((obj) => {
             if(row.time == obj?.time_to_start){
@@ -247,6 +291,8 @@ const TimeTableDisplay: React.FC<Props> = ({taskObj, task, deleteTask}) => {
                     {row.time}
                 </Anchor>
             </Table.Td>
+
+            <hr className={`border border-red-500 w-[100%] hidden ${row.time.charAt(0) + row.time.charAt(1) == timeNowFirstTwoDigits && row.time.charAt(6) + row.time.charAt(7) == timeNowLastTwoDigits && '!visible'}`}></hr>
             
             <Table.Td className='text-[12px] w-[23%] !p-0'>
                 {row.task && row.task[0]?.title && 
@@ -269,7 +315,7 @@ const TimeTableDisplay: React.FC<Props> = ({taskObj, task, deleteTask}) => {
             </Table.Td>
           </Table.Tr>
         )
-    })
+  })
 
     const TimeDisplay = () => {
         return (

@@ -17,7 +17,6 @@ const handleSignOut = () => {
     alert("Signing out now, goodbye")
     userSignOut('AUTH')
     window.location.reload()
-    // dispatch({type: "LOGGED_OUT"})
 }
 
 export function UserCardInfo({state, user, navigate}) {
@@ -53,7 +52,7 @@ export function UserCardInfo({state, user, navigate}) {
             </Button>
           </div>
 
-          <Button onClick={() => navigate("/personal")} radius="sm" style={{ flex: 1 }}>
+          <Button onClick={() => navigate("/dashboard")} radius="sm" style={{ flex: 1 }}>
             Back to work
           </Button>
         </Group>

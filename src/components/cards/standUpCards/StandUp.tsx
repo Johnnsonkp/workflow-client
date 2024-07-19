@@ -1,4 +1,4 @@
-import { Button, Card, Group, Modal, Switch, Text } from '@mantine/core';
+import { Badge, Button, Card, Group, Modal, Switch, Text, ThemeIcon } from '@mantine/core';
 import {IconArrowBadgeLeftFilled, IconArrowBadgeRightFilled, IconPlus} from '@tabler/icons-react';
 import React, {useEffect, useState} from 'react'
 
@@ -103,27 +103,26 @@ const StandUpCardCustom = () => {
 
   useEffect(() => {
     if(refreshStandUP === true){
-        // setStandUpObj({
-        //   id: state?.standup?.id,
-        //   date: state?.standup.date,
-        //   standup_tasks: state.standup.standup_tasks.sort((a,b) => b.complete - a.complete)
-        // });
       setRefreshStandUP(false)
     }
   }, [refreshStandUP, standUpObj])
 
   const Items = () => (
     standUpObj.standup_tasks.map((standUp, index) => (
-      <Group justify="space-between" className={`${classes.item} cursor-pointer`} wrap="nowrap" gap="sm" key={index}>
-        <Text  size="xs" className={`${standUp.complete? '!line-through' : ''}`}>{index + 1}. {standUp.title}</Text>
-        <Switch 
-          onLabel="UNCHECK" offLabel="CHECK" className={`${classes.switch} !z-50`} size="xs" 
-          onClick={() => completeStandup(standUp, index)}
-          checked={standUp.complete}
-          translate={'yes'}
-          
-         />
-      </Group>
+      // <Group justify="space-between" className={`${classes.item} cursor-pointer `} wrap="nowrap" gap="xs" key={index}>
+        <Badge color={'transparent'} variant="light" w={'100%'} className={`${classes.item} cursor-pointer `} key={index}>
+          <ThemeIcon p={'xs'} bg="#F2F3F5" variant='light' w={325} className='!flex !justify-between !align-middle '>
+              <Text size="xs" className={`!text-[10px] !text-[#111] ${standUp.complete? '!line-through' : ''}`}>{index + 1}. {standUp.title}</Text>
+
+              <Switch 
+                 className={`${classes.switch} !z-50`} size="xs" 
+                onClick={() => completeStandup(standUp, index)}
+                checked={standUp.complete}
+                translate={'yes'}  
+              />
+          </ThemeIcon>
+        </Badge>
+      // </Group>
     )) 
   );
 
@@ -150,13 +149,6 @@ const StandUpCardCustom = () => {
               <IconPlus size={'13px'}/>
               Create
             </Button>
-            {/* <Button 
-              className='shadow-sm !border-gray-200 !text-[#fff]' bg={'#95A2D9'} h={'24px'} fz={'10px'} p={'4px'} 
-              onClick={open}
-            >
-              <IconPlus size={'13px'}/>
-              Update
-            </Button> */}
           </div>
         </div>
         <div className={classes.inner}>

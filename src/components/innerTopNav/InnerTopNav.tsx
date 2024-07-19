@@ -9,6 +9,8 @@ import SingleDate from '../weekView/SingleDate';
 import { Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
+let darkMode = JSON.parse(localStorage.getItem('dark_mode'))
+
 export interface Link {               // interface describes the structure of the variable, Array or obj
   link: string;
   label: string;
@@ -23,26 +25,39 @@ const links: Link[] = [              // an array [] of objects {}
 
 interface Props {
   setTogglePanel: (value: string | undefined) => void;
-  data?: (string | Link)[];
+  // data?: (string | Link)[];
+  data?: (Link)[];
   value?: (string | Link)[];
+  title?: string
+  tab1?: string
+  setTab1: (value: string | undefined) => void;
 }
 
-const InnerTopNav: React.FC<Props> = ({ setTogglePanel, data, value}) => {
+const InnerTopNav: React.FC<Props> = ({ setTogglePanel, data, value, title, tab1, setTab1}) => {
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
-  const [section, setSection] = useState('list');
+  const [section, setSection] = useState(data && data[0]?.value || 'list');
+  const [theme, setTheme] = useState(darkMode);
 
   const urlRedirect = (value: any) => {
-    setTogglePanel(value)
     setSection(value)
+    if(tab1){
+      setTab1(value)
+    }else{
+      setTogglePanel(value)
+    }
   }
 
+  useEffect(() => {
+    setTheme(JSON.parse(localStorage.getItem('dark_mode')))
+  }, [darkMode])
+
   return (
-    <header className={`${classes.header} border border-#D1D1D1 bg-white rounded-md h-[560px] mt-3 !mb-5`}>
+    <header className={`${classes.header} rounded-md h-[560px] mt-0 !mb-5 border border-#D1D1D1 text-[#333] ${theme && 'border-[1px] border-[#5E5E5E] text-[#fff]' }`}>
       <DefaultContainer className={classes.inner} >
         <div className='flex !align-middle w-80 '>
           <Text className='flex align-middle my-[auto]'><IconDashboard className='my-[auto]' color='gray'/> </Text>
-          <Text fz="xl" fw={400} px={'3'} className=' font-semibold' >Dashboard</Text>
+          <Text fz="xl" fw={400} px={'3'} className={` font-semibold  ${darkMode && 'text-[#fff]' }`} >{title}</Text>
           <SingleDate fz={'sm'}/>
         </div>
 
@@ -51,9 +66,9 @@ const InnerTopNav: React.FC<Props> = ({ setTogglePanel, data, value}) => {
             value={section}
             onChange={(value) => urlRedirect(value)}
             transitionTimingFunction="ease"
-            className='text-[#333]'
+            className='text-[#333] z-0'
             fullWidth
-            data={[
+            data={data || [
                 { label: 'List View', value: 'list' },
                 { label: 'Week View', value: 'week' },
                 { label: 'Day View', value: 'time' }

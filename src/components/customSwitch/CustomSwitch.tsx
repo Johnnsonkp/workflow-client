@@ -2,10 +2,10 @@ import { Group, Switch } from '@mantine/core';
 
 import classes from './CustomSwitch.module.css';
 
-export function CustomSwitch({onChange, className}) {
+export function CustomSwitch({onChange, className, onClick, checked}) {
   return (
     <Group justify="center" p="xs" className={className}>
-      <Switch classNames={classes} onChange={onChange}/>
+      <Switch className={className} onChange={onChange} onClick={() => onClick()} checked={checked}/>
     </Group>
   );
 }

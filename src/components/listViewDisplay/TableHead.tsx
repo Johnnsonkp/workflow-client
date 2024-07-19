@@ -1,9 +1,10 @@
 import { Table } from "@mantine/core"
 
 function TableHead({setArchieve, showArchive, loadingComponent}) {
+  
   return (
     <>
-    <Table.Thead className="">
+    <Table.Thead className={``}>
         {loadingComponent? "" : <Table.Tr p={'xs'} className="text-[12px]" fw={600}>
             <Table.Th>Complete</Table.Th>
             <Table.Th>Name</Table.Th>

@@ -1,10 +1,10 @@
 import { Button, Group, Input, NumberInput, Select, SimpleGrid, TextInput, Textarea, Title } from '@mantine/core';
-import { DatePickerInput, DateTimePicker, TimeInput } from '@mantine/dates';
 import React, {useEffect, useState} from 'react'
 import {getDateTimeValue, monthsArr, reformatDateInput} from '../../utils/dateUtills.js'
 import {storeTask, taskFormActions} from '../../actions/taskActions.js'
 
 import CustomForm from './CreateTaskForm'
+import { TimeInput } from '@mantine/dates';
 import classes from './form.module.css'
 import {getItemFromLocalStorage} from '../../utils/localstorage.js'
 import { useAppState } from '../../store/AppState.jsx'
@@ -67,8 +67,12 @@ function CreateTaskForm() {
     const taskActions = await taskFormActions['create']
     taskActions(form.values, userData).then((data: any) => {
       console.log("task created", data)
-      dispatch({type: "STATE_REFRESH", payload: true})
-      navigate('/personal')
+      console.log("task created", state.tasks)
+
+      let addToTasks = state.tasks.concat(data)
+      dispatch({type: "ALL_TASK", payload: addToTasks})
+      // dispatch({type: "STATE_REFRESH", payload: true})
+      // navigate('/personal')
     })
   }
 

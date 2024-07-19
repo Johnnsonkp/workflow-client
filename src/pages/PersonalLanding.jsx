@@ -1,23 +1,19 @@
 import * as classes from '../components/formButtonToggle/formButton.module.css'
 
-import { Button, Modal } from '@mantine/core'
+import { Button, LoadingOverlay, Modal } from '@mantine/core'
 import React, {useCallback, useEffect, useMemo, useState} from 'react'
 import { storeTask, taskFormActions } from '../actions/taskActions.js'
 
 import CreateTaskForm from '../components/forms/CreateTaskForm.tsx'
 import DashboardBannerCards from '../components/dashboardBanner/DashboardBannerCards.tsx'
 import {DefaultContainer} from '../components/boilerplate/DefaultContainer.jsx'
-import FormButton from '../components/formButtonToggle/FormButton.tsx'
 import { IconPlus } from '@tabler/icons-react';
 import InnerTopNav from '../components/innerTopNav/InnerTopNav.tsx'
 import ListViewDisplay from '../components/listViewDisplay/ListViewDisplay.tsx'
-import { LoadingContainer } from '../components/boilerplate/LoadingContainer.jsx'
 import TimeTableDisplay from '../components/timeTableDisplay/TimeTableDisplay.tsx'
 import UpdateTaskForm from '../components/forms/UpdateTaskForm.tsx'
 import WeekView from '../components/weekView/WeekView.tsx'
 import { getItemFromLocalStorage } from '../utils/localstorage.js'
-import { getTask } from '../services/taskService.js'
-import { storeTaskObj } from '../actions/taskActions.js'
 import { useAppState } from '../store/AppState.jsx'
 import { useDisclosure } from '@mantine/hooks';
 import { useNavigate } from "react-router-dom";
@@ -25,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 function PersonalLanding() {
   const [taskPanel, setTaskPanel] = useState('list')
   const [togglePannel, setTogglePanel] = useState('')
+  const [toggleOpacity, setToggleOpacity] = useState('opacity-[0]')
   const {state, dispatch} = useAppState()
   const [taskObj, setTaskObj] = useState(state.tasks || [])
   const [formValue, setFormValue] = useState([])
@@ -39,39 +36,26 @@ function PersonalLanding() {
     task: null,
     toggle: false
   })
+  const [loadingDisplay, setLoadingDisplay] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      if(loadingDisplay === true && taskObj.length > 0){
+        setLoadingDisplay(false)
+        setToggleOpacity('opacity-1')
+        return
+      }
+
+      setTimeout(() => {
+        if(loadingDisplay === true && taskObj.length == 0){
+          setLoadingDisplay(false)
+          setToggleOpacity('opacity-1')
+        } 
+      }, 1000)
+      
+    }, 50)
+  }, [loadingDisplay])
   
-  // const initialTaskLoad = useCallback(() => {
-  //   if(loading && !taskObj.length && state.tasks){
-  //     console.log("loading", loading)
-  //     setTaskObj(state.tasks);
-  //     // setLoading(false)
-  //   }
-  //   return () => {setLoading(false)} 
-  // }, [loading])
-
-  // useEffect( () => {
-  //   (async () => {
-  //     if(state.refreshState){
-  //       console.log("state_refresh", state.refreshState)
-        
-  //       const taskActions = await taskFormActions['get']
-  //       const taskRefreshed = await taskActions(userData)
-
-  //       setTaskObj(taskRefreshed);
-  //       dispatch({type: "ALL_TASK", payload: taskRefreshed})
-  //       dispatch({type: "STATE_REFRESH", payload: false})
-  //     }
-  //   })();
-  //   return () => {}
-  // }, [state.refreshState, taskObj])
-
-  // useEffect(() => {
-  //   initialTaskLoad()
-  // }, [])
-
-  // useEffect(() => {
-  //   setTaskObj(state.tasks || [])
-  // }, [taskObj])
 
   const deleteTask =  async (taskToDelete, taskObj) => {
     const deleteTaskAction = await taskFormActions['delete']
@@ -124,10 +108,13 @@ function PersonalLanding() {
   }, [togglePannel])
 
   return (
-    <DefaultContainer className='relative !overflow-hidden'>
-      <DefaultContainer className={`${toggleForm? "h-[100vh]" : ""} !shadow-md max-w-[1400px]`}>
-        <InnerTopNav setTogglePanel={setTogglePanel}/>
-        {taskPanel === 'list' && <DashboardBannerCards taskObj={taskObj}/> }
+    loadingDisplay ? 
+    <LoadingOverlay color='darkgray' zIndex={'1'} visible={true} overlayProps={{ radius: "sm", blur: 2 }} /> :
+    
+    <DefaultContainer className={`relative !overflow-hidden pb-5`}>
+      <DefaultContainer className={`${toggleForm? "h-[100vh]" : ""} !shadow-md max-w-[1400px] transition-opacity duration-200 ease-in-out ${toggleOpacity}`}>
+        <InnerTopNav setTogglePanel={setTogglePanel} title={'Dasboard'}/>
+        {taskPanel === 'list' && <DashboardBannerCards /> }
         <DashboardDisplay />
       </DefaultContainer>
       

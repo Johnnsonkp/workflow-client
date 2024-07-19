@@ -36,8 +36,8 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
       className={`hover:!bg-[#f4f4f4] border border-gray-50 ${taskObj.title == "" && 'h-[50px]'}
         rounded-lg ${taskObj?.status === 'complete'? classes.taskList : classes.defaultTaskList }`}
     >
-      <Table.Td className='w-1 m-auto'>
-        <Group gap="[0px]">
+      <Table.Td className='!w-[1%] m-auto '>
+        <Group gap="[0px]" >
           {taskObj.status === 'complete'? 
             <ThemeIcon color="teal" size={30} radius="xl">
               <IconCircleCheck style={{ width: rem(36), height: rem(40) }} /> 
@@ -49,7 +49,7 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
         </Group>
       </Table.Td>
 
-      <Table.Td className='w-[35%]'onClick={() => toggleFormModule( {task: task, toggle: true})}>
+      <Table.Td className='w-[40%]'onClick={() => toggleFormModule( {task: task, toggle: true})}>
         <Group gap="" className='min-w-64'>
           <Text fz="xs">{taskObj.order}</Text>
           <Text fz="xs" fw={500} className=''>
@@ -59,12 +59,12 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
       </Table.Td>
 
       <Table.Td 
-        className='w-10'
+        className='w-[1%] !p-1'
         onClick={() => toggleFormModule( {task: taskObj, toggle: true})}
       > 
         <Badge color={'black'} variant="light" className='!flex '>
           <ThemeIcon bg="transparent" variant='light' w={'100%'} className='!flex !justify-between !align-middle'>
-            <ThemeIcon color={taskStatus[taskObj.status]} size={15} radius="xl" variant="light">
+            <ThemeIcon color={taskStatus[taskObj.status]} size={10} radius="xl" variant="light">
               <IconCircleFilled color="transparent" style={{ width: rem(13), height: rem(8) }} /> 
             </ThemeIcon>
             <Text fw={600} 
@@ -75,7 +75,7 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
         </Badge>
       </Table.Td>
 
-      <Table.Td className='opacity-[0.7] w-10'
+      <Table.Td className='opacity-[0.7] w-10 !p-1'
         onClick={() => toggleFormModule( {task: taskObj, toggle: true})}
       >
         <Badge color={'black'} variant="light">
@@ -88,7 +88,7 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
       </Table.Td>
 
 
-      <Table.Td className='opacity-[0.7] w-5'
+      <Table.Td className='opacity-[0.7] w-5 !p-1'
         onClick={() => toggleFormModule( {task: taskObj, toggle: true})}
       >
         <Badge color={'black'} variant="light">
@@ -100,8 +100,8 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
         </Badge>
       </Table.Td>
 
-      <Table.Td className='w-13 text-center'>
-        <Text fz="xs">General Task</Text>
+      <Table.Td className='w-13 text-center !p-1'>
+        <Text fz="xs">General</Text>
       </Table.Td>
       
       <ListActionsComp 

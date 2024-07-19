@@ -2,7 +2,8 @@ import React from 'react'
 import { Text } from '@mantine/core';
 var today = new Date();
 var yyyy = today.getFullYear();
-var mm = today.getMonth() + 1; // Months start at 0!
+// var mm = today.getMonth() + 1; // Months start at 0!
+var mm = today.getMonth() // Months start at 0!
 var dd = today.getDate();
 const todaysDate = today.getDate();
 const day = today.getDay()

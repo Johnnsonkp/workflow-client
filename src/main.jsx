@@ -8,6 +8,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import About from './pages/About.jsx';
 import App from './App.jsx'
 import { AppState } from './store/AppState.jsx';
+import Habits from './pages/Habits';
 import Landing from './pages/Landing.jsx';
 import PageBoilerPlate from './components/boilerplate/Boilerplate.jsx';
 import PersonalLanding from './pages/PersonalLanding.jsx';
@@ -15,6 +16,8 @@ import ReactDOM from 'react-dom/client'
 import StandupPage from './pages/StandupPage';
 import UserXP from './pages/UserXP';
 import WorkLanding from './pages/WorkLanding.jsx';
+
+let darkMode = JSON.parse(localStorage.getItem('dark_mode'))
 
 const theme = createTheme({
   breakpoints: {
@@ -44,6 +47,10 @@ const router = createBrowserRouter([
     element: <PageBoilerPlate component={<UserXP />} />,
   },
   {
+    path: '/habits',
+    element: <PageBoilerPlate component={<Habits />} />,
+  },
+  {
     path: "/standups",
     element: <PageBoilerPlate component={<StandupPage />} />,
   },
@@ -55,13 +62,17 @@ const router = createBrowserRouter([
   {
     path: "/personal",
     element: <PageBoilerPlate component={<PersonalLanding />} />,
+  },
+  {
+    path: "/dashboard",
+    element: <PageBoilerPlate component={<PersonalLanding />} />,
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AppState>
-      <MantineProvider className="w-[100%]" theme={theme}>
+      <MantineProvider className={`w-[100%] ${darkMode? '!bg-[#1C2127]' : 'bg-[#F0F0F0]' }`} theme={theme}>
         <RouterProvider router={router} />
       </MantineProvider>
     </AppState>

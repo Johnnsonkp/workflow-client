@@ -32,7 +32,7 @@ export function LandingAuth() {
   if(userData){ // checks / handles new user sign up + no JWT previous user sign in
     setUserType(`${userData.user.username || "user"} successfully logged in!`)
     setTimeout(() => {
-      navigate("/personal")
+      navigate("/dashboard")
     }, 1000);
   }
 }, [userData])

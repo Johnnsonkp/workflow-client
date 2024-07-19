@@ -61,7 +61,7 @@ function StatsRingCard({}) {
     if(completePercentage <= 30){
       return 'red'
     }
-    if(completePercentage > 30 && completePercentage < 60){
+    if(completePercentage > 30 && completePercentage <= 60){
       return 'orange'
     }
     if(completePercentage > 60){

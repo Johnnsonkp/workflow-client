@@ -1,8 +1,9 @@
 import { Avatar, Button, Center, Group, Paper, RingProgress, Text, rem } from '@mantine/core';
 import { Container, Grid, Skeleton } from '@mantine/core';
 import { IconArrowAutofitLeft, IconArrowBadgeLeft, IconArrowBadgeLeftFilled, IconArrowBadgeRightFilled } from '@tabler/icons-react';
-import React, {useEffect, useState} from 'react';
+import React, {Children, useEffect, useState} from 'react';
 
+import { EmptyTaskModal } from '../EmptytTaskModals/EmptyTaskModal';
 import StandUpCardCustom from '../cards/standUpCards/StandUp';
 import StatsRingCard from '../cards/taskStats/TaskCardStatsCard';
 import { TablerIconsProps } from '@tabler/icons-react';
@@ -16,18 +17,16 @@ interface Props {
 }
 
 const CardContainerCx = ({children, title}) => {
-  const child = <Skeleton height={200} radius="md" animate={true} />;
+  const child = <Skeleton height={200} radius="md" animate={false} />;
   const [loadingComponent, setLoadingComponent]: any = useState(true)
   const [activeTab, setActiveTab] = useState()
+  let darkMode = JSON.parse(localStorage.getItem('dark_mode'))
 
   useEffect(() => {
-    let loadingDelay = setTimeout(() => {
-      if(children){
-        setLoadingComponent(false)
-      }
-   }, 200)
-
-   return () => clearTimeout(loadingDelay);
+    console.log("dashboard rerender")
+    setTimeout(() => {
+      setLoadingComponent(false)
+    }, 200)
   }, [])
 
   useEffect(() => {
@@ -36,7 +35,8 @@ const CardContainerCx = ({children, title}) => {
 
 
   return (
-    loadingComponent? child : <div className={`${classes.cardContainer}`}>
+    loadingComponent? child : <div className={`${classes.cardContainer} ${darkMode && 'border-4 border-[#5E5E5E]' }`}>
+      {/* <div className={`${classes.cardContainer}`}> */}
         <div className={`${classes.innerCard}`}>
           {title && Array.isArray(title)?
             <div 
@@ -94,13 +94,13 @@ const data = [
 const CustomCarousel = ({position, setPosition, nextPosition, lastPosition, animationClass, rightAnimation, lastHiddenPosition}) => (
   <>
     <DashboardCardComp className={``} title={data[position].title} Comp={data[position].component} />
-    <DashboardCardComp className={`${classes.defaultCarousel}`}   title={data[nextPosition].title} Comp={data[nextPosition].component} />
-    <DashboardCardComp className={`${classes.defaultCarousel}`}  title={data[lastPosition].title} Comp={data[lastPosition].component} />
+    <DashboardCardComp className={`${classes.defaultCarousel}`} title={data[nextPosition].title} Comp={data[nextPosition].component} />
+    <DashboardCardComp className={`${classes.defaultCarousel}`} title={data[lastPosition].title} Comp={data[lastPosition].component} />
   </>
 )
 
 
-const DashboardBannerCards: React.FC<Props> = ({taskObj}) => {
+const DashboardBannerCards: React.FC<Props> = (loadingComponent) => {
   const [position, setPosition]: any = useState(0)
   const [nextPosition, setNextPosition]: any = useState(position + 1)
   const [lastPosition, setLastPosition]: any = useState(position + 2)
@@ -151,16 +151,19 @@ const DashboardBannerCards: React.FC<Props> = ({taskObj}) => {
         </div>
         
         <Grid>
-          <CustomCarousel 
-            position={position} 
-            nextPosition={nextPosition} 
-            setPosition={setPosition} 
-            lastPosition={lastPosition}
-            animationClass={animationClass}
-            rightAnimation={rightAnimation}
-            lastHiddenPosition={lastHiddenPosition}
-          />
-        </Grid>
+          { loadingComponent?
+            <CustomCarousel 
+              position={position} 
+              nextPosition={nextPosition} 
+              setPosition={setPosition} 
+              lastPosition={lastPosition}
+              animationClass={animationClass}
+              rightAnimation={rightAnimation}
+              lastHiddenPosition={lastHiddenPosition}
+            /> : <EmptyTaskModal />
+          }
+
+        </Grid> 
       </Container> 
       </>
     );

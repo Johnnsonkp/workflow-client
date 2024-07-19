@@ -28,7 +28,8 @@ const initialState = {
     tasks: null,
     latestTask: null,
     deletedTask: null,
-    refreshState: false
+    refreshState: false,
+    lightMode: false
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -53,6 +54,10 @@ export const reducer = (state, action) => {
             break;
         case "AUTH":
             newState = {...state, user: action.payload}
+            return newState
+            break;
+        case "LIGHT_DARK_MODE":
+            newState = {...state, lightMode: action.payload}
             return newState
             break;
         case "STATE_REFRESH":

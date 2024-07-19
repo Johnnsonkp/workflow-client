@@ -53,12 +53,13 @@ export function UserInfoAction() {
                     </Grid.Col>
                     <Grid.Col span={6}>
                         <Text ta="left" fz="xs" fw={400} mt="" className='bg-[#F9FAFA] mt-1 rounded-sm !p-1'>
-                            Completed {completedTasksCount}
+                            <p>Completed </p>
+                            <p>{completedTasksCount}</p>
                         </Text>
                     </Grid.Col>
 
                     <Grid.Col span={12} className=''>
-                        <Progress value={34.31} mt="xs" size="md" radius="xl" /> 
+                        <Progress value={completedTasksCount / state.tasks?.length * 100} mt="xs" size="md" radius="xl" /> 
                     </Grid.Col>
                 </Grid>
             </SimpleGrid>

@@ -12,7 +12,7 @@
     align-items:center;
   }
   .controller{
-    border: 1px solid #e5e7eb;
+    /* border: 1px solid #e5e7eb; */
   }
 
   .innerSideNav{
@@ -58,12 +58,14 @@
     &[data-active] {
       &,
       &:hover {
-        background-color: #fff;
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-        border-left: 3px solid #464FEB;
-        /* color: var(--mantine-color-blue-light-color); */
+        /* background-color: #f5f5f5; */
+        background-color: rgba(0, 0, 0, 0.01);
+        /* border: 1px dashed #464FEB; */
+        font-weight: 600;
+        /* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; */
+        box-shadow: rgba(0, 0, 0, 0.01) 0px 1px 3px 0px, rgba(0, 0, 0, 0.01) 0px 1px 2px 0px;
+        border-left: 4px solid #464FEB;
         color: #464FEB;
-  
         & .linkIcon {
           color: #464FEB;
         }

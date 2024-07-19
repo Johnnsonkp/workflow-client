@@ -1,21 +1,18 @@
-import { Button, Modal } from '@mantine/core';
 import {IconLogout, IconPlayerStopFilled} from '@tabler/icons-react';
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { SegmentedControl, Text } from '@mantine/core';
 
 import CustomButton from './CustomButton';
 import { Links } from './Tabs';
 import { LoadingContainer } from './LoadingContainer';
 import classes from './NavbarSegmented.module.css';
-import { removeItemFromLocalStorage } from '../../utils/localstorage';
 import { useAppState } from '../../store/AppState';
-import { useDisclosure } from '@mantine/hooks';
 import { useNavigate } from 'react-router-dom';
 import { userSignOut } from '../../actions/userActions';
 
-const SideNav = ({section, urlRedirect}) => {
+const SideNav = ({section, urlRedirect, className}) => {
   const [active, setActive] = useState('Dashboard');
-  const [opened, { open, close }] = useDisclosure(false);
+  const [tabNavigate, setTabNavigate] = useState();
   const {state, dispatch} = useAppState()
   const navigate = useNavigate()
 
@@ -25,8 +22,15 @@ const SideNav = ({section, urlRedirect}) => {
     navigate("/")
   }
 
+  useEffect(() => {
+
+    if(tabNavigate !== undefined){
+        navigate(tabNavigate)
+    }
+  }, [tabNavigate])
+
   return (
-    <nav className={`${classes.navbar}`}>
+    <nav className={`${classes.navbar} ${className}`}>
         <div className={`${classes.innerSideNav}`}>
             <div>
                 <Text fw={500} size="sm" className={classes.title} c="dimmed" mb="xs">
@@ -39,29 +43,13 @@ const SideNav = ({section, urlRedirect}) => {
                     fullWidth
                     data={[
                         { label: 'User XP', value: 'Userxp' },
-                        { label: 'Personal', value: 'Personal' },
+                        { label: 'Personal', value: 'Dashboard' },
                     ]}
                 />
             </div>
             <LoadingContainer className={classes.navbarMain}>
-                <Links active={active} setActive={setActive} section={section}/>
+                <Links setTabNavigate={setTabNavigate} active={active} setActive={setActive} section={section}/>
             </LoadingContainer>
-            <div className={classes.footer}>
-                <Button onClick={open} className={` ${classes.signOut} text-white`}>
-                    <IconLogout className={classes.linkIconCustom} stroke={1.5} />
-                    <p>Sign out</p>
-                </Button>
-                <hr></hr>
-                <Button className={`${classes.otherBtn}`}>
-                    <IconLogout className={classes.linkIconCustom} stroke={1.5} />
-                </Button>
-            </div>
-            <Modal opened={opened} onClose={close} title="Do you wish to sign out" centered>
-                <div className='flex justify-between w-32'>
-                    <Button onClick={() => handleSignOut()}>Yes</Button>
-                    <Button onClick={close}>No</Button>
-                </div>
-            </Modal>
         </div>
     </nav>
   )
