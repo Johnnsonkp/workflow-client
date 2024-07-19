@@ -13,6 +13,9 @@
   }
   .controller{
     /* border: 1px solid #e5e7eb; */
+    background-color: transparent;
+    background-color: rgba(240, 240, 245, 0.8);
+    border: 1px solid rgba(211, 211, 211, 0.3);
   }
 
   .innerSideNav{

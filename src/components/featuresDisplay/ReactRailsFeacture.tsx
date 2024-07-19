@@ -1,5 +1,4 @@
 import { Container, SimpleGrid, Text, rem } from '@mantine/core';
-import { IconCertificate, IconCoin, IconTruck } from '@tabler/icons-react';
 
 import classes from './features.module.css';
 import postgresqlLogo from '../../../public/postgresql.svg'
@@ -12,7 +11,7 @@ interface FeatureProps extends React.ComponentPropsWithoutRef<'div'> {
   description: string;
 }
 
-function Feature({ imgSrc, title }) {
+export function Feature({ imgSrc, title }) {
     return (
       <div className={classes.feature}>
   

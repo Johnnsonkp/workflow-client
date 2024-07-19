@@ -1,11 +1,12 @@
 import {
     IconActivity,
     IconDashboard,
-    IconLockAccess
+    IconLockAccess,
+    IconLockAccessOff
 } from '@tabler/icons-react';
+import { useEffect, useState } from 'react';
 
 import classes from './NavbarSegmented.module.css';
-import { useEffect } from 'react';
 
 export const tabs = {
     Userxp: [
@@ -15,18 +16,25 @@ export const tabs = {
     Dashboard: [
       { link: '/dashboard', label: 'Dashboard', icon: IconDashboard },
       { link: '/habits', label: 'Habits', icon: IconActivity },
-      { link: '', label: 'Projects Overview', icon: IconLockAccess },
-      { link: '', label: 'RYLLAB', icon: IconLockAccess },
-      { link: '', label: 'Calendar', icon: IconLockAccess },
+      { link: '/Projects', label: 'Projects', icon: IconLockAccessOff },
+      { link: '/RYLLAB', label: 'RYLLAB', icon: IconLockAccessOff },
+      { link: '/Calendar', label: 'Calendar', icon: IconLockAccessOff },
     ],
 };
 
 
 export const Links = ({active, setActive, section, setTabNavigate}) => {
     useEffect(() => {
-      let current_path = window.location.pathname.replace('/', '')
-      let path = current_path.charAt(0).toUpperCase() + current_path.slice(1)
-      setActive(path)
+      let loadingDelay = setTimeout(() => {
+        let current_path = window.location.pathname.replace('/', '')
+        if(current_path){
+          let path = current_path.charAt(0).toUpperCase() + current_path.slice(1)
+          setActive(path)
+        }
+      }, 100)
+      return () => {
+        clearTimeout(loadingDelay)
+      }
     }, [])
     
     if(section !== null){
@@ -38,7 +46,6 @@ export const Links = ({active, setActive, section, setTabNavigate}) => {
               key={item.label}
               onClick={(event) => {
                 event.preventDefault();
-                // setActive(item.label);
                 setTabNavigate(item.link)
               }}
             >

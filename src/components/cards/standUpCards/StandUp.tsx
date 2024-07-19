@@ -9,8 +9,6 @@ import { useAppState } from '../../../store/AppState';
 import { useDisclosure } from '@mantine/hooks';
 
 const StandUpCardCustom = () => {
-  const [toggle, setToggle] = useState(false)
-  const [toggleText, setToggleText] = useState(false)
   const [toggleForm, setToggleForm] = useState<boolean | any>(false);
   const [opened, { open, close }] = useDisclosure(toggleForm);
   const {state, dispatch} = useAppState()
@@ -109,20 +107,17 @@ const StandUpCardCustom = () => {
 
   const Items = () => (
     standUpObj.standup_tasks.map((standUp, index) => (
-      // <Group justify="space-between" className={`${classes.item} cursor-pointer `} wrap="nowrap" gap="xs" key={index}>
-        <Badge color={'transparent'} variant="" w={'100%'} className={`${classes.item} cursor-pointer !border !border-gray-200`} key={index}>
-          <ThemeIcon p={'xs'} bg="#F2F3F5" variant='light' w={325} className='!flex !justify-between !align-middle '>
-              <Text size="xs" className={`!text-[10px] !text-[#111] ${standUp.complete? '!line-through' : ''}`}>{index + 1}. {standUp.title}</Text>
+      <ThemeIcon p={'xs'} bg="#F2F3F5" variant='light' w={'100%'}  
+        className={`${classes.item} !flex !justify-between !align-middle !border !border-gray-200 `}>
+          <Text size="xs" className={`!text-[10px] !text-[#111] ${standUp.complete? '!line-through' : ''}`}>{index + 1}. {standUp.title}</Text>
 
-              <Switch 
-                 className={`${classes.switch} !z-50`} size="xs" 
-                onClick={() => completeStandup(standUp, index)}
-                checked={standUp.complete}
-                translate={'yes'}  
-              />
-          </ThemeIcon>
-        </Badge>
-      // </Group>
+          <Switch 
+              className={`${classes.switch} !z-50`} size="xs" 
+            onClick={() => completeStandup(standUp, index)}
+            checked={standUp.complete}
+            translate={'yes'}  
+          />
+      </ThemeIcon>
     )) 
   );
 

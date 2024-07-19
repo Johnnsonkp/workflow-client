@@ -8,6 +8,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import About from './pages/About.jsx';
 import App from './App.jsx'
 import { AppState } from './store/AppState.jsx';
+import ComingSoon from './pages/ComingSoon';
 import Habits from './pages/Habits';
 import Landing from './pages/Landing.jsx';
 import PageBoilerPlate from './components/boilerplate/Boilerplate.jsx';
@@ -66,7 +67,23 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <PageBoilerPlate component={<PersonalLanding />} />,
-  }
+  },
+  {
+    path: "/coming-soon",
+    element: <PageBoilerPlate component={<ComingSoon />} />,
+  },
+  {
+    path: "/Projects",
+    element: <PageBoilerPlate component={<ComingSoon />} />,
+  },
+  {
+    path: "/RYLLAB",
+    element: <PageBoilerPlate component={<ComingSoon />} />,
+  },
+  {
+    path: "/Calendar",
+    element: <PageBoilerPlate component={<ComingSoon />} />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

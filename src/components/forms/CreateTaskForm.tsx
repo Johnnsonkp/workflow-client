@@ -1,24 +1,21 @@
 import { Button, Group, Input, NumberInput, Select, SimpleGrid, TextInput, Textarea, Title } from '@mantine/core';
 import React, {useEffect, useState} from 'react'
-import {getDateTimeValue, monthsArr, reformatDateInput} from '../../utils/dateUtills.js'
-import {storeTask, taskFormActions} from '../../actions/taskActions.js'
 
-import CustomForm from './CreateTaskForm'
 import { TimeInput } from '@mantine/dates';
 import classes from './form.module.css'
 import {getItemFromLocalStorage} from '../../utils/localstorage.js'
+import { reformatDateInput } from '../../utils/dateUtills.js'
+import { taskFormActions } from '../../actions/taskActions.js'
 import { useAppState } from '../../store/AppState.jsx'
 import { useForm } from '@mantine/form';
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
 
 function CreateTaskForm() {
-  const [hhMinute, setHhMinute] = useState<Date | string | undefined>()
   const ref = useRef<HTMLInputElement>(null);
   const navigate = useNavigate()
   const userData = getItemFromLocalStorage('AUTH')
   let newDate = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-  let yearDateValue = new Date().toLocaleDateString()
   const {state, dispatch} = useAppState()
 
   let yyyymmddDf = new Date().toLocaleDateString('default', { year: 'numeric', month: '2-digit', day: '2-digit' })
@@ -67,12 +64,9 @@ function CreateTaskForm() {
     const taskActions = await taskFormActions['create']
     taskActions(form.values, userData).then((data: any) => {
       console.log("task created", data)
-      console.log("task created", state.tasks)
 
       let addToTasks = state.tasks.concat(data)
       dispatch({type: "ALL_TASK", payload: addToTasks})
-      // dispatch({type: "STATE_REFRESH", payload: true})
-      // navigate('/personal')
     })
   }
 

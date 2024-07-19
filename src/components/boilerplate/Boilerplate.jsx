@@ -82,7 +82,6 @@ function PageBoilerPlate({ component }) {
       return (
         <Grid 
           className={`${darkLightMode? '!bg-[#2D333B]' : 'bg-[#F0F0F0]' }`} 
-          // className={`${darkLightMode? '!bg-[#313131]' : 'bg-[#F0F0F0]' }`} 
           gutter="xs" 
           overflow="hidden"
         >
@@ -94,16 +93,12 @@ function PageBoilerPlate({ component }) {
             </Grid.Col>
             <Grid.Col span={{ base: 12, xs: 3.3, sm:2.9, md: 2.5, lg: 1.8 }} className={`!max-w-[220px] `}>
               <SideNav 
-                // className={`${darkLightMode? '!bg-[#1C2127]' : 'bg-[#F0F0F0]' }`}  
                 className={`${darkLightMode? '!bg-[#2D333B]' : 'bg-[#F0F0F0]' }`}
-                // className={`${darkLightMode? '!bg-[#313131]' : 'bg-[#F0F0F0]' }`}  
                 section={section} 
                 urlRedirect={urlRedirect} 
               />
             </Grid.Col>
             <Grid.Col span={{ base: 12, xs: 8.4, sm: 9, md: 9.4, lg: 10.2 }} 
-              // className={`${bpClasses.wrapper} 
-              //   ${darkLightMode? '!bg-[#2D333B] border border-[#5E5E5E] mt-10' : 'bg-[#fff] border border-[#f4f4f4] mt-10'} transition-colors ease-in-out !delay-1000`}
               className={`${bpClasses.wrapper} 
                 ${darkLightMode? '!bg-[#1C2127] border border-[#5E5E5E] mt-10' : 'bg-[#fff] border border-[#f4f4f4] mt-10'} transition-colors ease-in-out !delay-1000`}
               

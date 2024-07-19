@@ -292,7 +292,7 @@ const rows = Array.isArray(habitsObj) && sortHabitLogs(habitsObj).map((row, inde
             entry.date.slice(0, 2) === obj.date.toString() &&
                 <Table.Td key={dateIndex + index} className={`overflow-hidden `}>
                     <div className='text-center'>
-                        <p className={`${showDate? 'visible' : 'hidden'}`}>{obj.date}</p>
+                        <p className={`${showDate? 'visible' : 'hidden'} text-xs`}>{obj.date} {obj.month}</p>
                         {entry?.complete ?
                             <ThemeIcon key={dateIndex + index} onClick={() =>  updateFormAction(row, entry, obj)}  
                                 color="teal" size={30} radius="xl" className='cursor-pointer'>
@@ -325,13 +325,9 @@ const rows = Array.isArray(habitsObj) && sortHabitLogs(habitsObj).map((row, inde
     </Table.Tr>
 ));
 
-//   return (loadingComponent?  <LoadingOverlay color='darkgray' zIndex={'0'} visible={true} overlayProps={{ radius: "sm", blur: 2 }} /> :
   return (loadingComponent?  <LoadingOverlay color='darkgray' zIndex={'0'} visible={true} overlayProps={{ radius: "sm", blur: 2 }} /> : 
     <div className='min-h-[80vh] mb-10'>
       <InnerTopNav title={'Habits'} tab1={'Week view'} setTab1={setTab1} data={data}/>
-      <div className='flex w-[50%] justify-between m-2'>
-        <Button size='xs' onClick={() => setShowDate(!showDate)}>Show habit date</Button>
-      </div>
       {
         tab1 === 'Week'? 
         <ScrollArea onScrollPositionChange={({ y }) => setScrolled(y !== 0)} border={'true'} className='border border-#D1D1D1 rounded-md shadow-md '>
@@ -343,7 +339,6 @@ const rows = Array.isArray(habitsObj) && sortHabitLogs(habitsObj).map((row, inde
                     DateDisplay.map((obj, index) => (
                         <Table.Th key={index} className={` text-[12px]  `}>
                             <div className={`flex ${obj.date === todaysDate? 'bg-blue-400 text-white font-bold px-2 rounded-lg' : ''}`}>
-                            {/* <div className={`flex `}> */}
                                 <p className={`px `}>{obj.day.slice(0, 3)}</p>
                                 <p className={`px-1 `}>{obj.date}</p>
                                 <p className={`px `}>{obj.month}</p>
@@ -356,17 +351,17 @@ const rows = Array.isArray(habitsObj) && sortHabitLogs(habitsObj).map((row, inde
             </Table.Thead>
             <Table.Tbody>{rows}</Table.Tbody>
             <Table.Tfoot className='border border-gray-200 h-5 !p-5'>
-                <p className='p-1'>Habit count: {Array.isArray(habitsObj) && habitsObj.length || 0 }</p>
+                <p className='p-2 text-xs'>Habit count: {Array.isArray(habitsObj) && habitsObj.length || 0 }</p>
             </Table.Tfoot>
             </Table>
         </ScrollArea> : 'nothing'
       }
-
-        <Button onClick={open} onClose={close} 
-            className={`shadow-lg`}
-        >
-            <IconPlus size={30} className={`!transition-all !duration-500 `}/>
-        </Button>
+        <div className='flex justify-end m-2 mt-4'>
+            <Button className='m-2' size='xs' onClick={() => setShowDate(!showDate)}>Show habit date</Button>
+            <Button size='xs' onClick={open} onClose={close} className={`shadow-lg m-2`}>
+                <IconPlus size={20} className={`!transition-all !duration-500 `}/>
+            </Button>
+        </div>
 
         <Modal 
             opened={opened} 

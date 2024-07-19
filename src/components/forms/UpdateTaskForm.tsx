@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 
 function UpdateTaskForm({task}) {
   const taskToUpdate = task?.task || null
+  const navigate = useNavigate()
   
   const taskValuePresence = (item: any) => {
     return taskToUpdate && taskToUpdate[item]? taskToUpdate[item] : '' 
@@ -78,7 +79,9 @@ function UpdateTaskForm({task}) {
 
     taskActions(form.values, userData, taskValuePresence('id')).then((data: any) => {
       console.log("taskActions data state.user_id", data)
-      dispatch({type: "STATE_REFRESH", payload: true})
+      let addToTasks = state.tasks.filter((task) => task.id  !== data.id)
+      let updatedTaskAdded = addToTasks.concat(data)
+      dispatch({type: "ALL_TASK", payload: updatedTaskAdded})
     })
   }
 
