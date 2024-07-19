@@ -113,7 +113,7 @@ function PersonalLanding() {
     
     <DefaultContainer className={`relative !overflow-hidden pb-5`}>
       <DefaultContainer className={`${toggleForm? "h-[100vh]" : ""} !shadow-md max-w-[1400px] transition-opacity duration-200 ease-in-out ${toggleOpacity}`}>
-        <InnerTopNav setTogglePanel={setTogglePanel} title={'Dasboard'}/>
+        <InnerTopNav setTogglePanel={setTogglePanel} title={'Dashboard'}/>
         {taskPanel === 'list' && <DashboardBannerCards /> }
         <DashboardDisplay />
       </DefaultContainer>

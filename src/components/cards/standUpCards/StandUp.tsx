@@ -110,7 +110,7 @@ const StandUpCardCustom = () => {
   const Items = () => (
     standUpObj.standup_tasks.map((standUp, index) => (
       // <Group justify="space-between" className={`${classes.item} cursor-pointer `} wrap="nowrap" gap="xs" key={index}>
-        <Badge color={'transparent'} variant="light" w={'100%'} className={`${classes.item} cursor-pointer `} key={index}>
+        <Badge color={'transparent'} variant="" w={'100%'} className={`${classes.item} cursor-pointer !border !border-gray-200`} key={index}>
           <ThemeIcon p={'xs'} bg="#F2F3F5" variant='light' w={325} className='!flex !justify-between !align-middle '>
               <Text size="xs" className={`!text-[10px] !text-[#111] ${standUp.complete? '!line-through' : ''}`}>{index + 1}. {standUp.title}</Text>
 

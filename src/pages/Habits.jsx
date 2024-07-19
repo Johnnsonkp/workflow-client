@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Group, ScrollArea, SimpleGrid, Table, TextInput, Textarea, Title } from '@mantine/core';
+import { ActionIcon, Button, Group, LoadingOverlay, ScrollArea, SimpleGrid, Table, TextInput, Textarea, Title } from '@mantine/core';
 import { IconActivity, IconCircleCheck } from '@tabler/icons-react';
 import { ThemeIcon, rem } from '@mantine/core';
 import { useEffect, useState } from 'react';
@@ -115,6 +115,8 @@ function Habits() {
   })
   const [habitObj, setHabitObj] = useState()
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(true)
+  const [loadingComponent, setLoadingComponent] = useState(true)
 
   const {state, dispatch} = useAppState()
 
@@ -127,7 +129,8 @@ function Habits() {
     complete: true,
   }
 
-let habitsObj = habitObj || HabitsObj
+// let habitsObj = habitObj || HabitsObj
+let habitsObj = habitObj || []
 function sortHabitLogs(habitsObj) {
     Array.isArray(habitsObj) && habitsObj.forEach((habit) => {
         for(let i = 0; i < DateDisplay.length; i++){
@@ -248,9 +251,6 @@ async function updateFormAction(row, entry, obj){
     })
     setChecked(!checked)
 
-    console.log("updateObj", updateObj)
-    console.log("updateObj", row)
-
     updateAction(updateObj, state.user).then((data) => {
         console.log("Data:", data)
         setHabitObj(data)
@@ -264,7 +264,18 @@ const data = [
 
 useEffect(() => {
     fetchFormAction()
+    let loadingDelay = setTimeout(() => {
+        if(loading === true){
+        console.log("Habit loaded")
+        setLoadingComponent(false)
+        setLoading(false)
+        }
+    }, 200)
+    return () => {
+        clearTimeout(loadingDelay)
+    }
 }, [])
+
 
 const rows = Array.isArray(habitsObj) && sortHabitLogs(habitsObj).map((row, index) => (
     
@@ -314,7 +325,8 @@ const rows = Array.isArray(habitsObj) && sortHabitLogs(habitsObj).map((row, inde
     </Table.Tr>
 ));
 
-  return (
+//   return (loadingComponent?  <LoadingOverlay color='darkgray' zIndex={'0'} visible={true} overlayProps={{ radius: "sm", blur: 2 }} /> :
+  return (loadingComponent?  <LoadingOverlay color='darkgray' zIndex={'0'} visible={true} overlayProps={{ radius: "sm", blur: 2 }} /> : 
     <div className='min-h-[80vh] mb-10'>
       <InnerTopNav title={'Habits'} tab1={'Week view'} setTab1={setTab1} data={data}/>
       <div className='flex w-[50%] justify-between m-2'>
