@@ -25,8 +25,8 @@ const links: Link[] = [              // an array [] of objects {}
 
 interface Props {
   setTogglePanel: (value: string | undefined) => void;
-  // data?: (string | Link)[];
-  data?: (Link)[];
+  data?: any;  //TODO: add the right type 
+  // data?: (Link)[];
   value?: (string | Link)[];
   title?: string
   tab1?: string
