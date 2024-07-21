@@ -6,13 +6,6 @@ import { useAppState } from '../../../store/AppState';
 import {useNavigate} from 'react-router-dom'
 import { userSignOut } from '../../../actions/userActions';
 
-const mockdata = [
-  { label: '4 passengers', icon: IconUsers },
-  { label: '100 km/h in 4 seconds', icon: IconGauge },
-  { label: 'Automatic gearbox', icon: IconManualGearbox },
-  { label: 'Electric', icon: IconGasStation },
-];
-
 const handleSignOut = () => {
     alert("Signing out now, goodbye")
     userSignOut('AUTH')
@@ -20,13 +13,6 @@ const handleSignOut = () => {
 }
 
 export function UserCardInfo({state, user, navigate}) {
-  const features = mockdata.map((feature) => (
-    <Center key={feature.label}>
-      <feature.icon size="1.05rem" className={classes.icon} stroke={1.5} />
-      <Text size="xs">{feature.label}</Text>
-    </Center>
-  ));
-
 
   return (
     <Card withBorder radius="md" className={classes.card}>

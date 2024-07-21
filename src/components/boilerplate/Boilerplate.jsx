@@ -91,9 +91,10 @@ function PageBoilerPlate({ component }) {
                 setDarkLightMode={setDarkLightMode}
               />
             </Grid.Col>
-            <Grid.Col span={{ base: 12, xs: 3.3, sm:2.9, md: 2.5, lg: 1.8 }} className={`!max-w-[220px] `}>
+            <Grid.Col span={{ base: 12, xs: 3.3, sm:2.9, md: 2.5, lg: 1.8 }} className={`!max-w-[220px] bg-inherit `}>
               <SideNav 
-                className={`${darkLightMode? '!bg-[#2D333B]' : 'bg-[#F0F0F0]' }`}
+                // className={`${darkLightMode? '!bg-[#2D333B]' : 'bg-[#F0F0F0]' }`}
+                className={``}
                 section={section} 
                 urlRedirect={urlRedirect} 
               />

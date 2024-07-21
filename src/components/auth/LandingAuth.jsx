@@ -60,7 +60,7 @@ export function LandingAuth() {
           </LoadingContainer>
             {
               currentUserSession?.token ? 
-              <div className='flex align-middle justify-center relative top-24 left-40 '>
+              <div className='flex align-middle justify-center relative top-24 left-40'>
                 <UserCardInfo state={state} user={userAuthStatus} navigate={navigate}/>
               </div> : 
                 <AuthForm setUserData={setUserData} userData={userData}/>

@@ -16,6 +16,8 @@
     background-color: transparent;
     background-color: rgba(240, 240, 245, 0.8);
     border: 1px solid rgba(211, 211, 211, 0.3);
+    background-color: #fff;
+    background-color: #F2F3F5;
   }
 
   .innerSideNav{
@@ -43,7 +45,7 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    font-size: var(--mantine-font-size-sm);
+    font-size: var(--mantine-font-size-md);
     color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-1));
     padding: var(--mantine-spacing-xs) var(--mantine-spacing-xs);
     border-radius: var(--mantine-radius-sm);

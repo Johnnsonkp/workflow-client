@@ -36,6 +36,7 @@ const SideNav = ({section, urlRedirect, className}) => {
                 <Text fw={500} size="sm" className={classes.title} c="dimmed" mb="xs">
                 </Text>
                 <SegmentedControl
+                    // color={'#F0F0F0'}
                     className={`${classes.controller}`}
                     value={section}
                     onChange={(value) => urlRedirect(value)}

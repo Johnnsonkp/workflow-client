@@ -72,7 +72,6 @@ const HabitsObj = [
             {date: '14/07/24', complete: true},
             {date: '15/07/24', complete: true},
             {date: '16/07/24', complete: true},
-            // {date: '20/07/24', complete: true},
         ]
     },
     {   
@@ -120,29 +119,39 @@ function Habits() {
 
   const {state, dispatch} = useAppState()
 
-  const newHabit = {
-    id: 3,
-    title: "Daily Run",
-    description: "Run everyday for at least 10 minutes",
-    current_streak: 0,
-    date: '18/07/24', 
-    complete: true,
+// let habitsObj = habitObj || []
+function removeDuplicateEntries(data) {
+    const seenDates = new Set();
+    data.entries = data.entries.filter(entry => {
+      const isDuplicate = seenDates.has(entry.date);
+      seenDates.add(entry.date);
+      return !isDuplicate;
+    });
+    return data;
   }
 
-// let habitsObj = habitObj || HabitsObj
-let habitsObj = habitObj || []
+let habitsObj = habitObj
 function sortHabitLogs(habitsObj) {
-    Array.isArray(habitsObj) && habitsObj.forEach((habit) => {
-        for(let i = 0; i < DateDisplay.length; i++){
-            if(habit.entries[i] && habit.entries[i].date.slice(0,2).toString() !== DateDisplay[i].date.toString()){
-                habit.entries.unshift({date: `${DateDisplay[i].date}/${numMonth[DateDisplay[i].month]}/24`, complete: false})
-            } 
-            if(!habit.entries[i]){
-                habit.entries.push({date: `${DateDisplay[i].date}/${numMonth[DateDisplay[i].month]}/24`, complete: false})
-            } 
-            habit.entries.sort((a,b) => a.date.slice(0, 2) - b.date.slice(0, 2))
+    Array.isArray(habitsObj) ? habitsObj.forEach((habit, index) => {
+        console.log('index',index, habit.habit.title)
+
+        if(index === habitsObj.length){
+            return
         }
-    })
+
+        for(let i = 0; i < DateDisplay.length; i++){
+            console.log('i',i)
+            
+            if(habit.entries[i] && habit.entries[i].date.slice(0,2).toString() !== DateDisplay[i].date.toString()){
+                let habitEntries = removeDuplicateEntries(habit)
+                habitEntries.entries.push({date: `${DateDisplay[i].date}/${numMonth[DateDisplay[i].month]}/24`, complete: false})
+                
+            } else if(!habit.entries[i]){
+                let habitEntries = removeDuplicateEntries(habit)
+                habitEntries.entries.push({date: `${DateDisplay[i].date}/${numMonth[DateDisplay[i].month]}/24`, complete: false})
+            }
+        }
+    }) : null
     return habitsObj
 }
 
@@ -233,7 +242,10 @@ async function fetchFormAction(){
     const getAction = await habitFormActions['get']
     getAction(state.user).then((data) => {
         console.log("Data:", data)
-        setHabitObj(data)
+
+        let filterData = sortHabitLogs(data)
+        setHabitObj(filterData)
+        // setHabitObj(data)
     })
 }
 
@@ -263,12 +275,13 @@ const data = [
 ]
 
 useEffect(() => {
-    fetchFormAction()
+    // fetchFormAction()
     let loadingDelay = setTimeout(() => {
         if(loading === true){
-        console.log("Habit loaded")
-        setLoadingComponent(false)
-        setLoading(false)
+            fetchFormAction()
+            console.log("Habit loaded")
+            setLoadingComponent(false)
+            setLoading(false)
         }
     }, 200)
     return () => {
@@ -276,8 +289,8 @@ useEffect(() => {
     }
 }, [])
 
-
-const rows = Array.isArray(habitsObj) && sortHabitLogs(habitsObj).map((row, index) => (
+const rows = Array.isArray(habitsObj) ? habitsObj.map((row, index) => (
+// const rows = Array.isArray(habitsObj) ? sortHabitLogs(habitsObj).map((row, index) => (
     
     <Table.Tr key={row.habit.title}>
         <Table.Td className='flex justify-between'>
@@ -323,7 +336,7 @@ const rows = Array.isArray(habitsObj) && sortHabitLogs(habitsObj).map((row, inde
                 <p>{row.habit.current_streak}</p>
             </Table.Td>
     </Table.Tr>
-));
+)) : null
 
   return (loadingComponent?  <LoadingOverlay color='darkgray' zIndex={'0'} visible={true} overlayProps={{ radius: "sm", blur: 2 }} /> : 
     <div className='min-h-[80vh] mb-10'>

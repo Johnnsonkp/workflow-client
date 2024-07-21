@@ -112,7 +112,7 @@ const StandUpCardCustom = () => {
           <Text size="xs" className={`!text-[10px] !text-[#111] ${standUp.complete? '!line-through' : ''}`}>{index + 1}. {standUp.title}</Text>
 
           <Switch 
-              className={`${classes.switch} !z-50`} size="xs" 
+              className={`${classes.switch} !z-0`} size="xs" 
             onClick={() => completeStandup(standUp, index)}
             checked={standUp.complete}
             translate={'yes'}  
