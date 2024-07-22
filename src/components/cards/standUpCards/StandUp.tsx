@@ -109,7 +109,7 @@ const StandUpCardCustom = () => {
     standUpObj.standup_tasks.map((standUp, index) => (
       <ThemeIcon p={'xs'} bg="#F2F3F5" variant='light' w={'100%'}  
         className={`${classes.item} !flex !justify-between !align-middle !border !border-gray-200 `}>
-          <Text size="xs" className={`!text-[10px] !text-[#111] ${standUp.complete? '!line-through' : ''}`}>{index + 1}. {standUp.title}</Text>
+          <Text size="xs" className={`!text-[12px] !text-[#111] ${standUp.complete? '!line-through' : ''}`}>{index + 1}. {standUp.title}</Text>
 
           <Switch 
               className={`${classes.switch} !z-0`} size="xs" 

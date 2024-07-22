@@ -131,16 +131,18 @@ function removeDuplicateEntries(data) {
   }
 
 let habitsObj = habitObj
-function sortHabitLogs(habitsObj) {
-    Array.isArray(habitsObj) ? habitsObj.forEach((habit, index) => {
-        console.log('index',index, habit.habit.title)
+function sortHabitLogs(habitObj) {
+    // console.log("Array.isArray(habitsObj)", Array.isArray(habitObj))
+    
+    habitObj && Array.isArray(habitObj) ? habitObj.forEach((habit, index) => {
+        // console.log('index',index, habit.habit.title)
 
-        if(index === habitsObj.length){
+        if(index === habitObj.length){
             return
         }
 
         for(let i = 0; i < DateDisplay.length; i++){
-            console.log('i',i)
+            // console.log('i',i)
             
             if(habit.entries[i] && habit.entries[i].date.slice(0,2).toString() !== DateDisplay[i].date.toString()){
                 let habitEntries = removeDuplicateEntries(habit)
@@ -152,7 +154,7 @@ function sortHabitLogs(habitsObj) {
             }
         }
     }) : null
-    return habitsObj
+    return habitObj
 }
 
 function HabitForm() {
@@ -243,13 +245,14 @@ async function fetchFormAction(){
     getAction(state.user).then((data) => {
         console.log("Data:", data)
 
-        let filterData = sortHabitLogs(data)
+        const filterData = sortHabitLogs(data)
         setHabitObj(filterData)
         // setHabitObj(data)
     })
 }
 
-async function updateFormAction(row, entry, obj){
+async function updateFormAction(row, entry, obj, title){
+
     const updateAction = await habitFormActions['update']
     let updateObj = {
         id: row.habit.id,
@@ -257,16 +260,26 @@ async function updateFormAction(row, entry, obj){
         complete: !entry.complete,
         user_id: state.user.user_id
     }
-    setToggleHabit({
-      id: row.habit.id,
-      date: entry.date.slice(0,2)
-    })
-    setChecked(!checked)
 
+    
     updateAction(updateObj, state.user).then((data) => {
-        console.log("Data:", data)
-        setHabitObj(data)
+        console.log("update data Data:", data)
+        // setHabitObj(data)
     })
+
+    let filterHabit = habitObj.filter((habit) => {
+        return habit.entries.filter((en) => {
+            if(en.date.toString() === entry.date.toString() && title === habit.habit.title){
+                console.log("if", en.date, en.complete)
+                console.log("title", title)
+                console.log("habit.habit.title", habit.habit.title)
+                return en.complete = !en.complete
+            }
+        })
+    })
+
+    console.log("filterHabit", filterHabit)
+    setHabitObj(filterHabit)
 }
 
 const data = [
@@ -275,11 +288,9 @@ const data = [
 ]
 
 useEffect(() => {
-    // fetchFormAction()
     let loadingDelay = setTimeout(() => {
         if(loading === true){
             fetchFormAction()
-            console.log("Habit loaded")
             setLoadingComponent(false)
             setLoading(false)
         }
@@ -289,9 +300,7 @@ useEffect(() => {
     }
 }, [])
 
-const rows = Array.isArray(habitsObj) ? habitsObj.map((row, index) => (
-// const rows = Array.isArray(habitsObj) ? sortHabitLogs(habitsObj).map((row, index) => (
-    
+const rows = Array.isArray(habitObj) ? habitObj.map((row, index) => (    
     <Table.Tr key={row.habit.title}>
         <Table.Td className='flex justify-between'>
             <div className='flex'><IconActivity /> <p>{row.habit.title}</p></div>
@@ -303,29 +312,25 @@ const rows = Array.isArray(habitsObj) ? habitsObj.map((row, index) => (
         DateDisplay.map((obj, dateIndex) => (
             row?.entries && row.entries.map((entry, index) => (
             entry.date.slice(0, 2) === obj.date.toString() &&
-                <Table.Td key={dateIndex + index} className={`overflow-hidden `}>
-                    <div className='text-center'>
+                <Table.Td key={dateIndex + index} className={`!overflow-hidden !px-0`}>
+                    <div className='text-center !px-0'>
                         <p className={`${showDate? 'visible' : 'hidden'} text-xs`}>{obj.date} {obj.month}</p>
-                        {entry?.complete ?
-                            <ThemeIcon key={dateIndex + index} onClick={() =>  updateFormAction(row, entry, obj)}  
-                                color="teal" size={30} radius="xl" className='cursor-pointer'>
-                                <hr z={0} className='absolute w-[200px] border border-green-500'></hr>
-                                <IconCircleCheck className='absolute' z={1} style={{ width: rem(36), height: rem(40) }} /> 
-                            </ThemeIcon>  : 
-                            <ThemeIcon
-                                key={dateIndex + index} 
-                                color={`${toggleHabit.id === row.habit.id && toggleHabit.date === obj.date.toString() 
-                                    && checked? 'teal' : "rgba(228, 230, 240)"} 
-                                `} 
-                                size={30} radius="xl" className='cursor-pointer'>
-                                <hr z={0} className={`${toggleHabit.id === row.habit.id && 
-                                toggleHabit.date === obj.date.toString() && checked? 'visible' : 'hidden'
-                                }  
-                                absolute w-[200px] border border-green-500`}></hr>
-                                <IconCircleCheck z={1} className='absolute hover:bg-teal-500 rounded-lg p-1' 
-                                    onClick={() =>  updateFormAction(row, entry, obj)}  
-                                style={{ width: rem(46), height: rem(40) }} /> 
-                            </ThemeIcon> 
+                        {
+                        //  entry?.complete &&
+                         entry && 
+                            <Group gap="0" className='!overflow-hidden !flex !items-center !justify-between !w-[100%]' align={'center'}>
+                                <div className=' flex-[0.35]'>
+                                    <hr className={`w-[100%] border ${entry?.complete && row?.entries[index - 1]?.complete && 'border-green-500' }  `}></hr>
+                                </div>
+                                <ThemeIcon key={dateIndex + index} color={`${entry?.complete? 'teal' : 'rgba(228, 230, 240)'}`} size={28} radius="xl" 
+                                    className={`cursor-pointer px-0 mx-0 flex-[0.35] hover:${entry?.complete? '!bg-[rgba(228, 230, 240)]' : 'bg-teal-500'} `}>
+                                    <IconCircleCheck style={{ width: rem(34), height: rem(38) }} onClick={() =>  updateFormAction(row, entry, obj, row.habit.title)}  /> 
+                                </ThemeIcon> 
+                                <div className=' flex-[0.35]'>
+                                    <hr className={`w-[100%] border ${entry?.complete && row?.entries[index + 1]?.complete && 'border-green-500'}  `}></hr>
+                                </div>
+                            </Group>
+                            
                         }
                     </div>
                 </Table.Td> 
@@ -337,6 +342,7 @@ const rows = Array.isArray(habitsObj) ? habitsObj.map((row, index) => (
             </Table.Td>
     </Table.Tr>
 )) : null
+
 
   return (loadingComponent?  <LoadingOverlay color='darkgray' zIndex={'0'} visible={true} overlayProps={{ radius: "sm", blur: 2 }} /> : 
     <div className='min-h-[80vh] mb-10'>

@@ -56,10 +56,10 @@ const InnerTopNav: React.FC<Props> = ({ setTogglePanel, data, value, title, tab1
   return (
     <header className={`${classes.header} rounded-md h-[560px] mt-0 !mb-5 border border-#D1D1D1 text-[#333] ${theme && 'border-[1px] border-[#5E5E5E] text-[#fff]' }`}>
       <DefaultContainer className={classes.inner} >
-        <div className='flex !align-middle w-80 '>
+        <div className='flex !items-center w-80 '>
           <Text className='flex align-middle my-[auto]'><IconDashboard className='my-[auto]' color='gray'/> </Text>
-          <Text fz="xl" fw={400} px={'3'} className={` font-semibold  ${darkMode && 'text-[#fff]' }`} >{title}</Text>
-          <SingleDate fz={'sm'}/>
+          <Text fz="xl" fw={500} px={'3'} className={` font-semibold  ${darkMode && 'text-[#fff]' }`} >{title}</Text>
+          <SingleDate fz={'sm'} fw={400}/>
         </div>
 
         <SegmentedControl

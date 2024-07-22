@@ -14,9 +14,15 @@ var months= ["January", "February", "March", "April", "May", "June", "July", "Au
 var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 var formattedToday = days[day] + ',' + ' ' + dd + ' ' + months[mm] + ' ' + yyyy;
 
-function SingleDate({fz}) {
+interface Props {
+  fz?: number | string 
+  fw?: number | string
+}
+
+// function SingleDate: React.FC<Props> = ({fz, fw}) => {
+const SingleDate: React.FC<Props> = ({fz, fw}) => {
   return (
-    <Text className={'text-center'} fw={300} my='auto' ml={'7'} fz={fz || 'sm'}>{formattedToday}</Text>
+    <Text className={` text-center`} fw={fw || 300} my='auto' ml={'7'} fz={fz || 'sm'}>{formattedToday}</Text>
   )
 }
 
