@@ -253,6 +253,20 @@ async function fetchFormAction(){
 
 async function updateFormAction(row, entry, obj, title){
 
+    // let filterHabit = habitObj.filter((habit) => {
+    //     return habit.entries.filter((en) => {
+    //         if(en.date.toString() === entry.date.toString() && title === habit.habit.title){
+    //             console.log("if", en.date, en.complete)
+    //             console.log("title", title)
+    //             console.log("habit.habit.title", habit.habit.title)
+    //             return en.complete = !en.complete
+    //         }
+    //     })
+    // })
+
+    // console.log("filterHabit", filterHabit)
+    // setHabitObj(filterHabit)
+
     const updateAction = await habitFormActions['update']
     let updateObj = {
         id: row.habit.id,
@@ -260,7 +274,14 @@ async function updateFormAction(row, entry, obj, title){
         complete: !entry.complete,
         user_id: state.user.user_id
     }
+    setToggleHabit({
+      id: row.habit.id,
+      date: entry.date.slice(0,2)
+    })
+    setChecked(!checked)
 
+
+    console.log("Before update", updateObj)
     
     updateAction(updateObj, state.user).then((data) => {
         console.log("update data Data:", data)
@@ -317,7 +338,12 @@ const rows = Array.isArray(habitObj) ? habitObj.map((row, index) => (
                         <p className={`${showDate? 'visible' : 'hidden'} text-xs`}>{obj.date} {obj.month}</p>
                         {
                         //  entry?.complete &&
-                         entry && 
+                         entry &&
+                            // <ThemeIcon key={dateIndex + index} onClick={() =>  updateFormAction(row, entry, obj)}  
+                            //     color="teal" size={30} radius="xl" className='cursor-pointer'>
+                            //     <hr z={0} className='absolute w-[200px] border border-green-500'></hr>
+                            //     <IconCircleCheck className='absolute' z={1} style={{ width: rem(36), height: rem(40) }} /> 
+                            // </ThemeIcon>  
                             <Group gap="0" className='!overflow-hidden !flex !items-center !justify-between !w-[100%]' align={'center'}>
                                 <div className=' flex-[0.35]'>
                                     <hr className={`w-[100%] border ${entry?.complete && row?.entries[index - 1]?.complete && 'border-green-500' }  `}></hr>
@@ -330,8 +356,37 @@ const rows = Array.isArray(habitObj) ? habitObj.map((row, index) => (
                                     <hr className={`w-[100%] border ${entry?.complete && row?.entries[index + 1]?.complete && 'border-green-500'}  `}></hr>
                                 </div>
                             </Group>
+
+// onClick={() =>  updateFormAction(row, entry, obj)} 
+                            
+                            // : 
+                            // <ThemeIcon
+                            //     key={dateIndex + index} 
+                            //     color={`${toggleHabit.id === row.habit.id && toggleHabit.date === obj.date.toString() 
+                            //         && checked? 'teal' : "rgba(228, 230, 240)"} 
+                            //     `} 
+                            //     size={30} radius="xl" className='cursor-pointer'>
+                            //     <hr z={0} className={`${toggleHabit.id === row.habit.id && 
+                            //     toggleHabit.date === obj.date.toString() && checked? 'visible' : 'hidden'
+                            //     }  
+                            //     absolute w-[200px] border border-green-500`}></hr>
+                            //     <IconCircleCheck z={1} className='absolute hover:bg-teal-500 rounded-lg p-1' 
+                            //         onClick={() =>  updateFormAction(row, entry, obj)}  
+                            //     style={{ width: rem(46), height: rem(40) }} /> 
+                            // </ThemeIcon> 
                             
                         }
+
+                        {/* <Group gap="[0px]" >
+                            {taskObj.status === 'complete'? 
+                                <ThemeIcon color="teal" size={30} radius="xl">
+                                    <IconCircleCheck style={{ width: rem(36), height: rem(40) }} /> 
+                                </ThemeIcon> :
+                                <ThemeIcon color="rgba(228, 230, 240)" size={30} radius="xl">
+                                    <IconCircleFilled color="" style={{ width: rem(36), height: rem(40) }} /> 
+                                </ThemeIcon>
+                            }
+                        </Group> */}
                     </div>
                 </Table.Td> 
             )) 
