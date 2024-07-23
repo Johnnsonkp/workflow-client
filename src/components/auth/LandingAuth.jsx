@@ -5,9 +5,7 @@ import { getItemFromLocalStorage, setItemToLocalStorage } from '../../utils/loca
 
 import AppLogoContainer from '../appLogo/AppLogoContainer';
 import AuthForm from './AuthForm';
-import { DefaultContainer } from '../boilerplate/DefaultContainer';
 import HeroSection from '../hero/HeroSection.tsx';
-import { LoadingContainer } from '../boilerplate/LoadingContainer';
 import { ReactRailsFeatures } from '../featuresDisplay/ReactRailsFeacture';
 import { UserCardInfo } from '../cards/userCardInfo/UserCardInfo';
 import classes from './LandingAuth.module.css';
@@ -20,7 +18,6 @@ export function LandingAuth() {
  const navigate = useNavigate()
  const [userType, setUserType] = useState()
  const [currentUserSession, setCurrentUserSession] = useState()
- const [toggle, setToggle] = useState(false)
  const userAuthStatus = getItemFromLocalStorage('AUTH')
 
  useEffect(() => {
@@ -40,17 +37,8 @@ export function LandingAuth() {
 
  
   return (
-    // <Paper shadow="md" radius="lg" className='overflow-y-hidden'>
-    // <Container my="md">
-      <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xs"  className={`${classes.wrapper} border border-red-400 overflow-hidden`} >
-
-        {/* <LoadingContainer className={`${classes.wrapper} overflow-y-hidden`}> */}
-        {/* <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md"> */}
-          {/* <div className={`${classes.innerwrap}`}> */}
-          
-            {/* <LoadingContainer className={`${classes.contacts} bg-[#f7f7f8] `}> */}
+      <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xs"  className={`${classes.wrapper} overflow-hidden`} >
             <Grid gutter="md" className={`${classes.contacts} p-10`}>
-              {/* <div className='w-[180px] px-4 rounded-xl bg-[#a2a3a54f]'> */}
               <div className='w-[180px] px-4 rounded-xl'>
                 <AppLogoContainer 
                   height={'100px'}
@@ -61,14 +49,9 @@ export function LandingAuth() {
                   {userType || state.userAuthStatus.error}
                 </Text>
               </Grid>
-
-              {/* <div className={classes.heroWrapper}> */}
                   <HeroSection />
                   <ReactRailsFeatures />
-              {/* </div> */}
               </Grid>
-              
-            {/* </LoadingContainer> */}
             <Grid gutter="md" >
               {
                 currentUserSession?.token ? 
@@ -77,13 +60,7 @@ export function LandingAuth() {
                 </div> : 
                   <AuthForm setUserData={setUserData} userData={userData}/>
               }
-              </Grid>
-          {/* </div> */}
-
-          {/* </SimpleGrid> */}
-        {/* </LoadingContainer> */}
-
-        
+              </Grid>        
       </SimpleGrid>
   );
 }

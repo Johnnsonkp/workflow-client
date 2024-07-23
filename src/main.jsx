@@ -11,6 +11,7 @@ import { AppState } from './store/AppState.jsx';
 import ComingSoon from './pages/ComingSoon';
 import Habits from './pages/Habits';
 import Landing from './pages/Landing.jsx';
+import Monthly from './pages/Monthly';
 import PageBoilerPlate from './components/boilerplate/Boilerplate.jsx';
 import PersonalLanding from './pages/PersonalLanding.jsx';
 import ReactDOM from 'react-dom/client'
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
   {
     path: "/Calendar",
     element: <PageBoilerPlate component={<ComingSoon />} />,
+  },
+  {
+    path: "/monthly",
+    element: <PageBoilerPlate component={<Monthly />} />,
   },
 ]);
 

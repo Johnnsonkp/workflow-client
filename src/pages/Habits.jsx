@@ -180,9 +180,6 @@ useEffect(() => {
     }
 }, [])
 
-const rows = HabitRows({habitObj, deleteHabit, showDate, DateDisplay, updateFormAction})
-
-
   return (loadingComponent?  <LoadingOverlay color='darkgray' zIndex={'0'} visible={true} overlayProps={{ radius: "sm", blur: 2 }} /> : 
     <div className='min-h-[80vh] mb-10'>
       <InnerTopNav title={'Habits'} tab1={'Week view'} setTab1={setTab1} data={data}/>
@@ -207,7 +204,15 @@ const rows = HabitRows({habitObj, deleteHabit, showDate, DateDisplay, updateForm
                 <Table.Th className={` text-[12px]`}>Current Streak</Table.Th>
                 </Table.Tr>
             </Table.Thead>
-            <Table.Tbody>{rows}</Table.Tbody>
+            <Table.Tbody>
+                {<HabitRows 
+                    habitObj={habitObj}
+                    deleteHabit={deleteHabit} 
+                    showDate={showDate} 
+                    DateDisplay={DateDisplay} 
+                    updateFormAction={updateFormAction}
+                />}
+            </Table.Tbody>
             <Table.Tfoot className='border border-gray-200 h-5 !p-5 bg-[#F1F3F5]'>
                 <p className='p-2 text-xs'>Habit count: {Array.isArray(habitsObj) && habitsObj.length || 0 }</p>
             </Table.Tfoot>

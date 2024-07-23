@@ -16,11 +16,6 @@ const SideNav = ({section, urlRedirect, className}) => {
   const {state, dispatch} = useAppState()
   const navigate = useNavigate()
 
-  const handleSignOut = (item) => {
-    userSignOut('AUTH')
-    dispatch({type: "LOGGED_OUT"})
-    navigate("/")
-  }
 
   useEffect(() => {
 
@@ -36,7 +31,7 @@ const SideNav = ({section, urlRedirect, className}) => {
                 <Text fw={500} size="sm" className={classes.title} c="dimmed" mb="xs">
                 </Text>
                 <SegmentedControl
-                    // color={'#F0F0F0'}
+                    radius="lg"
                     className={`${classes.controller}`}
                     value={section}
                     onChange={(value) => urlRedirect(value)}

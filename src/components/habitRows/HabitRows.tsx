@@ -2,6 +2,7 @@ import { ActionIcon, Group, Table, ThemeIcon, rem } from '@mantine/core';
 import { IconActivity, IconCircleCheck } from '@tabler/icons-react';
 
 import { IconTrash } from '@tabler/icons-react'
+import ProgressLine from './ProgressLine';
 
 type HabitEntry = {
     date: string; // Date in string format (e.g., '14/07/24')
@@ -56,23 +57,16 @@ export const HabitRows: React.FC<Props> = ({habitObj, deleteHabit, showDate, Dat
                 entry.date.slice(0, 2) === obj.date.toString() &&
                     <Table.Td key={dateIndex + index} className={`!overflow-hidden !px-0`}>
                         <div className={`text-center !px-0 }`}>
-                            <p className={`${showDate? 'visible' : 'hidden'} text-xs`}>{obj.date} {obj.month}</p>
+                        <p className={`${showDate? 'visible' : 'hidden'} text-xs`}>{obj.date} {obj.month}</p>
                             {entry &&
-                                <Group gap="0" className={`!overflow-hidden !flex !items-center !justify-between m-[auto] ${entry?.complete && 'animate-pulse'}`} align={'center'}>
-                                    <div className=' flex-[0.35]'>
-                                        <hr className={`w-[100%] border ${entry?.complete && row?.entries[index - 1]?.complete? 'bg-green-200 h-[3px] border-green-200' : 'hidden' }  `}></hr>
-                                    </div>
-                                    <ThemeIcon key={dateIndex + index} color={`${entry?.complete? 'teal' : 'rgba(228, 230, 240)'}`} size={28} radius="xl" 
-                                        className={`transition-all duration-900 ease-in-out  cursor-pointer px-0 mx-0 flex-[0.35] hover:${entry?.complete? '!bg-[rgba(228, 230, 240)]' : 'bg-teal-500'}`}>
-                                        <IconCircleCheck style={{ width: rem(34), height: rem(38) }} onClick={() =>  updateFormAction(row, entry, obj, row.habit.title)}  /> 
-                                    </ThemeIcon> 
-                                    <div className=' flex-[0.35]'>
-                                        <hr className={`transition-all duration-500 ease-in-out border 
-                                            ${entry?.complete && row?.entries[index + 1]?.complete? 'bg-green-200 h-[3px] w-[100%] border-green-200' : 'w-[0%]'}  `}>
-
-                                            </hr>
-                                    </div>
-                                </Group>   
+                            <Group gap="0" className={` !overflow-hidden !flex !items-center !justify-between m-[auto] ${entry?.complete && 'animate-pulse'}`} align={'center'}>
+                                <ProgressLine entry={entry} row={row} index={index} direction={true}/>
+                                <ThemeIcon key={dateIndex + index} color={`${entry?.complete? 'teal' : 'rgba(228, 230, 240)'} `} size={28} radius="xl" 
+                                    className={`hover:bg-teal-400 transition-all duration-900 !ease-in-out cursor-pointer px-0 mx-0 flex-[0.35] `}>
+                                    <IconCircleCheck style={{ width: rem(34), height: rem(38) }} onClick={() =>  updateFormAction(row, entry, obj, row.habit.title)}  /> 
+                                </ThemeIcon> 
+                                <ProgressLine entry={entry} row={row} index={index} direction={false}/>
+                            </Group>   
                             }
                         </div>
                     </Table.Td> 

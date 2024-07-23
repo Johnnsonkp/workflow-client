@@ -29,7 +29,8 @@ const initialState = {
     latestTask: null,
     deletedTask: null,
     refreshState: false,
-    lightMode: false
+    lightMode: false,
+    monthly: null
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -40,6 +41,10 @@ export const reducer = (state, action) => {
     const {type, payload} = action
     
     switch(action.type){
+        case "SET_MONTHLY":
+            newState = {...state, monthly: action.payload}
+            return newState
+            break;
         case "LATEST_STAND_UP":
             newState = {...state, standup: action.payload}
             return newState

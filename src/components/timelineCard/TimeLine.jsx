@@ -1,12 +1,17 @@
 import { Button, Card, Group, Modal, Paper, Text, Timeline } from '@mantine/core';
 import { IconGitBranch, IconGitCommit, IconGitPullRequest, IconMessageDots } from '@tabler/icons-react';
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
+import { useAppState } from '../../store/AppState';
 import { useDisclosure } from '@mantine/hooks';
+import { useNavigate } from 'react-router-dom';
 
 function TimeLineCardDIsplay() {
     const [toggleForm, setToggleForm] = useState(false)
+    const [dispatchMonthy, setDispatchMonthly] = useState(true)
     const [opened, { open, close }] = useDisclosure(toggleForm);
+    const {dispatch} = useAppState()
+    const navigate = useNavigate()
     
     const [monthlyGoals, setMonthlyGoals] = useState([ 
         {title: 'Complete Productivity App', complete: true }, 
@@ -25,16 +30,19 @@ function TimeLineCardDIsplay() {
           {title: monthly_2, complete: false},
           {title: monthly_3, complete: false}
         ])
-    }
 
+        // dispatch({type: 'SET_MONTHLY', payload: monthlyGoals})
+    }
 
     return (
         <>
-            <Paper onMouseDown={open} onClose={close} withBorder radius="sm" p="xs" key={1} 
+            {/* <Paper onClick={() => navigate('/monthly')} withBorder radius="sm" p="xs" key={1} 
+                className='!shadow-md h-[88%] !bg-[#F9FAFA] cursor-pointer'> */}
+            <Paper onMouseDown={open} onClose={close}  withBorder radius="sm" p="xs" key={1} 
                 className='!shadow-md h-[88%] !bg-[#F9FAFA] cursor-pointer'>
                 <Group className='!justify-center !align-end'>
                     <Timeline active={0} bulletSize={22} lineWidth={2} className=' w-[95%]' mb="sm" pt='lg'>
-
+                        {/* <button onMouseDown={open} onClose={close}>CLick Me</button> */}
                         <Timeline.Item size={'sm'} 
                             bullet={<IconGitBranch size={10} />} fz="sm" 
                             title={monthlyGoals[0].title}>

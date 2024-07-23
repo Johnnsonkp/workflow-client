@@ -129,7 +129,9 @@ const DashboardBannerCards: React.FC<Props> = (loadingComponent) => {
               position={position} 
               nextPosition={(position + 1) % 4}
               lastPosition={(position + 2) % 4}
-            /> : <EmptyTaskModal />
+            /> 
+            : 
+            <EmptyTaskModal />
           }
 
         </Grid> 
