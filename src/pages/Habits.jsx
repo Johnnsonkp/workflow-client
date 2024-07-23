@@ -3,6 +3,9 @@ import { IconActivity, IconCircleCheck } from '@tabler/icons-react';
 import { ThemeIcon, rem } from '@mantine/core';
 import { useEffect, useState } from 'react';
 
+import { HabitForm } from '../components/forms/HabitForm';
+import { HabitRows } from '../components/habitRows/HabitRows';
+import { HabitsObj } from '../components/habitRows/HabitsObj';
 import { IconPlus } from '@tabler/icons-react';
 import { IconTrash } from '@tabler/icons-react'
 import InnerTopNav from '../components/innerTopNav/InnerTopNav';
@@ -59,67 +62,19 @@ const arrayRange = (start, stop, step) =>
     (value, index) => start + index * step
 );
 
-
-const HabitsObj = [
-    {   
-        habit: {
-            title: "Bible study",
-            description: "Run before or after work",
-            date_created: '16/07/24',
-            current_streak: 2,
-        },   
-        entries: [
-            {date: '14/07/24', complete: true},
-            {date: '15/07/24', complete: true},
-            {date: '16/07/24', complete: true},
-        ]
-    },
-    {   
-        habit: {
-            title: "Meditate",
-            description: "Meditate",
-            date_created: '16/07/24',
-            current_streak: 0,
-        },   
-        entries: [
-            {date: '14/07/24', complete: true},
-            {date: '15/07/24', complete: false},
-            {date: '16/07/24', complete: true},
-        ]
-    },
-    {   
-        habit: {
-            title: "Daily Run",
-            description: "Daily run ",
-            date_created: '16/07/24',
-            current_streak: 0,
-        },   
-        entries: [
-            {date: '14/07/24', complete: false},
-            {date: '15/07/24', complete: true},
-            {date: '16/07/24', complete: false},
-        ]
-    }
-]
-
 function Habits() {
   const [scrolled, setScrolled] = useState(false);
   const [checked, setChecked] = useState(false)
   const [showDate, setShowDate] = useState(false)
   const [tab1, setTab1] = useState('Week')
   const [opened, { open, close }] = useDisclosure(false);
-  const [toggleHabit, setToggleHabit] = useState({
-    id: '',
-    date: ''
-  })
+  const [toggleHabit, setToggleHabit] = useState({id: '', date: ''})
   const [habitObj, setHabitObj] = useState()
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const [loadingComponent, setLoadingComponent] = useState(true)
-
   const {state, dispatch} = useAppState()
 
-// let habitsObj = habitObj || []
 function removeDuplicateEntries(data) {
     const seenDates = new Set();
     data.entries = data.entries.filter(entry => {
@@ -132,18 +87,11 @@ function removeDuplicateEntries(data) {
 
 let habitsObj = habitObj
 function sortHabitLogs(habitObj) {
-    // console.log("Array.isArray(habitsObj)", Array.isArray(habitObj))
-    
     habitObj && Array.isArray(habitObj) ? habitObj.forEach((habit, index) => {
-        // console.log('index',index, habit.habit.title)
-
         if(index === habitObj.length){
             return
         }
-
         for(let i = 0; i < DateDisplay.length; i++){
-            // console.log('i',i)
-            
             if(habit.entries[i] && habit.entries[i].date.slice(0,2).toString() !== DateDisplay[i].date.toString()){
                 let habitEntries = removeDuplicateEntries(habit)
                 habitEntries.entries.push({date: `${DateDisplay[i].date}/${numMonth[DateDisplay[i].month]}/24`, complete: false})
@@ -157,82 +105,8 @@ function sortHabitLogs(habitObj) {
     return habitObj
 }
 
-function HabitForm() {
-    const form = useForm({
-        initialValues: {
-            title: "",
-            description: "",
-            current_streak: 0,
-            complete: false,
-        },
-        validate: {
-          title: (value) => value.trim().length < 2,
-        },
-    });
-
-    const handleFormSubmit = async (form) => {
-        const creatAction = await habitFormActions['create']
-        creatAction(form.values, state.user).then((data) => {
-            console.log("Data:", data)
-            navigate('/habits')
-        })
-    }
-
-
-    return(
-        <form 
-            className='flex-row items-center justify-center bg-white m-auto rounded-md px-7'
-            onSubmit={form.onSubmit(() => handleFormSubmit(form))}
-        >
-            <Title
-                order={2}
-                size="h2"
-                style={{ fontFamily: 'Greycliff CF, var(--mantine-font-family)' }}
-                fw={600}
-                ta="left"
-             >
-                Add New Habit
-            </Title>
-            <hr className='mt-2'></hr>
-            
-            <SimpleGrid cols={{ base: 1, sm: 2, md: 1 }} mt="md">
-                <TextInput
-                    label="Habit Name"
-                    placeholder="Habit Name"
-                    name="title"
-                    variant="filled"
-                    size='md'
-                    {...form.getInputProps('title')}
-                />
-                <Textarea
-                    mt="md"
-                    label="Description"
-                    placeholder="Task Description"
-                    maxRows={10}
-                    minRows={3}
-                    autosize
-                    size='md'
-                    name="description"
-                    variant="filled"
-                    {...form.getInputProps('description')}
-                />
-            </SimpleGrid>
-            <hr className='mt-7'></hr>
-            <Group justify="right" mt="xl">
-                <Button type="submit" size="sm" onClick={() => navigate('/habits')}>
-                    Cancel
-                </Button>
-                <Button type="submit" size="sm">
-                    Create
-                </Button>
-            </Group>
-        </form>
-    )
-}
-
 
 async function deleteHabit(obj){
-    console.log("obj:", obj)
     const deleteAction = await habitFormActions['delete']
     deleteAction(state.user, obj.id).then((data) => {
         console.log("Data:", data)
@@ -247,25 +121,10 @@ async function fetchFormAction(){
 
         const filterData = sortHabitLogs(data)
         setHabitObj(filterData)
-        // setHabitObj(data)
     })
 }
 
 async function updateFormAction(row, entry, obj, title){
-
-    // let filterHabit = habitObj.filter((habit) => {
-    //     return habit.entries.filter((en) => {
-    //         if(en.date.toString() === entry.date.toString() && title === habit.habit.title){
-    //             console.log("if", en.date, en.complete)
-    //             console.log("title", title)
-    //             console.log("habit.habit.title", habit.habit.title)
-    //             return en.complete = !en.complete
-    //         }
-    //     })
-    // })
-
-    // console.log("filterHabit", filterHabit)
-    // setHabitObj(filterHabit)
 
     const updateAction = await habitFormActions['update']
     let updateObj = {
@@ -321,82 +180,7 @@ useEffect(() => {
     }
 }, [])
 
-const rows = Array.isArray(habitObj) ? habitObj.map((row, index) => (    
-    <Table.Tr key={row.habit.title}>
-        <Table.Td className='flex justify-between'>
-            <div className='flex'><IconActivity /> <p>{row.habit.title}</p></div>
-            <ActionIcon variant="subtle" color="red" onClick={() => deleteHabit(row.habit)} >
-                <IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-            </ActionIcon>
-        </Table.Td>
-        {
-        DateDisplay.map((obj, dateIndex) => (
-            row?.entries && row.entries.map((entry, index) => (
-            entry.date.slice(0, 2) === obj.date.toString() &&
-                <Table.Td key={dateIndex + index} className={`!overflow-hidden !px-0`}>
-                    <div className='text-center !px-0'>
-                        <p className={`${showDate? 'visible' : 'hidden'} text-xs`}>{obj.date} {obj.month}</p>
-                        {
-                        //  entry?.complete &&
-                         entry &&
-                            // <ThemeIcon key={dateIndex + index} onClick={() =>  updateFormAction(row, entry, obj)}  
-                            //     color="teal" size={30} radius="xl" className='cursor-pointer'>
-                            //     <hr z={0} className='absolute w-[200px] border border-green-500'></hr>
-                            //     <IconCircleCheck className='absolute' z={1} style={{ width: rem(36), height: rem(40) }} /> 
-                            // </ThemeIcon>  
-                            <Group gap="0" className='!overflow-hidden !flex !items-center !justify-between !w-[100%]' align={'center'}>
-                                <div className=' flex-[0.35]'>
-                                    <hr className={`w-[100%] border ${entry?.complete && row?.entries[index - 1]?.complete && 'border-green-500' }  `}></hr>
-                                </div>
-                                <ThemeIcon key={dateIndex + index} color={`${entry?.complete? 'teal' : 'rgba(228, 230, 240)'}`} size={28} radius="xl" 
-                                    className={`cursor-pointer px-0 mx-0 flex-[0.35] hover:${entry?.complete? '!bg-[rgba(228, 230, 240)]' : 'bg-teal-500'} `}>
-                                    <IconCircleCheck style={{ width: rem(34), height: rem(38) }} onClick={() =>  updateFormAction(row, entry, obj, row.habit.title)}  /> 
-                                </ThemeIcon> 
-                                <div className=' flex-[0.35]'>
-                                    <hr className={`w-[100%] border ${entry?.complete && row?.entries[index + 1]?.complete && 'border-green-500'}  `}></hr>
-                                </div>
-                            </Group>
-
-// onClick={() =>  updateFormAction(row, entry, obj)} 
-                            
-                            // : 
-                            // <ThemeIcon
-                            //     key={dateIndex + index} 
-                            //     color={`${toggleHabit.id === row.habit.id && toggleHabit.date === obj.date.toString() 
-                            //         && checked? 'teal' : "rgba(228, 230, 240)"} 
-                            //     `} 
-                            //     size={30} radius="xl" className='cursor-pointer'>
-                            //     <hr z={0} className={`${toggleHabit.id === row.habit.id && 
-                            //     toggleHabit.date === obj.date.toString() && checked? 'visible' : 'hidden'
-                            //     }  
-                            //     absolute w-[200px] border border-green-500`}></hr>
-                            //     <IconCircleCheck z={1} className='absolute hover:bg-teal-500 rounded-lg p-1' 
-                            //         onClick={() =>  updateFormAction(row, entry, obj)}  
-                            //     style={{ width: rem(46), height: rem(40) }} /> 
-                            // </ThemeIcon> 
-                            
-                        }
-
-                        {/* <Group gap="[0px]" >
-                            {taskObj.status === 'complete'? 
-                                <ThemeIcon color="teal" size={30} radius="xl">
-                                    <IconCircleCheck style={{ width: rem(36), height: rem(40) }} /> 
-                                </ThemeIcon> :
-                                <ThemeIcon color="rgba(228, 230, 240)" size={30} radius="xl">
-                                    <IconCircleFilled color="" style={{ width: rem(36), height: rem(40) }} /> 
-                                </ThemeIcon>
-                            }
-                        </Group> */}
-                    </div>
-                </Table.Td> 
-            )) 
-        ))
-        }
-            <Table.Td className='flex'>
-                <p>{row.habit.current_streak}</p>
-            </Table.Td>
-    </Table.Tr>
-)) : null
+const rows = HabitRows({habitObj, deleteHabit, showDate, DateDisplay, updateFormAction})
 
 
   return (loadingComponent?  <LoadingOverlay color='darkgray' zIndex={'0'} visible={true} overlayProps={{ radius: "sm", blur: 2 }} /> : 
@@ -424,7 +208,7 @@ const rows = Array.isArray(habitObj) ? habitObj.map((row, index) => (
                 </Table.Tr>
             </Table.Thead>
             <Table.Tbody>{rows}</Table.Tbody>
-            <Table.Tfoot className='border border-gray-200 h-5 !p-5'>
+            <Table.Tfoot className='border border-gray-200 h-5 !p-5 bg-[#F1F3F5]'>
                 <p className='p-2 text-xs'>Habit count: {Array.isArray(habitsObj) && habitsObj.length || 0 }</p>
             </Table.Tfoot>
             </Table>

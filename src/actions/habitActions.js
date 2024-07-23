@@ -51,7 +51,6 @@ export const habitFormActions = ({
     },
     update: (formData, userData) => {
       console.log("Send update formData", formData)
-    //   (date: params[:date], complete: params[:complete])
       return fetch(baseURL + `habits/${formData.id}`, {
         method: "put",
         headers: {
@@ -59,12 +58,6 @@ export const habitFormActions = ({
           Accept: "application/json",
           Authorization: userData.token
         },
-        // body: JSON.stringify({
-        //   id: formData.id, 
-        //   date: formData.date, 
-        //   complete: formData.complete,
-        //   user_id: userData.user_id 
-        // }),
         body: JSON.stringify(formData),
       }).then((response) => {
         return response.json()

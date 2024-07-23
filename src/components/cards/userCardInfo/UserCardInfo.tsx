@@ -33,12 +33,12 @@ export function UserCardInfo({state, user, navigate}) {
       <Card.Section className={classes.section}>
         <Group gap={4}>
           <div>
-            <Button bg={'red'} onClick={ () => handleSignOut()} radius="sm" style={{ flex: 1 }}>
+            <Button bg={'red'} onClick={ () => handleSignOut()} radius="sm" style={{ flex: 1 }} size='xs'>
                 Signout
             </Button>
           </div>
 
-          <Button onClick={() => navigate("/dashboard")} radius="sm" style={{ flex: 1 }}>
+          <Button onClick={() => navigate("/dashboard")} radius="sm" style={{ flex: 1 }} size='xs'>
             Back to work
           </Button>
         </Group>

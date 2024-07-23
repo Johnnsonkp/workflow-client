@@ -8,7 +8,23 @@ export default {
     "./components/**/*.jsx",
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        pulse: {
+          '0%, 100%': {
+            opacity: 1,
+            transform: 'scale(1)',
+          },
+          '50%': {
+            opacity: 0.6,
+            transform: 'scale(1.03)',
+          },
+        },
+      },
+      animation: {
+        pulse: 'pulse 3s ease-in-out infinite',
+      },
+    },
   },
   plugins: [],
 };
