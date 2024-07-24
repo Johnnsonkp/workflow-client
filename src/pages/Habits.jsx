@@ -222,7 +222,7 @@ useEffect(() => {
         <div className='flex justify-end m-2 mt-4'>
             <Button className='m-2' size='xs' onClick={() => setShowDate(!showDate)}>Show habit date</Button>
             <Button size='xs' onClick={open} onClose={close} className={`shadow-lg m-2`}>
-                <IconPlus size={20} className={`!transition-all !duration-500 `}/>
+                <IconPlus size={20} className={`!transition-all !duration-500 `}/> Add Habit
             </Button>
         </div>
 

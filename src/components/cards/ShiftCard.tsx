@@ -41,7 +41,7 @@ const ShiftCard: React.FC<Props>  = ({obj, todaysDate, toggleDelete, setToggleDe
         obj?.task && Array.isArray(obj.task) && obj.task.length > 0 ? obj.task.map((task, index) => (    
             <div key={index + task.title} 
                 className={`relative cursor-pointer border ${task ? 'border-gray-300' : 'border-gray-200'} flex-col mt-2 text-[12px] h-[120px] w-28 rounded-md  p-1 
-                    ${obj?.date === todaysDate? ' border-dashed border-red-500' : "bg-[#F9F9FB] border-gray-200"}
+                    ${obj?.date === todaysDate? ' border-dashed border-[#60A6FA] bg-[#F9F9FB]' : "bg-[#F9F9FB] border-gray-200"}
                     ${task.status == 'complete' && '!bg-[#D2F8D9] !border-green-500' }`
                 }
             >
@@ -71,5 +71,3 @@ const ShiftCard: React.FC<Props>  = ({obj, todaysDate, toggleDelete, setToggleDe
 }
 
 export default ShiftCard
-// bg-[#DBEAFE]
-// border-[#60A5FA]

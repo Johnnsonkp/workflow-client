@@ -1,7 +1,7 @@
 import { ActionIcon, Group, Table, ThemeIcon, rem } from '@mantine/core';
 import { IconActivity, IconCircleCheck } from '@tabler/icons-react';
+import { IconPencil, IconTrash } from '@tabler/icons-react'
 
-import { IconTrash } from '@tabler/icons-react'
 import ProgressLine from './ProgressLine';
 
 type HabitEntry = {
@@ -44,12 +44,17 @@ interface Props {
 export const HabitRows: React.FC<Props> = ({habitObj, deleteHabit, showDate, DateDisplay, updateFormAction }) => (
 
     Array.isArray(habitObj) ? habitObj.map((row, index) => (    
-        <Table.Tr key={row.habit.title}>
+        <Table.Tr key={row.habit.title} >
             <Table.Td className='flex justify-between'>
                 <div className='flex'><IconActivity /> <p>{row.habit.title}</p></div>
-                <ActionIcon variant="subtle" color="red" onClick={() => deleteHabit(row.habit)} >
-                    <IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-                </ActionIcon>
+                <Group gap={4} justify="flex-end">
+                    <ActionIcon variant="subtle" color="gray">
+                        <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+                    </ActionIcon>
+                    <ActionIcon variant="subtle" color="red" onClick={() => deleteHabit(row.habit)} >
+                        <IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+                    </ActionIcon>
+                </Group>
             </Table.Td>
             {
             DateDisplay.map((obj, dateIndex) => (
@@ -59,10 +64,15 @@ export const HabitRows: React.FC<Props> = ({habitObj, deleteHabit, showDate, Dat
                         <div className={`text-center !px-0 }`}>
                         <p className={`${showDate? 'visible' : 'hidden'} text-xs`}>{obj.date} {obj.month}</p>
                             {entry &&
-                            <Group gap="0" className={` !overflow-hidden !flex !items-center !justify-between m-[auto] ${entry?.complete && 'animate-pulse'}`} align={'center'}>
+                            <Group gap="0" 
+                                className={` !overflow-hidden !flex !items-center !justify-between m-[auto] ${entry?.complete && 'animate-pulse'}`} align={'center'}
+                            >
                                 <ProgressLine entry={entry} row={row} index={index} direction={true}/>
-                                <ThemeIcon key={dateIndex + index} color={`${entry?.complete? 'teal' : 'rgba(228, 230, 240)'} `} size={28} radius="xl" 
-                                    className={`hover:bg-teal-400 transition-all duration-900 !ease-in-out cursor-pointer px-0 mx-0 flex-[0.35] `}>
+                                <ThemeIcon key={dateIndex + index} 
+                                    color={`${entry?.complete? '#00FA9A' : 'rgba(228, 230, 240)'} `} 
+                                    size={28} radius="xl" 
+                                    className={`hover:bg-teal-500 transition-all duration-900 !ease-in-out cursor-pointer px-0 mx-0 flex-[0.35] `}
+                                >
                                     <IconCircleCheck style={{ width: rem(34), height: rem(38) }} onClick={() =>  updateFormAction(row, entry, obj, row.habit.title)}  /> 
                                 </ThemeIcon> 
                                 <ProgressLine entry={entry} row={row} index={index} direction={false}/>

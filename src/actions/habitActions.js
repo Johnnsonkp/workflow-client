@@ -10,7 +10,6 @@ export const habitFormActions = ({
             Authorization: userData.token
           },
           body: JSON.stringify({
-            // (title: params[:title], description: params[:description], current_streak: 0, user_id: params[:user_id])
             title: formData.title,
             description: formData.description,
             current_streak: formData.current_streak,

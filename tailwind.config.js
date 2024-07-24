@@ -16,7 +16,7 @@ export default {
             transform: 'scale(1)',
           },
           '50%': {
-            opacity: 0.6,
+            opacity: 0.5,
             transform: 'scale(1.03)',
           },
         },
