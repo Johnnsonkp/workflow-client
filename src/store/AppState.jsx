@@ -24,7 +24,7 @@ const initialState = {
         email: ''
     },
     standup: '',
-    darkTheme: false, 
+    darkTheme: null, 
     tasks: null,
     latestTask: null,
     deletedTask: null,

@@ -98,7 +98,7 @@ const WeekView: React.FC<Props> = ({taskObj, dateObj, deleteTask}) => {
 
     return (
       <div className='min-h-[70vh]'>
-        <TopTabs dateDisplayObjWithTask={dateDisplayObjWithTask}/>
+        <TopTabs dateDisplayObjWithTask={dateDisplayObjWithTask} DateDisplay={DateDisplay}/>
           <Grid w={'100%'} className=''>
             <Grid.Col span={{ base: 12, xs: 9.2}} className='overflow-hidden mr-4'>
               {dateDisplayObjWithTask?

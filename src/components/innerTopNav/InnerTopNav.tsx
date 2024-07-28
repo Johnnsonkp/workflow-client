@@ -30,11 +30,14 @@ interface Props {
   value?: (string | Link)[];
   title?: string
   tab1?: string
+  tab2?: string
+  activeTab?: string
   setTab1: (value: string | undefined) => void;
+  setActiveTab: (value: string | undefined) => void;
   disableControl?: boolean;
 }
 
-const InnerTopNav: React.FC<Props> = ({ setTogglePanel, data, value, title, tab1, setTab1, disableControl}) => {
+const InnerTopNav: React.FC<Props> = ({ setTogglePanel, data, value, title, tab1, tab2, setTab1, disableControl, activeTab, setActiveTab}) => {
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const [section, setSection] = useState(data && data[0]?.value || 'list');
@@ -42,8 +45,8 @@ const InnerTopNav: React.FC<Props> = ({ setTogglePanel, data, value, title, tab1
 
   const urlRedirect = (value: any) => {
     setSection(value)
-    if(tab1){
-      setTab1(value)
+    if(activeTab){
+      setActiveTab(value)
     }else{
       setTogglePanel(value)
     }

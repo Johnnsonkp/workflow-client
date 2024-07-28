@@ -4,8 +4,6 @@
     width: 210px;
     width: 90%;
     margin: auto;
-
-    /* padding: var(--mantine-spacing-md); */
     padding: 4px;
     display: flex;
     flex-direction: column;
@@ -44,14 +42,14 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    font-size: var(--mantine-font-size-md);
+    /* font-size: var(--mantine-font-size-md); */
+    font-size: var(--mantine-font-size-sm);
     color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-1));
     /* padding: var(--mantine-spacing-xs) var(--mantine-spacing-xs); */
     padding: 7px 7px;
     margin: 2px;
     border-radius: var(--mantine-radius-sm);
-    font-weight: 500;
-  
+    font-weight: 400;
     &:hover {
       background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
       color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
@@ -66,8 +64,7 @@
       &:hover {
         background-color: #FFFFFF;
         font-weight: 600;
-        box-shadow: rgba(0, 0, 0, 0.01) 0px 1px 3px 0px, rgba(0, 0, 0, 0.01) 0px 1px 2px 0px;
-        border-left: 2px solid #464FEB;
+        /* box-shadow: rgba(0, 0, 0, 0.01) 0px 1px 3px 0px, rgba(0, 0, 0, 0.01) 0px 1px 2px 0px; */
         color: #464FEB;
         & .linkIcon {
           color: #464FEB;

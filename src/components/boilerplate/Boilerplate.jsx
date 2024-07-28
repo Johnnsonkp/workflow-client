@@ -93,16 +93,15 @@ function PageBoilerPlate({ component }) {
             </Grid.Col>
             <Grid.Col span={{ base: 12, xs: 3.3, sm:2.9, md: 2.5, lg: 1.8 }} className={`!max-w-[220px] bg-inherit `}>
               <SideNav 
-                // className={`${darkLightMode? '!bg-[#2D333B]' : 'bg-[#F0F0F0]' }`}
                 className={``}
                 section={section} 
                 urlRedirect={urlRedirect} 
               />
             </Grid.Col>
-            <Grid.Col span={{ base: 12, xs: 8.4, sm: 9, md: 9.4, lg: 10.2 }} 
+            <Grid.Col 
+              span={{ base: 12, xs: 8.4, sm: 9, md: 9.4, lg: 10.2 }} 
               className={`${bpClasses.wrapper} 
-                ${darkLightMode? '!bg-[#1C2127] border border-[#5E5E5E] mt-10' : 'bg-[#fff] border border-[#f4f4f4] mt-10'} transition-colors ease-in-out !delay-1000`}
-              
+                ${darkLightMode? '!bg-[#1C2127] border border-[#5E5E5E] mt-10' : 'bg-[#fff] border border-[#f4f4f4] mt-10'} transition-colors ease-in-out !delay-1000 `}
             >
               <LoadingContainer className={`${bpClasses.component} p-7 pt-4 mt-1`}>
                   <div className={` max-w-[1800px] !m-[auto] pt-0`}>
@@ -116,5 +115,3 @@ function PageBoilerPlate({ component }) {
     return component ? <CustomLayout /> : "loading...";
   }
   export default PageBoilerPlate;
-
-  // #3A3A3A

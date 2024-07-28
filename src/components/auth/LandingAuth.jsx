@@ -38,29 +38,31 @@ export function LandingAuth() {
  
   return (
       <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xs"  className={`${classes.wrapper} overflow-hidden`} >
-            <Grid gutter="md" className={`${classes.contacts} p-10`}>
-              <div className='w-[180px] px-4 rounded-xl'>
-                <AppLogoContainer 
-                  height={'100px'}
-                />
-              </div>
-              <Grid gutter="md" className='mt-20'>
-                <Text fz="lg" fw={700} className={`${classes.title} !mt-0`} c="#333" >
-                  {userType || state.userAuthStatus.error}
-                </Text>
-              </Grid>
-                  <HeroSection />
-                  <ReactRailsFeatures />
-              </Grid>
-            <Grid gutter="md" >
-              {
-                currentUserSession?.token ? 
-                <div className='flex align-middle justify-center relative top-24 left-40'>
-                  <UserCardInfo state={state} user={userAuthStatus} navigate={navigate}/>
-                </div> : 
-                  <AuthForm setUserData={setUserData} userData={userData}/>
-              }
-              </Grid>        
+        <Grid gutter="md" className={`${classes.contacts} p-10`}>
+          <AppLogoContainer />
+          <Grid gutter="md" className='mt-10'>
+            <Text fz="lg" fw={700} className={`${classes.title} !mt-0`} c="#333" >
+              {userType || state.userAuthStatus.error}
+            </Text>
+          </Grid>
+
+          <Grid gutter="md" className='mt-5'>
+              <HeroSection />
+              <ReactRailsFeatures />
+          </Grid>
+        </Grid>
+
+        <Grid gutter="md" justify='center' align='end' className='flex items-center justify-center min-h-screen'>
+          <div className='flex justify-center w-[100%] h-[100%]'>
+            {
+              currentUserSession?.token ? 
+              <div className='flex align-middle justify-center '>
+                <UserCardInfo state={state} user={userAuthStatus} navigate={navigate}/>
+              </div> : 
+                <AuthForm setUserData={setUserData} userData={userData}/>
+            }
+          </div>
+        </Grid>        
       </SimpleGrid>
   );
 }

@@ -106,37 +106,37 @@ const DashboardBannerCards: React.FC<Props> = (loadingComponent) => {
   };
   
   return (
-    <>
-      <Container 
-        className='flex-col justify-center'
-        fluid={true}
-        mt="md"
-        mb="xl" 
-        px="xs"
-      >
-        <div className='flex justify-end m-2'>
-          <Button bg="#F2F3F5" size="compact-xs" className="mx-1 !text-[#95A2D9] !border-gray-300" onClick={() => updatePositions(1)}>
-            <IconArrowBadgeLeftFilled />
-          </Button>
-          <Button bg="#F2F3F5" size="compact-xs" className="mx-1 !text-[#95A2D9] !border-gray-300" onClick={() => updatePositions(-1)}>
-            <IconArrowBadgeRightFilled />
-          </Button>
-        </div>
-        
-        <Grid>
-          { loadingComponent?
-            <CustomCarousel 
-              position={position} 
-              nextPosition={(position + 1) % 4}
-              lastPosition={(position + 2) % 4}
-            /> 
-            : 
-            <EmptyTaskModal />
-          }
+      <>
+        <Container 
+          className='flex-col justify-center'
+          fluid={true}
+          mt="md"
+          mb="xl" 
+          px="xs"
+        >
+          <div className='flex justify-end m-2'>
+            <Button bg="#F2F3F5" size="compact-xs" className="mx-1 !text-[#95A2D9] !border-gray-300" onClick={() => updatePositions(1)}>
+              <IconArrowBadgeLeftFilled />
+            </Button>
+            <Button bg="#F2F3F5" size="compact-xs" className="mx-1 !text-[#95A2D9] !border-gray-300" onClick={() => updatePositions(-1)}>
+              <IconArrowBadgeRightFilled />
+            </Button>
+          </div>
+          
+          <Grid>
+            { loadingComponent?
+              <CustomCarousel 
+                position={position} 
+                nextPosition={(position + 1) % 4}
+                lastPosition={(position + 2) % 4}
+              /> 
+              : 
+              <EmptyTaskModal />
+            }
 
-        </Grid> 
-      </Container> 
-      </>
+          </Grid> 
+        </Container> 
+        </> 
     );
 }
 

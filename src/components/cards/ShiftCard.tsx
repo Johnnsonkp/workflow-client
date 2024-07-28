@@ -40,8 +40,8 @@ const ShiftCard: React.FC<Props>  = ({obj, todaysDate, toggleDelete, setToggleDe
     return (
         obj?.task && Array.isArray(obj.task) && obj.task.length > 0 ? obj.task.map((task, index) => (    
             <div key={index + task.title} 
-                className={`relative cursor-pointer border ${task ? 'border-gray-300' : 'border-gray-200'} flex-col mt-2 text-[12px] h-[120px] w-28 rounded-md  p-1 
-                    ${obj?.date === todaysDate? ' border-dashed border-[#60A6FA] bg-[#F9F9FB]' : "bg-[#F9F9FB] border-gray-200"}
+                className={`relative cursor-pointer border ${task ? 'border-gray-300' : 'border-gray-200'} flex-col mt-2 text-[12px] h-[100px] w-28 rounded-md  p-1 
+                    ${obj?.date === todaysDate? ' border-dashed !border-[#60A6FA] bg-[#F9F9FB]' : "bg-[#F9F9FB] border-gray-200"}
                     ${task.status == 'complete' && '!bg-[#D2F8D9] !border-green-500' }`
                 }
             >
@@ -58,13 +58,13 @@ const ShiftCard: React.FC<Props>  = ({obj, todaysDate, toggleDelete, setToggleDe
                     </div>
                     <p className='text-[8px] my-1'>{task?.time_to_start} - {task?.time_to_finish}</p>
                 </div>
-                <p className='font-semibold text-[10px]'>{task?.title}</p>
+                <p className='font-[500] text-[10px]'>{task?.title?.length > 30? task?.title?.slice(0,35).concat('...') : task?.title?.slice(0,35)}</p>
                 <p className='text-[10px] mt-3 absolute bottom-1'>{task?.status}</p>
             </div>
         )) : 
     
         <div key={uniqueID} 
-            className='p-1 border border-gray-300 bg-transparent rounded-md mt-2 w-28 text-center text-[10px] h-[120px] flex align-middle justify-center'>
+            className='p-1 border border-gray-300 bg-transparent rounded-md mt-2 w-28 text-center text-[10px] h-[100px] flex align-middle justify-center'>
                 Unscheduled
         </div>
     )

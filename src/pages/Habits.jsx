@@ -1,6 +1,7 @@
 import { ActionIcon, Button, Group, LoadingOverlay, ScrollArea, SimpleGrid, Table, TextInput, Textarea, Title } from '@mantine/core';
 import { IconActivity, IconCircleCheck } from '@tabler/icons-react';
 import { ThemeIcon, rem } from '@mantine/core';
+import { calculateWeek, monthsArr, numMonth } from '../utils/dateUtills';
 import { useEffect, useState } from 'react';
 
 import { HabitForm } from '../components/forms/HabitForm';
@@ -10,19 +11,15 @@ import { IconPlus } from '@tabler/icons-react';
 import { IconTrash } from '@tabler/icons-react'
 import InnerTopNav from '../components/innerTopNav/InnerTopNav';
 import { Modal } from '@mantine/core';
-import { calculateWeek } from '../utils/dateUtills';
+import { WeekHabitsDisplay } from '../components/habitRows/WeekHabitsDisplay';
+import { calculateMonth } from '../utils/dateUtills';
 import { habitFormActions } from '../actions/habitActions';
 import { useAppState } from '../store/AppState';
 import { useDisclosure } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import { useNavigate } from 'react-router-dom';
 
-var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-const numMonth = {
-    'January': '01',
-    'July': '07'
-}
 var today = new Date();
 var yyyy = today.getFullYear();
 var mm = today.getMonth() + 1; // Months start at 0!
@@ -32,9 +29,7 @@ if (dd < 10) dd = 0 + dd;
 if (mm < 10) mm = 0 + mm;
 var formattedToday = mm + '/' + dd + '/' + yyyy;
 
-
-
-const GetDays = (formattedToday, days, months) => {
+const GetDays = (formattedToday, days, monthsArr) => {
     const dateObj = []
     const today = new Date();
     var newDate = new Date(formattedToday);
@@ -46,15 +41,51 @@ const GetDays = (formattedToday, days, months) => {
       dateObj.push({
         "day": days[dates[i].getDay()],
         "date": dates[i].getDate(),
-        "month": months[dates[i].getMonth()],
+        "month": monthsArr[dates[i].getMonth()],
         "year": dates[i].getFullYear(),
-        "full_date": dates[i].getDate() + '/' + months[dates[i].getMonth()] + '/' + dates[i].getFullYear()
+        "full_date": dates[i].getDate() + '/' + monthsArr[dates[i].getMonth()] + '/' + dates[i].getFullYear()
      })
     }
     return dateObj 
 }
 
-const DateDisplay = GetDays(formattedToday, days, months)
+const GetMonth = (days, monthsArr) => {
+    const dateObj = []
+    var firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    var lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    var lastDateOfMonth = lastDay.getDate()
+
+    var yyyy = firstDay.getFullYear();
+    var mm = firstDay.getMonth() + 1; // Months start at 0!
+    var dd = firstDay.getDate();
+    if (dd < 10) dd = 0 + dd;
+    if (mm < 10) mm = 0 + mm;
+    var formattedToday = mm + '/' + dd + '/' + yyyy;
+    var newDate = new Date(formattedToday);
+    var dates = new Array();
+    dates = calculateMonth(newDate, lastDateOfMonth);
+    
+    for(let i=0; i < dates.length; i++){
+        dateObj.push({
+            "day": days[dates[i].getDay()],
+            "date": dates[i].getDate(),
+            "month": monthsArr[dates[i].getMonth()],
+            "year": dates[i].getFullYear(),
+            "full_date": dates[i].getDate() + '/' + monthsArr[dates[i].getMonth()] + '/' + dates[i].getFullYear()
+        })
+    }
+
+    return dateObj 
+}
+
+const DateDisplay = GetDays(formattedToday, days, monthsArr)
+const MonthDisplay = GetMonth(days, monthsArr)
+let firstElement = MonthDisplay.shift();
+
+// console.log("Month display", MonthDisplay)
+console.log("DateDisplay display", DateDisplay)
+// console.log("firstDay", firstDay)
+// console.log("lastDay", lastDay)
 
 const arrayRange = (start, stop, step) =>
     Array.from(
@@ -63,10 +94,12 @@ const arrayRange = (start, stop, step) =>
 );
 
 function Habits() {
+    
   const [scrolled, setScrolled] = useState(false);
   const [checked, setChecked] = useState(false)
   const [showDate, setShowDate] = useState(false)
   const [tab1, setTab1] = useState('Week')
+  const [activeTab, setActiveTab] = useState('Week')
   const [opened, { open, close }] = useDisclosure(false);
   const [toggleHabit, setToggleHabit] = useState({id: '', date: ''})
   const [habitObj, setHabitObj] = useState()
@@ -74,6 +107,9 @@ function Habits() {
   const [loading, setLoading] = useState(true)
   const [loadingComponent, setLoadingComponent] = useState(true)
   const {state, dispatch} = useAppState()
+  const [habitView, setHabitView] = useState(DateDisplay)
+  const [habitWeekObj, setHabitWeekObj] = useState()
+  const [habitMonthObj, setHabitMonthObj] = useState()
 
 function removeDuplicateEntries(data) {
     const seenDates = new Set();
@@ -82,26 +118,33 @@ function removeDuplicateEntries(data) {
       seenDates.add(entry.date);
       return !isDuplicate;
     });
+    
     return data;
   }
 
-let habitsObj = habitObj
-function sortHabitLogs(habitObj) {
+  function parseDate(dateStr) {
+    let [day, month, year] = dateStr.split('/').map(Number);
+    return new Date(year + 2000, month - 1, day < 10? 0 + day : day); // Adding 2000 to year to handle the YY format
+
+  }
+
+function sortHabitLogs(habitObj, view) {
     habitObj && Array.isArray(habitObj) ? habitObj.forEach((habit, index) => {
         if(index === habitObj.length){
             return
         }
-        for(let i = 0; i < DateDisplay.length; i++){
-            if(habit.entries[i] && habit.entries[i].date.slice(0,2).toString() !== DateDisplay[i].date.toString()){
-                let habitEntries = removeDuplicateEntries(habit)
-                habitEntries.entries.push({date: `${DateDisplay[i].date}/${numMonth[DateDisplay[i].month]}/24`, complete: false})
-                
-            } else if(!habit.entries[i]){
-                let habitEntries = removeDuplicateEntries(habit)
-                habitEntries.entries.push({date: `${DateDisplay[i].date}/${numMonth[DateDisplay[i].month]}/24`, complete: false})
+        for(let i = 0; i < view.length; i++){
+            let habitEntries = habit
+            if(!habit.entries[i]){
+                habitEntries.entries.push({date: `${view[i].date}/${numMonth[view[i].month]}/24`, complete: false})
+            } else if(habit.entries[i] && habit.entries[i].date.slice(0,2).toString() !== view[i].date.toString()){
+                habitEntries.entries.push({date: `${view[i].date}/${numMonth[view[i].month]}/24`, complete: false})
             }
+            habitEntries.entries.sort((a, b) => parseDate(a.date) - parseDate(b.date));
         }
+        removeDuplicateEntries(habit)
     }) : null
+
     return habitObj
 }
 
@@ -117,10 +160,8 @@ async function deleteHabit(obj){
 async function fetchFormAction(){
     const getAction = await habitFormActions['get']
     getAction(state.user).then((data) => {
-        console.log("Data:", data)
-
-        const filterData = sortHabitLogs(data)
-        setHabitObj(filterData)
+        console.log("fetchFormAction:", data)
+        setHabitObj(data)
     })
 }
 
@@ -129,7 +170,8 @@ async function updateFormAction(row, entry, obj, title){
     const updateAction = await habitFormActions['update']
     let updateObj = {
         id: row.habit.id,
-        date: `${obj.date}/${numMonth[obj.month]}/${obj.year.toString().replace('20','')}`,
+        // date: `${obj.date}/${numMonth[obj.month]}/${obj.year.toString().replace('20','')}`,
+        date: entry.date,
         complete: !entry.complete,
         user_id: state.user.user_id
     }
@@ -138,21 +180,14 @@ async function updateFormAction(row, entry, obj, title){
       date: entry.date.slice(0,2)
     })
     setChecked(!checked)
-
-
-    console.log("Before update", updateObj)
     
     updateAction(updateObj, state.user).then((data) => {
         console.log("update data Data:", data)
-        // setHabitObj(data)
     })
 
     let filterHabit = habitObj.filter((habit) => {
         return habit.entries.filter((en) => {
             if(en.date.toString() === entry.date.toString() && title === habit.habit.title){
-                console.log("if", en.date, en.complete)
-                console.log("title", title)
-                console.log("habit.habit.title", habit.habit.title)
                 return en.complete = !en.complete
             }
         })
@@ -164,13 +199,13 @@ async function updateFormAction(row, entry, obj, title){
 
 const data = [
     { label: 'Week View', value: 'Week' },
-    { label: 'hidden view', value: 'hidden' }
+    { label: 'Month view', value: 'Month' }
 ]
 
 useEffect(() => {
     let loadingDelay = setTimeout(() => {
         if(loading === true){
-            fetchFormAction()
+            if(!habitObj) { fetchFormAction()}
             setLoadingComponent(false)
             setLoading(false)
         }
@@ -178,20 +213,48 @@ useEffect(() => {
     return () => {
         clearTimeout(loadingDelay)
     }
-}, [])
+}, [activeTab, habitView, habitObj, habitWeekObj])
 
-  return (loadingComponent?  <LoadingOverlay color='darkgray' zIndex={'0'} visible={true} overlayProps={{ radius: "sm", blur: 2 }} /> : 
-    <div className='min-h-[80vh] mb-10'>
-      <InnerTopNav title={'Habits'} tab1={'Week view'} setTab1={setTab1} data={data}/>
-      {
-        tab1 === 'Week'? 
-        <ScrollArea onScrollPositionChange={({ y }) => setScrolled(y !== 0)} border={'true'} className='border border-#D1D1D1 rounded-md shadow-md '>
-            <Table miw={700} withColumnBorders={true} >
+const WeekDateDisplay = () => {
+       return  <>
             <Table.Thead className={''}>
-                <Table.Tr>
-                <Table.Th>Habit</Table.Th>
-                {
-                    DateDisplay.map((obj, index) => (
+                        <Table.Tr>
+                        <Table.Th>Habit</Table.Th>
+                    { DateDisplay.map((obj, index) => (
+                            <Table.Th key={index} className={` text-[12px]  `}>
+                                <div className={`flex ${obj.date === todaysDate? 'bg-blue-400 text-white font-bold px-2 rounded-lg' : ''}`}>
+                                    <p className={`px `}>{obj.day.slice(0, 3)}</p>
+                                    <p className={`px-1 `}>{obj.date}</p>
+                                    <p className={`px `}>{obj.month}</p>
+                                </div>
+                            </Table.Th>        
+                        ))}
+
+                <Table.Th className={` text-[12px]`}>Current Streak</Table.Th>
+                    </Table.Tr>
+                </Table.Thead>
+
+                <Table.Tbody>
+                    {<WeekHabitsDisplay 
+                        habitObj={habitObj}
+                        deleteHabit={deleteHabit} 
+                        showDate={showDate} 
+                        DateDisplay={DateDisplay} 
+                        // DateDisplay={habitView}
+                        updateFormAction={updateFormAction}
+                        habitWeekObj={habitWeekObj}
+                        habitMonthObj={habitMonthObj}
+                    />}
+                </Table.Tbody>
+        </>
+
+}
+const MonthDateDisplay = () => (
+    <>
+            <Table.Thead className={''}>
+                    <Table.Tr>
+                    <Table.Th>Habit</Table.Th>
+                { MonthDisplay.map((obj, index) => (
                         <Table.Th key={index} className={` text-[12px]  `}>
                             <div className={`flex ${obj.date === todaysDate? 'bg-blue-400 text-white font-bold px-2 rounded-lg' : ''}`}>
                                 <p className={`px `}>{obj.day.slice(0, 3)}</p>
@@ -199,26 +262,58 @@ useEffect(() => {
                                 <p className={`px `}>{obj.month}</p>
                             </div>
                         </Table.Th>        
-                    ))
-                }
-                <Table.Th className={` text-[12px]`}>Current Streak</Table.Th>
+                ))}
+
+
+            <Table.Th className={` text-[12px]`}>Current Streak</Table.Th>
                 </Table.Tr>
             </Table.Thead>
+
             <Table.Tbody>
-                {<HabitRows 
+                <HabitRows 
+                    MonthDisplay={MonthDisplay}
                     habitObj={habitObj}
                     deleteHabit={deleteHabit} 
                     showDate={showDate} 
-                    DateDisplay={DateDisplay} 
                     updateFormAction={updateFormAction}
-                />}
+                    DateDisplay={DateDisplay} 
+                />
             </Table.Tbody>
+    </>
+)
+
+const HabitViewDisplay = () => {
+    let filterData = sortHabitLogs(habitObj, DateDisplay)
+    let filterData2 = sortHabitLogs(habitObj, MonthDisplay)
+
+    {
+      switch(activeTab){
+        case "Week":
+          setHabitWeekObj(filterData)
+          return <WeekDateDisplay />
+          break;
+          
+        case "Month":
+          setHabitMonthObj(filterData2)
+         return <MonthDateDisplay />
+          break;
+      }
+    }
+}
+   
+  return !habitObj ?  <LoadingOverlay color='darkgray' zIndex={'0'} visible={true} overlayProps={{ radius: "sm", blur: 2 }} /> : 
+   <div className='min-h-[80vh] mb-10'>
+      <InnerTopNav title={'Habits'} tab1={'Week view'} tab2={'Month view'} setTab1={setTab1} data={data} activeTab={activeTab} setActiveTab={setActiveTab}/>
+
+        <ScrollArea onScrollPositionChange={({ y }) => setScrolled(y !== 0)} border={'true'} className='border border-#D1D1D1 rounded-md shadow-md '>
+            <Table miw={700} withColumnBorders={true} >
+                <HabitViewDisplay />
             <Table.Tfoot className='border border-gray-200 h-5 !p-5 bg-[#F1F3F5]'>
-                <p className='p-2 text-xs'>Habit count: {Array.isArray(habitsObj) && habitsObj.length || 0 }</p>
+                {/* <p className='p-2 text-xs'>Habit count: {Array.isArray(habitsObj) && habitsObj.length || 0 }</p> */}
             </Table.Tfoot>
             </Table>
-        </ScrollArea> : 'nothing'
-      }
+        </ScrollArea> 
+
         <div className='flex justify-end m-2 mt-4'>
             <Button className='m-2' size='xs' onClick={() => setShowDate(!showDate)}>Show habit date</Button>
             <Button size='xs' onClick={open} onClose={close} className={`shadow-lg m-2`}>
@@ -241,7 +336,6 @@ useEffect(() => {
         </Modal>
     
     </div>
-  );
 }
 
 export default Habits

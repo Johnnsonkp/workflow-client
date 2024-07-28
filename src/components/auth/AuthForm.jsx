@@ -14,6 +14,7 @@ function AuthForm({setUserData}) {
  const [btnDisplay, setBtnDisplay] = useState(null);
  const {state, dispatch} = useAppState()
  const [loginSuccess, setLoginSuccess] = useState()
+ const [demoLoaderSpin, setDemoLoaderSpin] = useState(false)
 
 const formActionData = {
   "Sign up": { formAction: 'signup', action: 'SIGNUP_SUCCESS'},
@@ -43,6 +44,7 @@ const formActionData = {
   }
 
   async function handleDemo() {
+    setDemoLoaderSpin(true)
     let action = formActionData["Log in"].formAction
     const loadAction = await userFormActions[action];
     
@@ -50,11 +52,12 @@ const formActionData = {
       if (data && !data.error) {
         storeUserData(data, dispatch, formActionData["Log in"].action)
         setUserData(data);
-
       } else {
         console.log(`${data.error} please try again !`);
         alert(`${data.error} please try again !`);
       }
+      
+      setDemoLoaderSpin(false)
     });
 
   }
@@ -89,41 +92,41 @@ const formActionData = {
         </div>
 
         <div className={classes.fields}>
-        <SimpleGrid cols={{ base: 1, sm: 1 }}>
-            <TextInput label="Username" placeholder="Your username" 
-                {...form.getInputProps('username')}
-            />
-            <TextInput label="Email" placeholder="e.g. john@example.com" required 
-                {...form.getInputProps('email')}
-            />
-            <PasswordInput label="Password" placeholder="Your password" required  
-              {...form.getInputProps('password')}
-            />
+          <SimpleGrid cols={{ base: 1, sm: 1 }}>
+              <TextInput label="Username" placeholder="Your username" 
+                  {...form.getInputProps('username')}
+              />
+              <TextInput label="Email" placeholder="e.g. john@example.com" required 
+                  {...form.getInputProps('email')}
+              />
+              <PasswordInput label="Password" placeholder="Your password" required  
+                {...form.getInputProps('password')}
+              />
 
-            <Group justify="space-between" mt="xs">
-                <Checkbox label="Remember me" />
-                  <Anchor component="button" size="sm">
-                    Forgot password?
-                  </Anchor>
-            </Group>
-        </SimpleGrid>
+              <Group justify="space-between" mt="xs">
+                  <Checkbox label="Remember me" />
+                    <Anchor component="button" size="sm">
+                      Forgot password?
+                    </Anchor>
+              </Group>
+          </SimpleGrid>
 
-        <Group justify="" mt="lg" classNames="">
-            <Button 
-                type="submit" 
-                className={`${classes.control}`} w={'45%'}
-                onClick={() => setBtnDisplay(<IconLoader className='loader ease-linear animate-spin'/>)}    
-            > 
-              {btnDisplay === null? section : btnDisplay }
-            </Button>
+          <Group justify="" mt="lg" classNames="">
+              <Button 
+                  type="submit" 
+                  className={`${classes.control}`} w={'45%'}
+                  onClick={() => setBtnDisplay(<IconLoader className='loader ease-linear animate-spin'/>)}    
+              > 
+                {btnDisplay === null? section : btnDisplay }
+              </Button>
 
-            <Button 
-                onClick={() => handleDemo()}
-                className={`${classes.control} !bg-transparent !text-blue-400 !border !border-blue-400`} w={'50%'}>
-                    
-              {"Demo mode" || <IconLoader className='loader ease-linear animate-spin'/>}
-            </Button>
-        </Group>
+              <Button 
+                  onClick={() => handleDemo()}
+                  className={`${classes.control} !bg-transparent !text-blue-400 !border !border-blue-400`} w={'50%'}
+              >
+                {demoLoaderSpin? <IconLoader className='loader ease-linear animate-spin'/> : "Demo mode"}
+              </Button>
+          </Group>
 
         {/* <Link to="/personal">Personal Page</Link> */}
         </div>

@@ -9,8 +9,8 @@
     --dot-size: 2px;
     --dot-space: 20px;
     background:
-      linear-gradient(90deg, var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
-      linear-gradient(var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
+      linear-gradient(90deg, var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 50%) center / var(--dot-space) var(--dot-space),
+      linear-gradient(var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 100%) center / var(--dot-space) var(--dot-space),
       var(--dot-color);
   
     @media (max-width: $mantine-breakpoint-sm) {
@@ -35,11 +35,12 @@
 }
   
   .form {
-    flex: 0.3;
+    flex: 0.7;
     padding: var(--mantine-spacing-xl);
     padding-left: calc(var(--mantine-spacing-xl) * 2);
     border-left: 0;
     margin: auto;
+    /* border: 1px solid green; */
   
     @media (max-width: $mantine-breakpoint-sm) {
       padding: var(--mantine-spacing-md);
@@ -48,7 +49,6 @@
   }
   
   .fields {
-    /* margin-top: rem(-12px); */
     margin-top: -12px;
   }
   

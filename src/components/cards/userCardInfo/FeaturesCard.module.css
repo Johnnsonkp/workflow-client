@@ -1,11 +1,12 @@
 .card {
     background-color: var(--mantine-color-body);
-    max-width: 230px;
+    max-width: 220px;
     max-height: 400px;
+    
   }
   
   .imageSection {
-    padding: var(--mantine-spacing-md);
+    padding: var(--mantine-spacing-sm);
     display: flex;
     align-items: center;
     justify-content: center;

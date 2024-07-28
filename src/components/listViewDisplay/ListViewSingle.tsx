@@ -30,6 +30,7 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
     handleUpdateTask(updatedTask)
   }
 
+
   return <> 
     <Table.Tr 
       key={task?.id} 
@@ -53,7 +54,7 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
         <Group gap="" className='min-w-64'>
           <Text fz="xs">{taskObj.order}</Text>
           <Text fz="xs" fw={500} className=''>
-          {taskObj.title}
+          {taskObj.title && taskObj.title.length > 55? taskObj.title.slice(0, 55).concat('...') : taskObj.title}
           </Text>
         </Group>
       </Table.Td>

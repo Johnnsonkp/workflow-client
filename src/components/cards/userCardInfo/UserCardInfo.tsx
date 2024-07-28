@@ -17,7 +17,10 @@ export function UserCardInfo({state, user, navigate}) {
   return (
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section className={classes.imageSection}>
-        <Image src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png" alt="User deisplay picture" />
+        <Image 
+          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png" 
+          alt="User display picture" 
+        />
       </Card.Section>
 
       <Group justify="space-between" mt="md">
