@@ -32,7 +32,7 @@ const SideNav = ({section, urlRedirect, className}) => {
                 </Text>
                 <SegmentedControl
                     radius="lg"
-                    className={`${classes.controller}`}
+                    className={`${classes.controller} shadow-sm`}
                     value={section}
                     onChange={(value) => urlRedirect(value)}
                     transitionTimingFunction="ease"

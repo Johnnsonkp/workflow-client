@@ -10,8 +10,9 @@
     align-items:center;
   }
   .controller{
-    border: 1px solid rgba(211, 211, 211, 0.3);
-    border: 0.5px solid #DEE2E6;
+    /* border: 1px solid rgba(211, 211, 211, 0.3);
+    border: 0.1px solid #DEE2E6; */
+    border: 0.5px solid rgba(211, 211, 211, 0.2);
     background-color: #fff;
     background-color: #F2F3F5;
     border-radius: 18px;
