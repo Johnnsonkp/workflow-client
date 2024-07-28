@@ -218,34 +218,34 @@ useEffect(() => {
 const WeekDateDisplay = () => {
        return  <>
             <Table.Thead className={''}>
-                        <Table.Tr>
-                        <Table.Th>Habit</Table.Th>
+                <Table.Tr>
+                    <Table.Th className={''}>Habit</Table.Th>
                     { DateDisplay.map((obj, index) => (
-                            <Table.Th key={index} className={` text-[12px]  `}>
-                                <div className={`flex ${obj.date === todaysDate? 'bg-blue-400 text-white font-bold px-2 rounded-lg' : ''}`}>
-                                    <p className={`px `}>{obj.day.slice(0, 3)}</p>
-                                    <p className={`px-1 `}>{obj.date}</p>
-                                    <p className={`px `}>{obj.month}</p>
-                                </div>
-                            </Table.Th>        
-                        ))}
+                        <Table.Th key={index} className={` text-[12px]  `}>
+                            <div className={`flex ${obj.date === todaysDate? 'bg-blue-400 text-white font-bold px-2 rounded-lg' : ''}`}>
+                                <p className={`px `}>{obj.day.slice(0, 3)}</p>
+                                <p className={`px-1 `}>{obj.date}</p>
+                                <p className={`px `}>{obj.month}</p>
+                            </div>
+                        </Table.Th>        
+                    ))}
 
-                <Table.Th className={` text-[12px]`}>Current Streak</Table.Th>
-                    </Table.Tr>
-                </Table.Thead>
+                    <Table.Th className={` text-[12px]`}>Current Streak</Table.Th>
+                </Table.Tr>
+            </Table.Thead>
 
-                <Table.Tbody>
-                    {<WeekHabitsDisplay 
-                        habitObj={habitObj}
-                        deleteHabit={deleteHabit} 
-                        showDate={showDate} 
-                        DateDisplay={DateDisplay} 
-                        // DateDisplay={habitView}
-                        updateFormAction={updateFormAction}
-                        habitWeekObj={habitWeekObj}
-                        habitMonthObj={habitMonthObj}
-                    />}
-                </Table.Tbody>
+            <Table.Tbody>
+                {<WeekHabitsDisplay 
+                    habitObj={habitObj}
+                    deleteHabit={deleteHabit} 
+                    showDate={showDate} 
+                    DateDisplay={DateDisplay} 
+                    // DateDisplay={habitView}
+                    updateFormAction={updateFormAction}
+                    habitWeekObj={habitWeekObj}
+                    habitMonthObj={habitMonthObj}
+                />}
+            </Table.Tbody>
         </>
 
 }
@@ -253,7 +253,7 @@ const MonthDateDisplay = () => (
     <>
             <Table.Thead className={''}>
                     <Table.Tr>
-                    <Table.Th>Habit</Table.Th>
+                    <Table.Th className={''}>Habit</Table.Th>
                 { MonthDisplay.map((obj, index) => (
                         <Table.Th key={index} className={` text-[12px]  `}>
                             <div className={`flex ${obj.date === todaysDate? 'bg-blue-400 text-white font-bold px-2 rounded-lg' : ''}`}>

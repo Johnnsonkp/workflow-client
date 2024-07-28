@@ -49,12 +49,15 @@ export const HabitRows: React.FC<Props> = ({habitObj, deleteHabit, showDate, upd
     
     Array.isArray(habitObj) ? habitObj.map((row, rowIndex) => (    
         <Table.Tr key={row.habit.title} >
-            <Table.Td className='flex justify-between'>
-                <div className='flex'><IconActivity /> <p>{row.habit.title}</p></div>
-                <Group gap={4} justify="flex-end">
-                    <ActionIcon variant="subtle" color="gray">
+            <Table.Td className='flex justify-between w-[170px]'>
+                <div className='flex'>
+                    <IconActivity /> 
+                    <p className='mx-1'>{row.habit.title}</p>
+                </div>
+                <Group gap={0} justify="flex-end">
+                    {/* <ActionIcon variant="subtle" color="gray">
                         <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-                    </ActionIcon>
+                    </ActionIcon> */}
                     <ActionIcon variant="subtle" color="red" onClick={() => deleteHabit(row.habit)} >
                         <IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     </ActionIcon>
