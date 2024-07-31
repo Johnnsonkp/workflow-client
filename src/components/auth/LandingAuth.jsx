@@ -37,19 +37,16 @@ export function LandingAuth() {
 
  
   return (
-      <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xs"  className={`${classes.wrapper} overflow-hidden`} >
-        <Grid gutter="md" className={`${classes.contacts} p-10`}>
+      <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xs"  className={`${classes.wrapper} overflow-hidden `} >
+        <Grid gutter="md" className={`${classes.contacts} p-12 flex items-center h-screen shadow-lg`}>
           <AppLogoContainer />
+          
           <Grid gutter="md" className='mt-10'>
             <Text fz="lg" fw={700} className={`${classes.title} !mt-0`} c="#333" >
               {userType || state.userAuthStatus.error}
             </Text>
           </Grid>
-
-          <Grid gutter="md" className='mt-5'>
-              <HeroSection />
-              <ReactRailsFeatures />
-          </Grid>
+          <HeroSection />
         </Grid>
 
         <Grid gutter="md" justify='center' align='end' className='flex items-center justify-center min-h-screen'>

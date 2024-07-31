@@ -64,7 +64,6 @@ function Nav({setDarkLightMode, className}) {
     if(darkMode === null){
       localStorage.setItem('dark_mode', false)
     }
-    // setChecked(darkMode)
   }, [])
   
   return (

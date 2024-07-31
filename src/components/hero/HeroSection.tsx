@@ -1,5 +1,6 @@
 import { Container, Text, Title } from '@mantine/core'
 
+import { ReactRailsFeatures } from '../featuresDisplay/ReactRailsFeacture'
 import classes from './hero.module.css'
 
 function HeroSection() {
@@ -27,6 +28,7 @@ function HeroSection() {
         Workflows allows you to make progress on the things that matter the most. Prioritize quality in everything you do and reclaim your valuable time back.
       </Text>
 
+      <ReactRailsFeatures />
     </Container>
   )
 }

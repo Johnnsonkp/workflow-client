@@ -5,7 +5,8 @@ function TableHead({setArchieve, showArchive, loadingComponent}) {
   return (
     <>
     <Table.Thead className={``}>
-        {loadingComponent? "" : <Table.Tr p={'xs'} className="text-[13px]" fw={600}>
+        {/* {loadingComponent? "" :  */}
+        <Table.Tr p={'xs'} className="text-[13px]" fw={600}>
             <Table.Th fw={500}>Complete</Table.Th>
             <Table.Th fw={500}>Name</Table.Th>
             <Table.Th fw={500}>Status</Table.Th>
@@ -19,7 +20,8 @@ function TableHead({setArchieve, showArchive, loadingComponent}) {
                 {showArchive? 'Hide' : 'Show'} Archive
             </button>
             </Table.Th>
-        </Table.Tr>}
+        </Table.Tr>
+         {/* } */}
     </Table.Thead>
     </>
   )

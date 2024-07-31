@@ -3,9 +3,7 @@ import { IconArchive, IconCalendar, IconPencil, IconTrash } from '@tabler/icons-
 import { IconCircleCheck, IconCircleDashed, IconCircleFilled, IconTimeDuration0 } from '@tabler/icons-react';
 
 import ListActionsComp from './ListActionsComp';
-import React from 'react'
 import { Task } from '../../types/GlobalTypes';
-import TaskListLoadSkeleton from './TaskListLoadSkeleton';
 import classes from './list.module.css'
 import { taskFormActions } from '../../actions/taskActions';
 import { useAppState } from '../../store/AppState';
@@ -89,7 +87,8 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
       </Table.Td>
 
 
-      <Table.Td className='opacity-[0.7] w-5 !p-1'
+      <Table.Td 
+        className='opacity-[0.7] w-5 !p-1'
         onClick={() => toggleFormModule( {task: taskObj, toggle: true})}
       >
         <Badge color={'black'} variant="light">

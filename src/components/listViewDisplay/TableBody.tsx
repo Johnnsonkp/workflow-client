@@ -5,16 +5,17 @@ import TaskListLoadSkeleton from "./TaskListLoadSkeleton"
 function TableBody({loadingComponent, listTasks, items}) {
 
   const TBody = () => (
-    loadingComponent? <TaskListLoadSkeleton /> : 
-    listTasks && listTasks.length > 0 &&
+    // loadingComponent? <TaskListLoadSkeleton /> : 
+    listTasks && listTasks.length > 0 ?
         <Table.Tbody className="!border-b-2 border-purple-400">
             {items} 
-        </Table.Tbody> 
+        </Table.Tbody> : <TaskListLoadSkeleton /> 
   
   )
 
   return (
-    listTasks && listTasks.length > 0? <TBody /> : <EmptyTaskModal />
+    // listTasks && listTasks.length > 0? <TBody /> : <EmptyTaskModal />
+    !listTasks && !loadingComponent? <EmptyTaskModal /> : <TBody /> 
   )
 }
 

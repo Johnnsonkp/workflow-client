@@ -4,7 +4,7 @@ function TableFooter({loadingComponent, paginationCount, activePage, setPage}) {
   return (
     // <Table className='px-3'>
         <>
-          {!loadingComponent &&
+          {/* {!loadingComponent && */}
             <Pagination 
               total={paginationCount} 
               value={activePage} 
@@ -14,7 +14,7 @@ function TableFooter({loadingComponent, paginationCount, activePage, setPage}) {
               size="xs" 
               color="#228a"
             />
-          }
+          {/* } */}
           </>
     // </Table>
   )

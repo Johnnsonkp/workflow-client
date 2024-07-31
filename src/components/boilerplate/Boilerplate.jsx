@@ -85,15 +85,16 @@ function PageBoilerPlate({ component }) {
           gutter="xs" 
           overflow="hidden"
         >
-            <Grid.Col>
+            <Grid.Col className={`!z-20 `}>
               <Nav 
                 className={`${darkLightMode? '!bg-[#2D333B]' : 'bg-[#F0F0F0]' }`} 
                 setDarkLightMode={setDarkLightMode}
               />
             </Grid.Col>
-            <Grid.Col span={{ base: 12, xs: 3.3, sm:2.9, md: 2.5, lg: 1.8 }} className={`!max-w-[220px] bg-inherit `}>
+            <Grid.Col span={{ base: 12, xs: 3.3, sm:2.9, md: 2.5, lg: 1.8 }} 
+              className={`!max-w-[220px] !z-10 `}>
               <SideNav 
-                className={``}
+                className={`!z-10 ${darkLightMode? '!bg-[#2D333B]' : 'bg-[#F0F0F0]' }`}
                 section={section} 
                 urlRedirect={urlRedirect} 
               />
@@ -115,3 +116,5 @@ function PageBoilerPlate({ component }) {
     return component ? <CustomLayout /> : "loading...";
   }
   export default PageBoilerPlate;
+
+  // bg-inherit

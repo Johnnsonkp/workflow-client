@@ -27,7 +27,6 @@ const SideNav = ({section, urlRedirect, className}) => {
   return (
     <nav className={`${classes.navbar} ${className}`}>
         <div className={`${classes.innerSideNav}`}>
-            <div>
                 <Text fw={500} size="sm" className={classes.title} c="dimmed" mb="xs">
                 </Text>
                 <SegmentedControl
@@ -42,7 +41,7 @@ const SideNav = ({section, urlRedirect, className}) => {
                         { label: 'Personal', value: 'Dashboard' },
                     ]}
                 />
-            </div>
+
             <LoadingContainer className={classes.navbarMain}>
                 <Links setTabNavigate={setTabNavigate} active={active} setActive={setActive} section={section}/>
             </LoadingContainer>
