@@ -17,26 +17,22 @@ export function EmptyTaskModal() {
       <Container my="xl">
         <SimpleGrid cols={{ base: 1, sm: 1 }} spacing="md" className='' >
           <Group justify="center">
-            <IconHourglassEmpty style={{ width: rem(40), height: rem(40), textAlign: 'center' }} stroke={1.5} color='#555'/>
+            <IconHourglassEmpty style={{ width: rem(60), height: rem(60), textAlign: 'center' }} 
+              stroke={1.5} color='#999'/>
           </Group>
           <Group justify="center">
-            <Text ta="center" fz="sm" mt="xs" c="dimmed">
-              No Tasks in your Tasklist, hit the "+" button to create a new Task.
-            </Text>
+            <div>
+              <Text ta="center" fz="sm" mt="xs">
+                Press the "+" button to create a new task
+              </Text>
+              <Text ta="center" fz="sm" mt="xs" c="dimmed">
+                No tasks in your tasklist.
+              </Text>
+            </div>
           </Group>
         </SimpleGrid>
       </Container>
     </Grid>
   )
-
-  useEffect(() => {
-    setTimeout(() => {
-      console.log("state.tasks", state.tasks)
-      if(loading === true && state?.tasks?.length < 1 || loading === true && state?.tasks?.length == null){
-        setLoading(false)
-      }
-    }, 200)
-  }, [loading])
-
-  return loading? <LoadingOverlay color='darkgray' zIndex={'0'} visible={true} overlayProps={{ radius: "sm", blur: 2 }} />  : <EmptyComp />;
+  return <EmptyComp />;
 }

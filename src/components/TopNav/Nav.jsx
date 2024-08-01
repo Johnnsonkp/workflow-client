@@ -94,8 +94,9 @@ function Nav({setDarkLightMode, className}) {
                 </div>
               </Menu.Target>
 
-              <Menu.Target className={`${classes.navRightButton} border-l-2 ${light? 'border-[#5E5E5E]' : 'border-white-500'}`}>
-                <Group justify="center" p="xs">
+              {/* <Menu.Target className={`${classes.navRightButton} border-l-2 ${light? 'border-[#5E5E5E]' : 'border-white-500'}`}> */}
+              <Menu.Target className={`${classes.navRightButton} ${light? 'border-[#5E5E5E]' : 'border-white-500'}`}>
+                <Group justify="center" p="xs" >
                   <a className='cursor-pointer my-[auto] !bg-[transparent] !text-[#fff] uppercase p-3'
                     href="/about"
                   >
@@ -104,7 +105,7 @@ function Nav({setDarkLightMode, className}) {
                 </Group>
               </Menu.Target>
 
-              <div className={`${classes.navRightButton} w-[100%] flex px-3 border-l-2 ${light? 'border-[#5E5E5E]' : 'border-white-500'}`}>
+              <div className={`${classes.navRight} w-[100%] flex px-3 border-l-2 ${light? 'border-[#5E5E5E]' : 'border-white-500'}`}>
                 <Menu.Target>
                   <Avatar 
                     className='cursor-pointer my-[auto] !bg-[#333] !text-[#fff] uppercase'

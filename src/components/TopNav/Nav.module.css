@@ -4,9 +4,12 @@
   }
 
 .navRightButton{
-  /* background-color: blue !important;
-  color: #fff; */
-  /* border: 1px solid white; */
+  padding: 0px !important;
+}
+.navRight:hover{
+  background-color: #ffff !important;
+  color: #fff !important;
+  cursor: pointer;
 }
 .navRightButton:hover{
   /* background-color: #464FEB !important; */

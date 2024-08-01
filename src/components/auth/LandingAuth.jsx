@@ -51,12 +51,11 @@ export function LandingAuth() {
 
         <Grid gutter="md" justify='center' align='end' className='flex items-center justify-center min-h-screen'>
           <div className='flex justify-center w-[100%] h-[100%]'>
-            {
-              currentUserSession?.token ? 
+            {currentUserSession?.token ? 
               <div className='flex align-middle justify-center '>
                 <UserCardInfo state={state} user={userAuthStatus} navigate={navigate}/>
               </div> : 
-                <AuthForm setUserData={setUserData} userData={userData}/>
+              <AuthForm setUserData={setUserData} userData={userData}/>
             }
           </div>
         </Grid>        

@@ -16,14 +16,12 @@ export function UserCardInfo({state, user, navigate}) {
 
   return (
     <Card withBorder radius="md" className={classes.card}>
-      <Card.Section className={classes.imageSection}>
         <Image 
           src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png" 
           alt="User display picture" 
         />
-      </Card.Section>
 
-      <Group justify="space-between" mt="md">
+      <Group justify="space-between" mt="xs">
         <div>
           <Text fw={500}>{user?.username || " "}</Text>
           <Text fz="xs" c="dimmed">
@@ -33,8 +31,7 @@ export function UserCardInfo({state, user, navigate}) {
         {/* <Badge variant="outline">25% off</Badge> */}
       </Group>
 
-      <Card.Section className={classes.section}>
-        <Group gap={4}>
+        <Group gap={4} mt="xs">
           <div>
             <Button bg={'red'} onClick={ () => handleSignOut()} radius="sm" style={{ flex: 1 }} size='xs'>
                 Signout
@@ -42,10 +39,9 @@ export function UserCardInfo({state, user, navigate}) {
           </div>
 
           <Button onClick={() => navigate("/dashboard")} radius="sm" style={{ flex: 1 }} size='xs'>
-            Back to work
+            Dashboard
           </Button>
         </Group>
-      </Card.Section>
     </Card>
   );
 }

@@ -107,5 +107,4 @@ export const HabitRows: React.FC<Props> = ({habitObj, deleteHabit, showDate, upd
             </Table.Td>
         </Table.Tr>
     )) : null
-    
 )

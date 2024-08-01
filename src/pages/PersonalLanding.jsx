@@ -1,8 +1,7 @@
 import * as classes from '../components/formButtonToggle/formButton.module.css'
 
-import { Button, LoadingOverlay, Modal } from '@mantine/core'
-import React, {useCallback, useEffect, useMemo, useState} from 'react'
-import { storeTask, taskFormActions } from '../actions/taskActions.js'
+import { Box, Button, LoadingOverlay, Modal } from '@mantine/core'
+import React, { useEffect, useState } from 'react'
 
 import CreateTaskForm from '../components/forms/CreateTaskForm.tsx'
 import DashboardBannerCards from '../components/dashboardBanner/DashboardBannerCards.tsx'
@@ -14,6 +13,7 @@ import TimeTableDisplay from '../components/timeTableDisplay/TimeTableDisplay.ts
 import UpdateTaskForm from '../components/forms/UpdateTaskForm.tsx'
 import WeekView from '../components/weekView/WeekView.tsx'
 import { getItemFromLocalStorage } from '../utils/localstorage.js'
+import { taskFormActions } from '../actions/taskActions.js'
 import { useAppState } from '../store/AppState.jsx'
 import { useDisclosure } from '@mantine/hooks';
 import { useNavigate } from "react-router-dom";
@@ -32,11 +32,11 @@ function PersonalLanding() {
   const [openForm, setOpenForm] = useState(close)
   const userData = getItemFromLocalStorage('AUTH')
   const navigate = useNavigate()
+  const [loadingDisplay, setLoadingDisplay] = useState(true)
   const [updateForm, setUpdateForm] = useState({
     task: null,
     toggle: false
   })
-  const [loadingDisplay, setLoadingDisplay] = useState(true)
 
   useEffect(() => {
     setTimeout(() => {
@@ -51,10 +51,10 @@ function PersonalLanding() {
           setLoadingDisplay(false)
           setToggleOpacity('opacity-1')
         } 
-      }, 1000)
+      }, 500)
       
     }, 50)
-  }, [loadingDisplay])
+  }, [])
   
 
   const deleteTask =  async (taskToDelete, taskObj) => {
@@ -67,10 +67,8 @@ function PersonalLanding() {
   const handleTaskArchive = async (taskToUpdate) => {
     const updateActions = await taskFormActions['update']
     updateActions(taskToUpdate, state?.user, taskToUpdate.id).then((data) => {
-
       console.log("taskActions update", data)
       setTaskObj((prevState) => prevState.filter((t) => t.id != data.id ).concat(data))
-
     })
   }
 
@@ -83,8 +81,7 @@ function PersonalLanding() {
   }
 
   const DashboardDisplay = () => {
-    {
-      switch(taskPanel){
+    {switch(taskPanel){
         case "list":
           return <ListViewDisplay 
             taskObj={taskObj} 
@@ -99,8 +96,7 @@ function PersonalLanding() {
         case "week":
           return <WeekView taskObj={taskObj} deleteTask={deleteTask}/>
           break; 
-      }
-    }
+    }}
   }
 
   useEffect(() => {
@@ -108,49 +104,50 @@ function PersonalLanding() {
   }, [togglePannel])
 
   return (
-    loadingDisplay ? 
-    <LoadingOverlay color='darkgray' zIndex={'1'} visible={true} overlayProps={{ radius: "sm", blur: 2 }} /> :
-    
-    <DefaultContainer className={`relative !overflow-hidden pb-5`}>
-      <DefaultContainer className={`${toggleForm? "h-[100vh]" : ""} !shadow-md max-w-[1400px] transition-opacity duration-200 ease-in-out ${toggleOpacity}`}>
-        <InnerTopNav setTogglePanel={setTogglePanel} title={'Dashboard'}/>
-        {taskPanel === 'list' && <DashboardBannerCards /> }
-        <DashboardDisplay />
-      </DefaultContainer>
-      
-      <Button onMouseDown={open} onClose={close} 
-        className={`shadow-lg ${classes.button} ${opened? classes.buttonOpen : classes.buttonClose}`}
-      >
-        <IconPlus size={30} className={`!transition-all !duration-500 ${opened && classes.buttonRotate}  `}/>
-      </Button>
+    <Box pos="relative">
+      <LoadingOverlay zIndex={1000} visible={loadingDisplay? true : false} overlayProps={{ radius: "sm", blur: 2 }} /> 
+      <DefaultContainer className={`relative !overflow-hidden pb-5`}>
+        <DefaultContainer className={`${toggleForm? "h-[100vh]" : ""} !shadow-md max-w-[1400px] }`}>
+          <InnerTopNav setTogglePanel={setTogglePanel} title={'Dashboard'}/>
+          {taskPanel === 'list' && <DashboardBannerCards /> }
+          <DashboardDisplay />
+        </DefaultContainer>
+        <Button 
+          onMouseDown={open} 
+          onClose={close} 
+          className={`shadow-lg ${classes.button} ${opened? classes.buttonOpen : classes.buttonClose}`}
+        >
+          <IconPlus size={30} className={`!transition-all !duration-500 ${opened && classes.buttonRotate}  `}/>
+        </Button>
 
-      <Modal 
-        opened={opened} 
-        onClose={close} 
-        centered 
-        fullScreen={false} 
-        size="900px"
-        overlayProps={{
-          backgroundOpacity: 0.55,
-          blur: 3,
-        }}
-      >
-        <CreateTaskForm />
-      </Modal>
-      <Modal 
-        opened={updateForm.toggle} 
-        onClose={() => setUpdateForm({task: updateForm?.task , toggle: false})} 
-        centered 
-        fullScreen={false} 
-        size="900px"
-        overlayProps={{
-          backgroundOpacity: 0.55,
-          blur: 3,
-        }}  
-      >
-        <UpdateTaskForm task={updateForm?.task}/>
-      </Modal>
-    </ DefaultContainer>
+        <Modal 
+          opened={opened} 
+          onClose={close} 
+          centered 
+          fullScreen={false} 
+          size="900px"
+          overlayProps={{
+            backgroundOpacity: 0.55,
+            blur: 3,
+          }}
+        >
+          <CreateTaskForm />
+        </Modal>
+        <Modal 
+          opened={updateForm.toggle} 
+          onClose={() => setUpdateForm({task: updateForm?.task , toggle: false})} 
+          centered 
+          fullScreen={false} 
+          size="900px"
+          overlayProps={{
+            backgroundOpacity: 0.55,
+            blur: 3,
+          }}  
+        >
+          <UpdateTaskForm task={updateForm?.task}/>
+        </Modal>
+      </ DefaultContainer>
+    </Box>
   );
 }
 

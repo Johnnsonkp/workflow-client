@@ -1,6 +1,6 @@
 import { ActionIcon, Button, Group, LoadingOverlay, ScrollArea, SimpleGrid, Table, TextInput, Textarea, Title } from '@mantine/core';
+import { Box, ThemeIcon, rem } from '@mantine/core';
 import { IconActivity, IconCircleCheck } from '@tabler/icons-react';
-import { ThemeIcon, rem } from '@mantine/core';
 import { calculateWeek, monthsArr, numMonth } from '../utils/dateUtills';
 import { useEffect, useState } from 'react';
 
@@ -209,7 +209,8 @@ useEffect(() => {
             setLoadingComponent(false)
             setLoading(false)
         }
-    }, 200)
+    // }, 200)
+       }, 500)
     return () => {
         clearTimeout(loadingDelay)
     }
@@ -251,34 +252,34 @@ const WeekDateDisplay = () => {
 }
 const MonthDateDisplay = () => (
     <>
-            <Table.Thead className={''}>
-                    <Table.Tr>
-                    <Table.Th className={''}>Habit</Table.Th>
-                { MonthDisplay.map((obj, index) => (
-                        <Table.Th key={index} className={` text-[12px]  `}>
-                            <div className={`flex ${obj.date === todaysDate? 'bg-blue-400 text-white font-bold px-2 rounded-lg' : ''}`}>
-                                <p className={`px `}>{obj.day.slice(0, 3)}</p>
-                                <p className={`px-1 `}>{obj.date}</p>
-                                <p className={`px `}>{obj.month}</p>
-                            </div>
-                        </Table.Th>        
-                ))}
+        <Table.Thead className={''}>
+                <Table.Tr>
+                <Table.Th className={''}>Habit</Table.Th>
+            { MonthDisplay.map((obj, index) => (
+                    <Table.Th key={index} className={` text-[12px]  `}>
+                        <div className={`flex ${obj.date === todaysDate? 'bg-blue-400 text-white font-bold px-2 rounded-lg' : ''}`}>
+                            <p className={`px `}>{obj.day.slice(0, 3)}</p>
+                            <p className={`px-1 `}>{obj.date}</p>
+                            <p className={`px `}>{obj.month}</p>
+                        </div>
+                    </Table.Th>        
+            ))}
 
 
-            <Table.Th className={` text-[12px]`}>Current Streak</Table.Th>
-                </Table.Tr>
-            </Table.Thead>
+        <Table.Th className={` text-[12px]`}>Current Streak</Table.Th>
+            </Table.Tr>
+        </Table.Thead>
 
-            <Table.Tbody>
-                <HabitRows 
-                    MonthDisplay={MonthDisplay}
-                    habitObj={habitObj}
-                    deleteHabit={deleteHabit} 
-                    showDate={showDate} 
-                    updateFormAction={updateFormAction}
-                    DateDisplay={DateDisplay} 
-                />
-            </Table.Tbody>
+        <Table.Tbody>
+            <HabitRows 
+                MonthDisplay={MonthDisplay}
+                habitObj={habitObj}
+                deleteHabit={deleteHabit} 
+                showDate={showDate} 
+                updateFormAction={updateFormAction}
+                DateDisplay={DateDisplay} 
+            />
+        </Table.Tbody>
     </>
 )
 
@@ -301,7 +302,9 @@ const HabitViewDisplay = () => {
     }
 }
    
-  return !habitObj ?  <LoadingOverlay color='darkgray' zIndex={'0'} visible={true} overlayProps={{ radius: "sm", blur: 2 }} /> : 
+//   return !habitObj ?  
+  return <Box pos="relative">
+    <LoadingOverlay  zIndex={'1000'} visible={loadingComponent} overlayProps={{ radius: "sm", blur: 2 }} /> 
    <div className='min-h-[80vh] mb-10'>
       <InnerTopNav title={'Habits'} tab1={'Week view'} tab2={'Month view'} setTab1={setTab1} data={data} activeTab={activeTab} setActiveTab={setActiveTab}/>
 
@@ -336,6 +339,7 @@ const HabitViewDisplay = () => {
         </Modal>
     
     </div>
+    </Box>
 }
 
 export default Habits

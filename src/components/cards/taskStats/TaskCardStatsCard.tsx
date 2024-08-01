@@ -42,7 +42,7 @@ function StatsRingCard({}) {
     } 
   })
   
-  let completedTaskCount: number = counter.length
+  let completedTaskCount: number = counter.length || 0
   let taskCreatedVsTaskCompleted = completedTaskCount + '/' + TaskCount
   let completionPercentage: number = completedTaskCount / TaskCount * 100
   completionPercentage = Math.ceil(completionPercentage)
@@ -117,7 +117,7 @@ function StatsRingCard({}) {
             label={
               <div>
                 <Text ta="center" fz="md" className={classes.label}>
-                  {((completedTaskCount / TaskCount) * 100).toFixed(0)}%
+                  {((completedTaskCount / TaskCount || 0) * 100).toFixed(0)}%
                 </Text>
                 <Text ta="center" fz="sm" c="dimmed">
                   Completed

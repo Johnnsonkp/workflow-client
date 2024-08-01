@@ -1,12 +1,6 @@
 .wrapper {
     display: flex;
-    /* background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8)); */
-    /* border-radius: var(--mantine-radius-lg); */
-    /* padding: rem(4px); */
     padding: 4px;
-    /* border: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8)); */
-    /* border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8)); */
-  
     @media (max-width: 48em) {
       flex-direction: column;
       padding: 0px;
@@ -20,6 +14,7 @@
     align-items: flex-start;
     z-index: 1;
     position: relative;
+    /* padding: 0px; */
   
     @media (max-width: 48em) {
       height: 100%;
@@ -52,7 +47,7 @@
   .description {
     color: #333;
     max-width: rem(100px);
-    max-width: 25em;
+    max-width: 32em;
     /* border: 1px solid red; */
   
     @media (max-width: 48em) {

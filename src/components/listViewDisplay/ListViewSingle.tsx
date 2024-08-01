@@ -7,6 +7,7 @@ import { Task } from '../../types/GlobalTypes';
 import classes from './list.module.css'
 import { taskFormActions } from '../../actions/taskActions';
 import { useAppState } from '../../store/AppState';
+import { useState } from 'react';
 
 const emptyTask: Task = {
   title: '',
@@ -21,6 +22,8 @@ const emptyTask: Task = {
 const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, handleUpdateTask}) => {
   const taskObj: Task = task || emptyTask
   const {state} = useAppState()
+  let darkMode = JSON.parse(localStorage.getItem('dark_mode'))
+  const [darkLightMode, setDarkLightMode] = useState(darkMode);
   
   const toggleTaskArchive = (task) => {
     task.number = !task.number && "archive" || task.number && null
@@ -28,12 +31,15 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
     handleUpdateTask(updatedTask)
   }
 
-
+  // ${taskObj?.status !== 'complete' && darkLightMode && "!bg-[transparent]"}
   return <> 
     <Table.Tr 
       key={task?.id} 
       className={`hover:!bg-[#f4f4f4] border border-gray-50 ${taskObj.title == "" && 'h-[50px]'}
-        rounded-lg ${taskObj?.status === 'complete'? classes.taskList : classes.defaultTaskList }`}
+        rounded-lg ${taskObj?.status === 'complete'? classes.taskList : classes.defaultTaskList}
+        ${taskObj?.status !== 'complete' && darkLightMode && "!bg-[transparent] !border-[#33323F]"}
+        ${taskObj?.status === 'complete' && darkLightMode && "!border-[#33323F]"}
+        `}
     >
       <Table.Td className='!w-[1%] m-auto '>
         <Group gap="[0px]" >

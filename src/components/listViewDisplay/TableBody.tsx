@@ -1,21 +1,22 @@
 import { EmptyTaskModal } from "../EmptytTaskModals/EmptyTaskModal"
 import { Table } from "@mantine/core"
 import TaskListLoadSkeleton from "./TaskListLoadSkeleton"
+import { useAppState } from "../../store/AppState"
 
 function TableBody({loadingComponent, listTasks, items}) {
+  const {state} = useAppState()
 
   const TBody = () => (
-    // loadingComponent? <TaskListLoadSkeleton /> : 
     listTasks && listTasks.length > 0 ?
-        <Table.Tbody className="!border-b-2 border-purple-400">
-            {items} 
-        </Table.Tbody> : <TaskListLoadSkeleton /> 
-  
+      <Table.Tbody className="!border-b-2 border-purple-400">
+          {items} 
+      </Table.Tbody> : 
+      loadingComponent && state.tasks?.length? 
+      <TaskListLoadSkeleton /> : <EmptyTaskModal /> 
   )
 
   return (
-    // listTasks && listTasks.length > 0? <TBody /> : <EmptyTaskModal />
-    !listTasks && !loadingComponent? <EmptyTaskModal /> : <TBody /> 
+    <TBody />
   )
 }
 

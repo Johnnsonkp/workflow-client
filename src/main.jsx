@@ -16,6 +16,7 @@ import PageBoilerPlate from './components/boilerplate/Boilerplate.jsx';
 import PersonalLanding from './pages/PersonalLanding.jsx';
 import ReactDOM from 'react-dom/client'
 import StandupPage from './pages/StandupPage';
+import TimeLogs from './components/timeLogComp/timeLog';
 import UserXP from './pages/UserXP';
 import WorkLanding from './pages/WorkLanding.jsx';
 

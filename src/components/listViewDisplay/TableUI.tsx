@@ -4,6 +4,7 @@ import { Table } from '@mantine/core'
 import TableBody from './TableBody'
 import TableFooter from './TableFooter'
 import TableHead from './TableHead'
+import TimeLogs from '../timeLogComp/timeLog'
 import classes from './list.module.css'
 
 function TableUI({items, listTasks, setArchieve, showArchive, activePage, setPage}) {
@@ -26,9 +27,10 @@ function TableUI({items, listTasks, setArchieve, showArchive, activePage, setPag
     }, [])
 
   return (
+    // <div className='flex'>
+    // <TimeLogs />
     <div 
-      // className={`${classes.listTable} w-[99%] m-[auto] h-[] cursor-pointer border border-#D1D1D1 bg-white rounded-md mt-10 mb-5 ${darkMode && 'border-4 border-[#5E5E5E]' } ${darkMode && ' !bg-[#2D333B] text-[#fff]' }`}
-      className={`${classes.listTable} w-[99%] m-[auto] h-[] cursor-pointer border border-#D1D1D1 bg-white rounded-md mt-10 mb-5 ${darkMode && 'border-1 border-[#5E5E5E]' } ${darkMode && ' !bg-[#2D333B] text-[#fff]' }`}
+      className={`${classes.listTable} w-[99%] m-[auto] h-[] cursor-pointer border border-#D1D1D1 bg-white rounded-md mt-10 mb-5 ${darkMode && 'border-1 border-[#33323F]' } ${darkMode && ' !bg-[#191622] text-[#fff]' }`}
     >
       <Table.ScrollContainer minWidth={800} className='overflow-hidden'>
         <Table
@@ -57,12 +59,14 @@ function TableUI({items, listTasks, setArchieve, showArchive, activePage, setPag
           setPage={setPage}
         />
       </Table.ScrollContainer>
+      {/* <TimeLogs /> */}
 
       {/* <div className='border border-red-400 w-52'>
         <p>What I've done</p>
       </div> */}
       
     </div>
+    // </div>
   )
 }
 
