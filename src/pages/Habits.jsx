@@ -206,11 +206,12 @@ useEffect(() => {
     let loadingDelay = setTimeout(() => {
         if(loading === true){
             if(!habitObj) { fetchFormAction()}
-            setLoadingComponent(false)
+            // setLoadingComponent(false)
             setLoading(false)
         }
-    // }, 200)
-       }, 500)
+        setLoadingComponent(false)
+    }, 200)
+    //    }, 500)
     return () => {
         clearTimeout(loadingDelay)
     }

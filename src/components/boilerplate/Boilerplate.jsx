@@ -81,14 +81,12 @@ function PageBoilerPlate({ component }) {
 
       return (
         <Grid 
-          // className={`${darkLightMode? '!bg-[#2D333B]' : 'bg-[#F0F0F0]' }`} 
           className={`${darkLightMode? '!bg-[#14121D]' : 'bg-[#F0F0F0]' }`}
           gutter="xs" 
           overflow="hidden"
         >
             <Grid.Col className={`!z-20 `}>
               <Nav 
-                // className={`${darkLightMode? '!bg-[#2D333B]' : 'bg-[#F0F0F0]' }`} 
                 className={`${darkLightMode? '!bg-[#14121D]' : 'bg-[#F0F0F0]' }`}
                 setDarkLightMode={setDarkLightMode}
               />
@@ -96,7 +94,6 @@ function PageBoilerPlate({ component }) {
             <Grid.Col span={{ base: 12, xs: 3.3, sm:2.9, md: 2.5, lg: 1.8 }} 
               className={`!max-w-[220px] !z-10 `}>
               <SideNav 
-                // className={`!z-10 ${darkLightMode? '!bg-[#2D333B]' : 'bg-[#F0F0F0]' }`}
                 className={`${darkLightMode? '!bg-[#14121D]' : 'bg-[#F0F0F0]' }`}
                 section={section} 
                 urlRedirect={urlRedirect} 
@@ -104,12 +101,10 @@ function PageBoilerPlate({ component }) {
             </Grid.Col>
             <Grid.Col 
               span={{ base: 12, xs: 8.4, sm: 9, md: 9.4, lg: 10.2 }} 
-              // className={`${bpClasses.wrapper} 
-              //   ${darkLightMode? '!bg-[#1C2127] border border-[#5E5E5E] mt-10' : 'bg-[#fff] border border-[#f4f4f4] mt-10'} transition-colors ease-in-out !delay-1000 `}
               className={`${bpClasses.wrapper} 
-                ${darkLightMode? '!bg-[#191622] border border-[#5E5E5E] mt-10' : 'bg-[#fff] border border-[#f4f4f4] mt-10'} transition-colors ease-in-out !delay-1000 `}
+                ${darkLightMode? '!bg-[#191622] border border-[#5E5E5E] mt-10' : 'bg-[#fff] border border-[#f4f4f4] mt-10'} transition-colors ease-in-out !delay-1000`}
             >
-              <LoadingContainer className={`${bpClasses.component} p-7 pt-4 mt-1`}>
+              <LoadingContainer className={`${bpClasses.component} p-7 pt-4 mt-1 !mx-[auto]`}>
                   <div className={` max-w-[1800px] !m-[auto] pt-0`}>
                     {component}
                   </div>
