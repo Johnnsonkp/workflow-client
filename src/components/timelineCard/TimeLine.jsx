@@ -38,7 +38,7 @@ function TimeLineCardDIsplay() {
         <>
             {/* <Paper onClick={() => navigate('/monthly')} withBorder radius="sm" p="xs" key={1} 
                 className='!shadow-md h-[88%] !bg-[#F9FAFA] cursor-pointer'> */}
-            <Paper onMouseDown={open} onClose={close}  withBorder radius="sm" p="xs" key={1} 
+            <Paper onMouseDown={open} onClose={close} radius="" p="xs" key={1} 
                 className='!shadow-md h-[88%] !bg-[#F9FAFA] cursor-pointer'>
                 <Group className='!justify-center !align-end'>
                     <Timeline active={0} bulletSize={22} lineWidth={2} className=' w-[95%]' mb="sm" pt='lg'>

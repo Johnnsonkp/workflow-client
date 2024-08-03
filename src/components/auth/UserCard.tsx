@@ -24,7 +24,7 @@ export function UserInfoAction() {
     let completedTasksCount = state.tasks?.filter? state.tasks?.filter((task) => task.status === 'complete').length : 0;
     
     return (
-     <Container my="" pl={0} pr={10} pb={9} className='bg-[#F9FAFA] rounded-lg' onClick={() => NavigateToUserPage()}>
+     <Container my="" pl={0} pr={10} pb={9} className='bg-[#F9FAFA]' onClick={() => NavigateToUserPage()}>
         {/* <a href="/userxp"> */}
             <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="" className='pt-3 pb-1'>
                 <Avatar

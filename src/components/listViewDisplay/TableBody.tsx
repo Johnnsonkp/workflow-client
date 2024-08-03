@@ -11,7 +11,8 @@ function TableBody({loadingComponent, listTasks, items}) {
       <Table.Tbody className="!border-b-2 border-purple-400">
           {items} 
       </Table.Tbody> : 
-      loadingComponent && state.tasks?.length? 
+      // loadingComponent && state.tasks?.length? 
+      loadingComponent? 
       <TaskListLoadSkeleton /> : <EmptyTaskModal /> 
   )
 

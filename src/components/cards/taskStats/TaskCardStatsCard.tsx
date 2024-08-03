@@ -82,7 +82,7 @@ function StatsRingCard({}) {
   ));
 
   return (
-    <Card withBorder p="lg" radius="md" className={`${classes.card} !border !bg-[#F9FAFA]`}>
+    <Card  p="lg" radius="" className={`${classes.card}  !bg-[#F9FAFA]`}>
       <div className={classes.inner}>
         <div>
           <Group className='flex justify-between'>

@@ -34,7 +34,7 @@ const CardContainerCx = ({children, title}) => {
   }
 
   return (
-    <div className={`${classes.cardContainer} ${darkMode && 'border-4 border-[#5E5E5E]'}`}>
+    <div className={`${classes.cardContainer} ${darkMode && 'border border-[#5E5E5E]'}`}>
       <div className={`${classes.innerCard}`}>
         {title && Array.isArray(title) ? (
           <div className="flex">

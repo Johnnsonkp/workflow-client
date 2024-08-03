@@ -4,6 +4,7 @@ function ArchiveBtnComp({showArchive, setArchieve}) {
   return (
         <SegmentedControl
           size="xs"
+          fullWidth={false}
           value={showArchive? 'Show' : 'Hide'}
           onChange={() => setArchieve((prevState) => prevState === null? "archive" : null)}
           transitionTimingFunction="ease"

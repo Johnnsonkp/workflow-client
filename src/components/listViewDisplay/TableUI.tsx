@@ -6,6 +6,7 @@ import TableFooter from './TableFooter'
 import TableHead from './TableHead'
 import TimeLogs from '../timeLogComp/timeLog'
 import classes from './list.module.css'
+import { useAppState } from '../../store/AppState'
 
 function TableUI({items, listTasks, setArchieve, showArchive, activePage, setPage}) {
     const [loading, setLoading] = useState(true)

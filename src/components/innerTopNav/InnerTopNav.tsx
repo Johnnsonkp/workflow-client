@@ -59,7 +59,7 @@ const InnerTopNav: React.FC<Props> = ({ setTogglePanel, data, value, title, tab1
   return (
     <header 
       className={`${classes.header} rounded-md mt-0 !mb-5 shadow-md 
-      border border-[#f5f5f5] text-[#333] 
+      border-2 border-[#f4f4f4] text-[#333] 
       ${theme && 'border-[1px] border-[#5E5E5E] text-[#fff]' }`}
     >
       

@@ -54,7 +54,7 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
         </Group>
       </Table.Td>
 
-      <Table.Td className='w-[40%]'onClick={() => toggleFormModule( {task: task, toggle: true})}>
+      <Table.Td className='w-[35%]'onClick={() => toggleFormModule( {task: task, toggle: true})}>
         <Group gap="" className='min-w-64'>
           <Text fz="xs">{taskObj.order}</Text>
           <Text fz="xs" fw={500} className=''>
@@ -63,19 +63,13 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
         </Group>
       </Table.Td>
 
-      <Table.Td 
-        className='w-[1%] !p-1'
+      <Table.Td className='opacity-[0.7] w-10 !p-1'
         onClick={() => toggleFormModule( {task: taskObj, toggle: true})}
-      > 
-        <Badge color={'black'} variant="light" className='!flex '>
-          <ThemeIcon bg="transparent" variant='light' w={'100%'} className='!flex !justify-between !align-middle'>
-            <ThemeIcon color={taskStatus[taskObj.status]} size={10} radius="xl" variant="light">
-              <IconCircleFilled color="transparent" style={{ width: rem(13), height: rem(8) }} /> 
-            </ThemeIcon>
-            <Text fw={600} 
-              className={`!text-[9px] !px-1 !text-[#333]`}>
-                {taskObj.status}
-              </Text>
+      >
+        <Badge color={'black'} variant="light">
+          <ThemeIcon color={taskStatus[taskObj.status]} bg="transparent" variant='light' w={'100%'} className='!flex !justify-between !align-middle'>
+            <IconCircleFilled color="transparent" size={15} style={{ marginRight: rem(2) }}/>
+            <Text fw={600} className={`!text-[9px] !px-1 !text-[#333]`}>{taskObj.status}</Text>
           </ThemeIcon>
         </Badge>
       </Table.Td>
@@ -84,8 +78,7 @@ const ListViewSingle = ({task, taskStatus, handleDeleteTask, toggleFormModule, h
         onClick={() => toggleFormModule( {task: taskObj, toggle: true})}
       >
         <Badge color={'black'} variant="light">
-          <ThemeIcon bg="transparent" variant='light' w={'100%'} 
-          className='!flex !justify-between !align-middle'>
+          <ThemeIcon bg="transparent" variant='light' w={'100%'} className='!flex !justify-between !align-middle'>
             <IconCalendar size={15} style={{ marginRight: rem(2) }}/>
             <Text fw={600} className='!text-[10px] !text-[#111]'>{taskObj?.start_date}</Text>
           </ThemeIcon>
