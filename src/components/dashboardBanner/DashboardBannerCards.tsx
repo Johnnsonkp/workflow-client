@@ -2,7 +2,9 @@ import { Button, Center, Group, Paper, RingProgress, Text, rem } from '@mantine/
 import { Container, Grid, Skeleton } from '@mantine/core';
 import { IconArrowBadgeLeftFilled, IconArrowBadgeRightFilled } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
+import { dataIcon, moneyIcon, userIcon, userPlusIcon } from './dashboardIcons';
 
+import DashboardCards2 from './DashboardCards2';
 import { EmptyTaskModal } from '../EmptytTaskModals/EmptyTaskModal';
 import StandUpCardCustom from '../cards/standUpCards/StandUp';
 import StatsRingCard from '../cards/taskStats/TaskCardStatsCard';
@@ -15,85 +17,92 @@ interface Props {
   taskObj: Task[] | undefined
 }
 
-const CardContainerCx = ({children, title}) => {
-  const [loadingComponent, setLoadingComponent]: any = useState(true)
-  const [activeTab, setActiveTab] = useState()
-  let darkMode = JSON.parse(localStorage.getItem('dark_mode'))
+// const CardContainerCx = ({children, title}) => {
+//   const [loadingComponent, setLoadingComponent]: any = useState(true)
+//   const [activeTab, setActiveTab] = useState()
+//   let darkMode = JSON.parse(localStorage.getItem('dark_mode'))
 
-  useEffect(() => {
-    const timer = setTimeout(() => setLoadingComponent(false), 200);
-    return () => clearTimeout(timer);
-  }, [])
+//   useEffect(() => {
+//     const timer = setTimeout(() => setLoadingComponent(false), 200);
+//     return () => clearTimeout(timer);
+//   }, [])
 
-  useEffect(() => {
-    setActiveTab(title && Array.isArray(title)? title[0] : title)
-  }, [title])
+//   useEffect(() => {
+//     setActiveTab(title && Array.isArray(title)? title[0] : title)
+//   }, [title])
 
-  if (loadingComponent) {
-    return <Skeleton height={200} radius="md" animate={false} />;
-  }
+//   if (loadingComponent) {
+//     return <Skeleton height={200} radius="md" animate={false} />;
+//   }
 
-  return (
-    <div className={`${classes.cardContainer} ${darkMode && 'border border-[#5E5E5E]'}`}>
-      <div className={`${classes.innerCard}`}>
-        {title && Array.isArray(title) ? (
-          <div className="flex">
-            {title.map((tabTitle) => (
-              <Group
-                key={tabTitle}
-                onClick={() => setActiveTab(tabTitle)}
-                mt="2"
-                mb="0"
-                mx="1"
-                px="10"
-                className={`${classes.tab} ${activeTab === tabTitle && "!bg-[#F9FAFA]"}`}
-              >
-                <Text fz="xs" fw={500}>{tabTitle}</Text>
-              </Group>
-            ))}
-          </div>
-        ) : (
-          <Group mt="2" mb="0" px="10" className={`${classes.tab} ${activeTab === title && "!bg-[#F9FAFA]"}`}>
-            <Text fz="xs" fw={500}>{activeTab}</Text>
-          </Group>
-        )}
-      </div>
-      {children}
-    </div>
-  );
-}
+//   return (
+//     <div className={`${classes.cardContainer} ${darkMode && 'border border-[#5E5E5E]'}`}>
+//       <div className={`${classes.innerCard}`}>
+//         {title && Array.isArray(title) ? (
+//           <div className="flex">
+//             {title.map((tabTitle) => (
+//               <Group
+//                 key={tabTitle}
+//                 onClick={() => setActiveTab(tabTitle)}
+//                 mt="2"
+//                 mb="0"
+//                 mx="1"
+//                 px="10"
+//                 className={`${classes.tab} ${activeTab === tabTitle && "!bg-[#F9FAFA]"}`}
+//               >
+//                 <Text fz="xs" fw={500}>{tabTitle}</Text>
+//               </Group>
+//             ))}
+//           </div>
+//         ) : (
+//           <Group mt="2" mb="0" px="10" className={`${classes.tab} ${activeTab === title && "!bg-[#F9FAFA]"}`}>
+//             <Text fz="xs" fw={500}>{activeTab}</Text>
+//           </Group>
+//         )}
+//       </div>
+//       {children}
+//     </div>
 
-const DashboardCardComp = ({title, Comp, className}) => (
+//     // <DashboardCards2 children={children}/>
+//   );
+// }
+
+const DashboardCardComp = ({title, Comp, className, SvgIcon}) => (
    <Grid.Col span={{ base: 12, lg: 4 }} className={className}>
-    {<CardContainerCx title={title} children={<Comp />} />} 
+    {/* <CardContainerCx title={title} children={<Comp />} /> */}
+    <DashboardCards2 title={title} children={<Comp />} svgIcon={<SvgIcon />}/>
   </Grid.Col>
 )
-
 
 const data = [
   {
     title: 'UserXP',
     component: UserInfoAction,
+    svgIcon: moneyIcon
   },
   {
-    title: ['Stand up', 'Stand down'],
+    // title: ['Stand up', 'Stand down'],
+    title: 'Stand up',
     component: StandUpCardCustom,
+    svgIcon: userIcon
   },
   {
     title: 'Stats',
     component: StatsRingCard,
+    svgIcon: dataIcon
   },
   {
     title: 'Monthly',
-    component: TimeLineCardDIsplay
+    component: TimeLineCardDIsplay,
+    svgIcon: userPlusIcon
   },
 ]
 
 const CustomCarousel = ({position, nextPosition, lastPosition}) => (
   <>
-    <DashboardCardComp className={``} title={data[position].title} Comp={data[position].component} />
-    <DashboardCardComp className={`${classes.defaultCarousel}`} title={data[nextPosition].title} Comp={data[nextPosition].component} />
-    <DashboardCardComp className={`${classes.defaultCarousel}`} title={data[lastPosition].title} Comp={data[lastPosition].component} />
+    <DashboardCardComp className={``} title={data[position].title} Comp={data[position].component} SvgIcon={data[position].svgIcon}/>
+    <DashboardCardComp className={`${classes.defaultCarousel}`} title={data[nextPosition].title} Comp={data[nextPosition].component} SvgIcon={data[nextPosition].svgIcon}/>
+    <DashboardCardComp className={`${classes.defaultCarousel}`} title={data[lastPosition].title} Comp={data[lastPosition].component} SvgIcon={data[lastPosition].svgIcon}/>
   </>
 )
 

@@ -2,6 +2,7 @@ import { Button, Card, Group, Modal, Paper, Text, Timeline } from '@mantine/core
 import { IconGitBranch, IconGitCommit, IconGitPullRequest, IconMessageDots } from '@tabler/icons-react';
 import React, {useEffect, useState} from 'react'
 
+import classes from './timeline.module.css'
 import { useAppState } from '../../store/AppState';
 import { useDisclosure } from '@mantine/hooks';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +17,7 @@ function TimeLineCardDIsplay() {
     const [monthlyGoals, setMonthlyGoals] = useState([ 
         {title: 'Complete Productivity App', complete: true }, 
         {title:'Begin shopify dev freelancing',complete: false }, 
-        {title: "Beging making dev content", complete: false }
+        {title: "Begin making dev content", complete: false }
     ])
 
     const [monthly_1, setMonthly_1] = useState(monthlyGoals[0].title)
@@ -36,13 +37,16 @@ function TimeLineCardDIsplay() {
 
     return (
         <>
-            {/* <Paper onClick={() => navigate('/monthly')} withBorder radius="sm" p="xs" key={1} 
-                className='!shadow-md h-[88%] !bg-[#F9FAFA] cursor-pointer'> */}
-            <Paper onMouseDown={open} onClose={close} radius="" p="xs" key={1} 
-                className='!shadow-md h-[88%] !bg-[#F9FAFA] cursor-pointer'>
-                <Group className='!justify-center !align-end'>
+            <Paper 
+                onMouseDown={open} 
+                onClose={close} 
+                radius="md" 
+                p="xs" 
+                key={1} 
+                className={`${classes.card}  !bg-[#F9FAFA] cursor-pointer`}
+            >
+                <Group className='!justify-center !align-end '>
                     <Timeline active={0} bulletSize={22} lineWidth={2} className=' w-[95%]' mb="sm" pt='lg'>
-                        {/* <button onMouseDown={open} onClose={close}>CLick Me</button> */}
                         <Timeline.Item size={'sm'} 
                             bullet={<IconGitBranch size={10} />} fz="sm" 
                             title={monthlyGoals[0].title}>

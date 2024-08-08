@@ -1,8 +1,9 @@
 import {Avatar, Button, Group, Menu, Modal, SegmentedControl, rem} from '@mantine/core';
-import {IconLogout, IconPlayerStopFilled, IconSettings, IconSwitchHorizontal} from '@tabler/icons-react';
+import { IconLogout, IconPlayerStopFilled, IconSettings, IconSwitchHorizontal } from '@tabler/icons-react';
 import { IconMenu, IconMenu2 } from '@tabler/icons-react';
 import React, {useEffect, useState} from 'react'
 
+import CountDownTimer from '../timer/CountDownTimer';
 import { CustomSwitch } from '../customSwitch/CustomSwitch';
 import { IconQuestionMark } from '@tabler/icons-react';
 import { IconSwitch } from '@tabler/icons-react';
@@ -94,13 +95,18 @@ function Nav({setDarkLightMode, className}) {
                 </div>
               </Menu.Target>
 
-              {/* <Menu.Target className={`${classes.navRightButton} border-l-2 ${light? 'border-[#5E5E5E]' : 'border-white-500'}`}> */}
+              {/* <Menu.Target className={`${classes.navRightButton} `}>
+                <Group justify="center" className='!px-3 ' opacity={'0.5'}>
+                  <CountDownTimer />
+                </Group>
+              </Menu.Target> */}
+
               <Menu.Target className={`${classes.navRightButton} ${light? 'border-[#5E5E5E]' : 'border-white-500'}`}>
                 <Group justify="center" p="xs" >
                   <a className='cursor-pointer my-[auto] !bg-[transparent] !text-[#fff] uppercase p-3'
                     href="/about"
                   >
-                      <IconQuestionMark size={23} color='#999'/>
+                      <IconQuestionMark size={20} color='#999' />
                   </a>
                 </Group>
               </Menu.Target>

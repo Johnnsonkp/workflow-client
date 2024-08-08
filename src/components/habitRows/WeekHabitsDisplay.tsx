@@ -66,7 +66,8 @@ export const WeekHabitsDisplay: React.FC<Props> = ({habitObj, deleteHabit, showD
                 return row?.entries && row.entries.map((entry, index) => {
                     const isDateMatched = formattedDate === entry.date
                     const showComparison = monthDisplayDateComparision(DateDisplay, index, numMonth) === entryDisplayDateComparision(entry);
-                   return (isDateMatched &&  
+                   return (
+                        isDateMatched &&  
                         <Table.Td key={dateIndex + index} className={`!overflow-hidden !px-0`}>
                             <div className={`text-center !px-0 }`}>
                                 <p className={`${showDate? 'visible' : 'hidden'} text-xs`}>
@@ -95,9 +96,7 @@ export const WeekHabitsDisplay: React.FC<Props> = ({habitObj, deleteHabit, showD
                                 </Group>   
                             </div>
                         </Table.Td> 
-                   )
-                    
-                }) 
+                )}) 
             })}
             <Table.Td className='flex'>
                 <p>{row.habit.current_streak}</p>

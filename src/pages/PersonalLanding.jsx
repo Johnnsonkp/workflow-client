@@ -109,7 +109,7 @@ function PersonalLanding() {
         zIndex={1000} 
         visible={loadingDisplay? true : false} overlayProps={{ radius: "sm", blur: 2 }} 
       /> 
-      <DefaultContainer className={`relative !overflow-hidden pb-5 !mx-[auto]`}>
+      <DefaultContainer className={`relative  !mx-[auto]`}>
         <DefaultContainer className={`${toggleForm? "h-[100vh]" : ""} max-w-[1600px] m-[auto] }`}>
           <InnerTopNav setTogglePanel={setTogglePanel} title={'Dashboard'}/>
           {taskPanel === 'list' && <DashboardBannerCards /> }

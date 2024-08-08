@@ -1,13 +1,13 @@
 .header {
+    margin: auto;
     height: 50px;
     margin-bottom: 15px;
-    /* background-color: var(--mantine-color-body); */
-    /* box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; */
   }
   
   
   .inner {
     /* height: 50px; */
+    /* position: relative; */
     height: 100%;
     width: 100%;
     display: flex;

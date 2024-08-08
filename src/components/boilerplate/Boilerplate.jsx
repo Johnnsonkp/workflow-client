@@ -74,27 +74,34 @@ function PageBoilerPlate({ component }) {
       }
 
       console.log("boilerplate page reloaded")
+      console.log("darkLightMode", darkLightMode)
 
     }, [state.refreshState])
+
+    // #202025
+    // #17171C
+    // border: #27272A
+    let bgTheme = darkLightMode? '!bg-[#202025]' : '!bg-[#F5F5F5]'
+    let bgThemeBorder = darkLightMode? 'border border-[#5E5E5E]' : 'border border-[#f4f4f4]'
 
     const CustomLayout = () => {
 
       return (
         <Grid 
-          className={`${darkLightMode? '!bg-[#14121D]' : 'bg-[#F0F0F0]' }`}
+          className={`${bgTheme }`}
           gutter="xs" 
           overflow="hidden"
         >
             <Grid.Col className={`!z-20 `}>
               <Nav 
-                className={`${darkLightMode? '!bg-[#14121D]' : 'bg-[#F0F0F0]' }`}
+                className={`${bgTheme}`}
                 setDarkLightMode={setDarkLightMode}
               />
             </Grid.Col>
             <Grid.Col span={{ base: 12, xs: 3.3, sm:2.9, md: 2.5, lg: 1.8 }} 
               className={`!max-w-[220px] !z-10 `}>
               <SideNav 
-                className={`${darkLightMode? '!bg-[#14121D]' : 'bg-[#F0F0F0]' }`}
+                className={`${bgTheme }`}
                 section={section} 
                 urlRedirect={urlRedirect} 
               />
@@ -102,12 +109,11 @@ function PageBoilerPlate({ component }) {
             <Grid.Col 
               span={{ base: 12, xs: 8.4, sm: 9, md: 9.4, lg: 10.2 }} 
               className={`${bpClasses.wrapper} 
-                ${darkLightMode? '!bg-[#191622] border border-[#5E5E5E] mt-10' : 'bg-[#fff] border border-[#f4f4f4] mt-10'} transition-colors ease-in-out !delay-1000`}
+                ${darkLightMode? '!bg-[#17171C] border-[#5E5E5E]' : 'bg-[#fff] border-[#f4f4f4]'} 
+                border mt-10 transition-colors ease-in-out !delay-1000`}
             >
               <LoadingContainer className={`${bpClasses.component} p-7 pt-4 mt-1 !mx-[auto]`}>
-                  <div className={` max-w-[1800px] !m-[auto] pt-0`}>
                     {component}
-                  </div>
               </LoadingContainer>
             </Grid.Col>    
         </Grid>

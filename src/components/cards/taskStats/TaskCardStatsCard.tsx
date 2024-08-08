@@ -82,7 +82,7 @@ function StatsRingCard({}) {
   ));
 
   return (
-    <Card  p="lg" radius="" className={`${classes.card}  !bg-[#F9FAFA]`}>
+    <Card  p="lg" radius="md" className={`${classes.card}  !bg-[#F9FAFA]`}>
       <div className={classes.inner}>
         <div>
           <Group className='flex justify-between'>
@@ -112,7 +112,6 @@ function StatsRingCard({}) {
             roundCaps
             thickness={10}
             size={140}
-            // sections={[{ value: (completedTaskCount / TaskCount) * 100, color: theme.primaryColor }]}
             sections={[{ value: (completedTaskCount / TaskCount) * 100, color: ringStatusColor((completedTaskCount / TaskCount) * 100) }]}
             label={
               <div>

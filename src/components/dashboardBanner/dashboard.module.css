@@ -15,6 +15,11 @@
     background: linear-gradient(to right, #8CA6DB, #B993D6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; */
 }
+/* ackground: linear-gradient(to right, #8ca6db, #b993d6); */
+
+.cardContainer2{
+    background: linear-gradient(to right, #8CA6DB, #B993D6); 
+}
 @keyframes slideaway {
     from { 
         display: none; 

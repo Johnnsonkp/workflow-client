@@ -1,14 +1,12 @@
-import { ActionIcon, Button, Group, LoadingOverlay, ScrollArea, SimpleGrid, Table, TextInput, Textarea, Title } from '@mantine/core';
 import { Box, ThemeIcon, rem } from '@mantine/core';
-import { IconActivity, IconCircleCheck } from '@tabler/icons-react';
+import { LoadingOverlay, ScrollArea, Table } from '@mantine/core';
 import { calculateWeek, monthsArr, numMonth } from '../utils/dateUtills';
 import { useEffect, useState } from 'react';
 
+import HabitBtnGroup from '../components/habitRows/HabitBtnGroup';
 import { HabitForm } from '../components/forms/HabitForm';
 import { HabitRows } from '../components/habitRows/HabitRows';
 import { HabitsObj } from '../components/habitRows/HabitsObj';
-import { IconPlus } from '@tabler/icons-react';
-import { IconTrash } from '@tabler/icons-react'
 import InnerTopNav from '../components/innerTopNav/InnerTopNav';
 import { Modal } from '@mantine/core';
 import { WeekHabitsDisplay } from '../components/habitRows/WeekHabitsDisplay';
@@ -83,7 +81,7 @@ const MonthDisplay = GetMonth(days, monthsArr)
 let firstElement = MonthDisplay.shift();
 
 // console.log("Month display", MonthDisplay)
-console.log("DateDisplay display", DateDisplay)
+// console.log("DateDisplay display", DateDisplay)
 // console.log("firstDay", firstDay)
 // console.log("lastDay", lastDay)
 
@@ -160,7 +158,7 @@ async function deleteHabit(obj){
 async function fetchFormAction(){
     const getAction = await habitFormActions['get']
     getAction(state.user).then((data) => {
-        console.log("fetchFormAction:", data)
+        // console.log("fetchFormAction:", data)
         setHabitObj(data)
     })
 }
@@ -254,20 +252,18 @@ const WeekDateDisplay = () => {
 const MonthDateDisplay = () => (
     <>
         <Table.Thead className={''}>
-                <Table.Tr>
+            <Table.Tr>
                 <Table.Th className={''}>Habit</Table.Th>
-            { MonthDisplay.map((obj, index) => (
-                    <Table.Th key={index} className={` text-[12px]  `}>
-                        <div className={`flex ${obj.date === todaysDate? 'bg-blue-400 text-white font-bold px-2 rounded-lg' : ''}`}>
-                            <p className={`px `}>{obj.day.slice(0, 3)}</p>
-                            <p className={`px-1 `}>{obj.date}</p>
-                            <p className={`px `}>{obj.month}</p>
-                        </div>
-                    </Table.Th>        
-            ))}
-
-
-        <Table.Th className={` text-[12px]`}>Current Streak</Table.Th>
+                    { MonthDisplay.map((obj, index) => (
+                        <Table.Th key={index} className={` text-[12px]  `}>
+                            <div className={`flex ${obj.date === todaysDate? 'bg-blue-400 text-white font-bold px-2 rounded-lg' : ''}`}>
+                                <p className={`px `}>{obj.day.slice(0, 3)}</p>
+                                <p className={`px-1 `}>{obj.date}</p>
+                                <p className={`px `}>{obj.month}</p>
+                            </div>
+                        </Table.Th>        
+                    ))}
+                <Table.Th className={` text-[12px]`}>Current Streak</Table.Th>
             </Table.Tr>
         </Table.Thead>
 
@@ -302,45 +298,45 @@ const HabitViewDisplay = () => {
       }
     }
 }
-   
-//   return !habitObj ?  
-  return <Box pos="relative">
-    <LoadingOverlay  zIndex={'1000'} visible={loadingComponent} overlayProps={{ radius: "sm", blur: 2 }} /> 
-   <div className='min-h-[80vh] mb-10'>
-      <InnerTopNav title={'Habits'} tab1={'Week view'} tab2={'Month view'} setTab1={setTab1} data={data} activeTab={activeTab} setActiveTab={setActiveTab}/>
 
-        <ScrollArea onScrollPositionChange={({ y }) => setScrolled(y !== 0)} border={'true'} className='border border-#D1D1D1 rounded-md shadow-md '>
-            <Table miw={700} withColumnBorders={true} >
-                <HabitViewDisplay />
-            <Table.Tfoot className='border border-gray-200 h-5 !p-5 bg-[#F1F3F5]'>
-                {/* <p className='p-2 text-xs'>Habit count: {Array.isArray(habitsObj) && habitsObj.length || 0 }</p> */}
-            </Table.Tfoot>
-            </Table>
-        </ScrollArea> 
+  return (
+    <Box pos="relative">
+        <LoadingOverlay  zIndex={'1000'} visible={loadingComponent} overlayProps={{ radius: "sm", blur: 2 }} /> 
+        <div className='min-h-[80vh] mb-10'>
+            <InnerTopNav title={'Habits'} tab1={'Week view'} tab2={'Month view'} setTab1={setTab1} data={data} activeTab={activeTab} setActiveTab={setActiveTab}/>
 
-        <div className='flex justify-end m-2 mt-4'>
-            <Button className='m-2' size='xs' onClick={() => setShowDate(!showDate)}>Show habit date</Button>
-            <Button size='xs' onClick={open} onClose={close} className={`shadow-lg m-2`}>
-                <IconPlus size={20} className={`!transition-all !duration-500 `}/> Add Habit
-            </Button>
+            <ScrollArea onScrollPositionChange={({ y }) => setScrolled(y !== 0)} border={'true'} className='border border-#D1D1D1 rounded-md shadow-md '>
+                <Table miw={700} withColumnBorders={true} >
+                    <HabitViewDisplay />
+                    <Table.Tfoot className='border border-gray-200 h-5 !p-5 bg-[#F1F3F5]'>
+                        <p className='p-2 text-xs'>Habit count: {Array.isArray(habitObj) && habitObj?.length || 0 }</p>
+                    </Table.Tfoot>
+                </Table>
+            </ScrollArea> 
+            
+            <HabitBtnGroup 
+                open={open} 
+                close={close} 
+                showDate={showDate} 
+                setShowDate={setShowDate}
+            />
+            
+            <Modal 
+                opened={opened} 
+                onClose={close} 
+                centered 
+                fullScreen={false} 
+                size="900px"
+                overlayProps={{
+                backgroundOpacity: 0.55,
+                blur: 3,
+                }}
+            >
+                <HabitForm />
+            </Modal>
         </div>
-
-        <Modal 
-            opened={opened} 
-            onClose={close} 
-            centered 
-            fullScreen={false} 
-            size="900px"
-            overlayProps={{
-            backgroundOpacity: 0.55,
-            blur: 3,
-            }}
-        >
-            <HabitForm />
-        </Modal>
-    
-    </div>
     </Box>
+  )
 }
 
 export default Habits

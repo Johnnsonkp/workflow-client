@@ -123,7 +123,7 @@ const StandUpCardCustom = () => {
 
   return (
     <>
-      <Card radius="" p="md" className={`${classes.card}`} pb="" >
+      <Card radius="md" p="md" className={`${classes.card}`} pb="" >
         <div className='flex justify-between'>
           <div className='flex mb-2'>
             <Button fz="8px" p={'1px'} h={'24px'} bg={'#95A2D9'} size="compact-xs" className='mx-1 !text-[#fff] !border-gray-200'>
