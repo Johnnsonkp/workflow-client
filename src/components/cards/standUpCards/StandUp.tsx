@@ -162,7 +162,7 @@ const StandUpCardCustom = () => {
           blur: 3,
         }}  
       > 
-        <Card withBorder radius="md" p="md" className={`${classes.card}`} pb="">
+        <Card withBorder radius="md" p="md" className={`${classes.modalCard}`} pb="">
           {formTitle || "Add Daily Stand Up"}
           <div className={`${classes.inner} flex-col`}>
             <form>

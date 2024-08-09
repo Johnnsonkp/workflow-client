@@ -4,6 +4,12 @@
     height: 170px;
   }
 
+  .modalCard{
+    background-color: #F9FAFA;
+    height: 88%;
+    max-height: 310px;
+  }
+
   .inner{
     height: 100%;
     margin-top: 0px;
