@@ -1,4 +1,4 @@
-import { Container, Grid, SimpleGrid, Skeleton, rem } from '@mantine/core';
+import { Box, Container, Grid, LoadingOverlay, SimpleGrid, Skeleton, rem } from '@mantine/core';
 import { useCallback, useEffect, useState } from 'react';
 
 import { LoadingContainer } from './LoadingContainer';
@@ -22,6 +22,7 @@ function PageBoilerPlate({ component }) {
     const [prevStandUp, setPrevStandUp] = useState()
     let darkMode = JSON.parse(localStorage.getItem('dark_mode'))
     const [darkLightMode, setDarkLightMode] = useState(darkMode);
+    const [allDataLoaded, setAllDataLoaded] = useState(false)
 
     const userAuthorised = getItemFromLocalStorage('AUTH')
     
@@ -34,21 +35,21 @@ function PageBoilerPlate({ component }) {
       const taskActions = await taskFormActions['get'];
       const data = await taskActions(userAuthorised);
 
-      setTimeout(() => {
+      // setTimeout(() => {
         if(data){
           dispatch({type: "ALL_TASK", payload: data})
           dispatch({type: 'AUTH', payload: userAuthorised})
-          dispatch({type: 'STATE_REFRESH', payload: false})
+          dispatch({type: 'STATE_REFRESH', payload: true})
           setPrevStateTask(data)
         }
-      }, 500)
+      // }, 500)
     }
 
     const loadStandUp = async () => {
       const standupActions = await standupFormActions['get'];
       const data = await standupActions(userAuthorised);
 
-      setTimeout(() => {
+      // setTimeout(() => {
         if(data && !prevStandUp){
           setPrevStandUp(data)
           dispatch({type: "LATEST_STAND_UP", payload: {
@@ -57,32 +58,26 @@ function PageBoilerPlate({ component }) {
             standup_tasks: data.standup_tasks
           }})
         }
-      }, 500)
+      // }, 500)
     }
 
     useEffect(() => { // On mount fetch request for tasks
       if(userAuthorised && prevStateTask.length === 0){
         loadTasks()
         loadStandUp()
+
+        setTimeout(() => {
+          console.log("alldata loaded")
+          setAllDataLoaded(true)
+        }, 500)
       } 
-      if(userAuthorised && state.refreshState){
-        loadTasks()
-      }
       if(!userAuthorised){
         alert("User must be signed in")
         navigate('/')
       }
+    }, [allDataLoaded])
 
-      console.log("boilerplate page reloaded")
-      console.log("darkLightMode", darkLightMode)
-
-    }, [state.refreshState])
-
-    // #202025
-    // #17171C
-    // border: #27272A
     let bgTheme = darkLightMode? '!bg-[#202025]' : '!bg-[#F5F5F5]'
-    let bgThemeBorder = darkLightMode? 'border border-[#5E5E5E]' : 'border border-[#f4f4f4]'
 
     const CustomLayout = () => {
 
@@ -113,7 +108,14 @@ function PageBoilerPlate({ component }) {
                 border mt-10 transition-colors ease-in-out !delay-1000`}
             >
               <LoadingContainer className={`${bpClasses.component} p-7 pt-4 mt-1 !mx-[auto]`}>
-                    {component}
+                <Box pos="relative">
+                  <LoadingOverlay 
+                    zIndex={1000} 
+                    visible={!allDataLoaded} 
+                    overlayProps={{ radius: "sm", blur: 2 }} 
+                  />
+                  {component}
+                </Box>
               </LoadingContainer>
             </Grid.Col>    
         </Grid>

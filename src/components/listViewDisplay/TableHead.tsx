@@ -2,7 +2,7 @@ import ArchiveBtnComp from "./ArchiveBtnComp"
 import { Table } from "@mantine/core"
 import { useAppState } from '../../store/AppState'
 
-function TableHead({setArchieve, showArchive, loadingComponent}) {
+function TableHead({setArchieve, showArchive}) {
   
   return (
     <Table.Thead className={``}>

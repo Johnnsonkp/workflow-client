@@ -40,7 +40,6 @@ export function LandingAuth() {
       <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xs"  className={`${classes.wrapper} overflow-hidden `} >
         <Grid gutter="md" className={`${classes.contacts} p-12 flex items-center h-screen shadow-lg`}>
           <AppLogoContainer />
-          
           <Grid gutter="md" className='mt-10'>
             <Text fz="lg" fw={700} className={`${classes.title} !mt-0`} c="#333" >
               {userType || state.userAuthStatus.error}

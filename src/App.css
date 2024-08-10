@@ -5,7 +5,7 @@ body{
   /* background-image: url('https://tasksprinterv3.netlify.app/header-background%20copy.svg'); */
   /* scrollbar-gutter: stable both-edges;  */
   scrollbar-gutter: stable auto; 
-    /* overflow: scroll; */
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
+
 }
 

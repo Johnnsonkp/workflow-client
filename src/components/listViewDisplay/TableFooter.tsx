@@ -1,22 +1,18 @@
-import { Pagination, Table } from "@mantine/core"
+import { Pagination } from "@mantine/core"
 
-function TableFooter({loadingComponent, paginationCount, activePage, setPage}) {
+function TableFooter({paginationCount, activePage, setPage}) {
   return (
-    // <Table className='px-3'>
-        <>
-          {/* {!loadingComponent && */}
-            <Pagination 
-              total={paginationCount} 
-              value={activePage} 
-              onChange={setPage} 
-              mt="md" 
-              ml={'sm'}
-              size="xs" 
-              color="#228a"
-            />
-          {/* } */}
-          </>
-    // </Table>
+    <>
+        <Pagination 
+          total={paginationCount} 
+          value={activePage} 
+          onChange={setPage} 
+          mt="md" 
+          ml={'sm'}
+          size="xs" 
+          color="#228a"
+        />
+    </>
   )
 }
 

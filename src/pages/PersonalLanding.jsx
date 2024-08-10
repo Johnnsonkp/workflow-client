@@ -21,7 +21,6 @@ import { useNavigate } from "react-router-dom";
 function PersonalLanding() {
   const [taskPanel, setTaskPanel] = useState('list')
   const [togglePannel, setTogglePanel] = useState('')
-  const [toggleOpacity, setToggleOpacity] = useState('opacity-[0]')
   const {state, dispatch} = useAppState()
   const [taskObj, setTaskObj] = useState(state.tasks || [])
   const [formValue, setFormValue] = useState([])
@@ -36,26 +35,7 @@ function PersonalLanding() {
   const [updateForm, setUpdateForm] = useState({
     task: null,
     toggle: false
-  })
-
-  useEffect(() => {
-    setTimeout(() => {
-      if(loadingDisplay === true && taskObj.length > 0){
-        setLoadingDisplay(false)
-        setToggleOpacity('opacity-1')
-        return
-      }
-
-      setTimeout(() => {
-        if(loadingDisplay === true && taskObj.length == 0){
-          setLoadingDisplay(false)
-          setToggleOpacity('opacity-1')
-        } 
-      }, 500)
-      
-    }, 50)
-  }, [])
-  
+  })  
 
   const deleteTask =  async (taskToDelete, taskObj) => {
     const deleteTaskAction = await taskFormActions['delete']
@@ -104,53 +84,47 @@ function PersonalLanding() {
   }, [togglePannel])
 
   return (
-    <Box pos="relative">
-      <LoadingOverlay 
-        zIndex={1000} 
-        visible={loadingDisplay? true : false} overlayProps={{ radius: "sm", blur: 2 }} 
-      /> 
-      <DefaultContainer className={`relative  !mx-[auto]`}>
-        <DefaultContainer className={`${toggleForm? "h-[100vh]" : ""} max-w-[1600px] m-[auto] }`}>
-          <InnerTopNav setTogglePanel={setTogglePanel} title={'Dashboard'}/>
-          {taskPanel === 'list' && <DashboardBannerCards /> }
-          <DashboardDisplay />
-        </DefaultContainer>
-        <Button 
-          onMouseDown={open} 
-          onClose={close} 
-          className={`shadow-lg ${classes.button} ${opened? classes.buttonOpen : classes.buttonClose}`}
-        >
-          <IconPlus size={30} className={`!transition-all !duration-500 ${opened && classes.buttonRotate}  `}/>
-        </Button>
+    <DefaultContainer className={`relative  !mx-[auto]`}>
+      <DefaultContainer className={`${toggleForm? "h-[100vh]" : ""} max-w-[1600px] m-[auto] }`}>
+        <InnerTopNav setTogglePanel={setTogglePanel} title={'Dashboard'}/>
+        {taskPanel === 'list' && <DashboardBannerCards /> }
+        <DashboardDisplay />
+      </DefaultContainer>
+      <Button 
+        onMouseDown={open} 
+        onClose={close} 
+        className={`shadow-lg ${classes.button} ${opened? classes.buttonOpen : classes.buttonClose}`}
+      >
+        <IconPlus size={30} className={`!transition-all !duration-500 ${opened && classes.buttonRotate}  `}/>
+      </Button>
 
-        <Modal 
-          opened={opened} 
-          onClose={close} 
-          centered 
-          fullScreen={false} 
-          size="900px"
-          overlayProps={{
-            backgroundOpacity: 0.55,
-            blur: 3,
-          }}
-        >
-          <CreateTaskForm />
-        </Modal>
-        <Modal 
-          opened={updateForm.toggle} 
-          onClose={() => setUpdateForm({task: updateForm?.task , toggle: false})} 
-          centered 
-          fullScreen={false} 
-          size="900px"
-          overlayProps={{
-            backgroundOpacity: 0.55,
-            blur: 3,
-          }}  
-        >
-          <UpdateTaskForm task={updateForm?.task}/>
-        </Modal>
-      </ DefaultContainer>
-    </Box>
+      <Modal 
+        opened={opened} 
+        onClose={close} 
+        centered 
+        fullScreen={false} 
+        size="900px"
+        overlayProps={{
+          backgroundOpacity: 0.55,
+          blur: 3,
+        }}
+      >
+        <CreateTaskForm />
+      </Modal>
+      <Modal 
+        opened={updateForm.toggle} 
+        onClose={() => setUpdateForm({task: updateForm?.task , toggle: false})} 
+        centered 
+        fullScreen={false} 
+        size="900px"
+        overlayProps={{
+          backgroundOpacity: 0.55,
+          blur: 3,
+        }}  
+      >
+        <UpdateTaskForm task={updateForm?.task}/>
+      </Modal>
+    </ DefaultContainer>
   );
 }
 

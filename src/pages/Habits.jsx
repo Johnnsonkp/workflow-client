@@ -203,12 +203,14 @@ const data = [
 useEffect(() => {
     let loadingDelay = setTimeout(() => {
         if(loading === true){
-            if(!habitObj) { fetchFormAction()}
+            if(!habitObj) { 
+                fetchFormAction()
+            }
             // setLoadingComponent(false)
             setLoading(false)
         }
         setLoadingComponent(false)
-    }, 200)
+    }, 300)
     //    }, 500)
     return () => {
         clearTimeout(loadingDelay)

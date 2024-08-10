@@ -3,17 +3,21 @@ import { Table } from "@mantine/core"
 import TaskListLoadSkeleton from "./TaskListLoadSkeleton"
 import { useAppState } from "../../store/AppState"
 
-function TableBody({loadingComponent, listTasks, items}) {
+function TableBody({ listTasks, items}) {
   const {state} = useAppState()
 
   const TBody = () => (
     listTasks && listTasks.length > 0 ?
+    // loadingComponent? <EmptyTaskModal listTasks={listTasks} loadingComponent={loadingComponent}/> :
       <Table.Tbody className="!border-b-2 border-purple-400">
           {items} 
-      </Table.Tbody> : 
+      </Table.Tbody> :
+
+      <EmptyTaskModal listTasks={listTasks} />
       // loadingComponent && state.tasks?.length? 
-      loadingComponent? 
-      <TaskListLoadSkeleton /> : <EmptyTaskModal /> 
+      // !loadingComponent && 
+      // <EmptyTaskModal listTasks={listTasks} loadingComponent={loadingComponent}/>
+      // <TaskListLoadSkeleton /> : <EmptyTaskModal /> 
   )
 
   return (

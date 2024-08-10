@@ -4,6 +4,7 @@ import { IconPencil, IconTrash } from '@tabler/icons-react'
 import { entryDisplayDateComparision, monthDisplayDateComparision } from './DateComparisonMonth';
 
 import ProgressLine from './ProgressLine';
+import TaskListLoadSkeleton from '../listViewDisplay/TaskListLoadSkeleton';
 import { numMonth } from '../../utils/dateUtills';
 import { reformatDate } from './DateComparisonMonth';
 
@@ -102,6 +103,6 @@ export const WeekHabitsDisplay: React.FC<Props> = ({habitObj, deleteHabit, showD
                 <p>{row.habit.current_streak}</p>
             </Table.Td>
         </Table.Tr>
-    )) : null
+    )) : <TaskListLoadSkeleton lines={3}/> 
     
 )

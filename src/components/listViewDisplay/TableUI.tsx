@@ -16,10 +16,9 @@ function TableUI({items, listTasks, setArchieve, showArchive, activePage, setPag
 
     useEffect(() => {
         let loadingDelay = setTimeout(() => {
-          if(items){
+          if(items && listTasks && listTasks.length > 0 ){
             console.log("listViewTask")
             setLoadingComponent(false)
-            setLoading(false)
           }
         }, 200)
         return () => {
@@ -43,31 +42,22 @@ function TableUI({items, listTasks, setArchieve, showArchive, activePage, setPag
             ${listTasks.filter((task) => task.number == null).length < 1 && 'h-[240px]'}`}
         >
           <TableHead 
-            loadingComponent={loadingComponent}
             setArchieve={setArchieve} 
             showArchive={showArchive}
           />
           <TableBody 
-            loadingComponent={loadingComponent} 
             listTasks={listTasks} 
             items={items}
           />
         </Table>
         <TableFooter 
-          loadingComponent={loadingComponent} 
           paginationCount={paginationCount} 
           activePage={activePage} 
           setPage={setPage}
         />
       </Table.ScrollContainer>
       {/* <TimeLogs /> */}
-
-      {/* <div className='border border-red-400 w-52'>
-        <p>What I've done</p>
-      </div> */}
-      
     </div>
-    // </div>
   )
 }
 

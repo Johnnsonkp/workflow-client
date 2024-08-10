@@ -171,7 +171,8 @@ const StandUpCardCustom = () => {
                 <input 
                   defaultValue={standUpObj && standUpObj.standup_tasks[0].title}
                   className='w-[100%]' 
-                  onChange={(e) => setStandUp_1(e.target.value)}></input>
+                  onChange={(e) => setStandUp_1(e.target.value)}>
+                </input>
               </Group>  
               <Group justify="space-around" className={classes.item} wrap="nowrap" gap="xs">
                 <label>2.</label>
@@ -189,7 +190,8 @@ const StandUpCardCustom = () => {
           </div>
           <div className='mt-4 w-[100%]'>
             <hr className='mb-5'></hr>
-            <Button className='!w-[100%]' 
+            <Button 
+              className='!w-[100%]' 
               onClick={(e) => handleFormSubmit(e)}
             >
             Save

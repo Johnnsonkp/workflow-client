@@ -1,19 +1,33 @@
-import { Grid, Skeleton } from '@mantine/core'
+import {Skeleton} from '@mantine/core'
 
-const TaskListLoadSkeleton = () => {
-      // return <Grid className='absolute m-[auto] py-3 px-3'>
-      // <Skeleton height={40} radius="sm" width={'80vw'}/>
-      // <Skeleton height={40} mt={8} radius="sm" />
-      // <Skeleton height={40} mt={8} radius="sm" />
-      // <Skeleton height={40} mt={8} radius="sm" />
-      // </Grid>
+interface Props {
+  lines?: number;
+}
 
-      return <>
-      <Skeleton height={40} radius="sm" width={'80vw'}/>
-      <Skeleton height={40} mt={8} radius="sm" />
-      <Skeleton height={40} mt={8} radius="sm" />
-      <Skeleton height={40} mt={8} radius="sm" />
+const TaskListLoadSkeleton: React.FC<Props> = ({lines}) => {
+  const LinesToLoad = () => {
+    let obj: any = []
+    for(let i = 1; i < lines; i++){
+      obj.push(<Skeleton height={40} mt={6} mb={2} radius="sm" width={'80vw'}/> )
+    }
+    return obj
+  }
+
+  const DefaultLines = () => {
+    return( 
+      <>
+        <Skeleton height={40} mt={8} radius="sm" width={'80vw'}/>
+        <Skeleton height={40} mt={8} radius="sm" width={'80vw'}/>
+        <Skeleton height={40} mt={8} radius="sm" width={'80vw'}/>
+        <Skeleton height={40} mt={8} radius="sm" width={'80vw'}/>
       </>
+    )
+  }
+
+  return(
+    lines? <LinesToLoad /> : <DefaultLines />
+  )
 }
 
 export default TaskListLoadSkeleton
+
