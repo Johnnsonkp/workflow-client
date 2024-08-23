@@ -15,7 +15,7 @@ function TableBody({ listTasks, items}) {
           {items || <TaskListLoadSkeleton /> } 
       </Table.Tbody> 
       :
-      <EmptyTaskModal listTasks={listTasks} />
+      <EmptyTaskModal  />
   )
 
   return (
