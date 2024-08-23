@@ -29,18 +29,20 @@ const SideNav = ({section, urlRedirect, className}) => {
         <div className={`${classes.innerSideNav}`}>
                 <Text fw={500} size="sm" className={classes.title} c="dimmed" mb="xs">
                 </Text>
-                <SegmentedControl
-                    radius="lg"
-                    className={`${classes.controller} shadow-sm`}
-                    value={section}
-                    onChange={(value) => urlRedirect(value)}
-                    transitionTimingFunction="ease"
-                    fullWidth
-                    data={[
-                        { label: 'User XP', value: 'Userxp' },
-                        { label: 'Personal', value: 'Dashboard' },
-                    ]}
-                />
+                {/* <div className={`${classes.controllerBorder} shadow-sm`}> */}
+                  <SegmentedControl
+                      radius="lg"
+                      className={`${classes.controller} shadow-sm`}
+                      value={section}
+                      onChange={(value) => urlRedirect(value)}
+                      transitionTimingFunction="ease"
+                      fullWidth
+                      data={[
+                          { label: 'User XP', value: 'Userxp' },
+                          { label: 'Personal', value: 'Dashboard' },
+                      ]}
+                  />
+                {/* </div> */}
 
             <LoadingContainer className={classes.navbarMain}>
                 <Links setTabNavigate={setTabNavigate} active={active} setActive={setActive} section={section}/>

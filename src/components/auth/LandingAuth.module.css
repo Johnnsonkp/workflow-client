@@ -17,6 +17,7 @@
       flex-direction: column;
     }
 }
+
 .heroWrapper{
   background-color: transparent;
     border-radius: var(--mantine-radius-lg);
@@ -37,10 +38,12 @@
   .form {
     flex: 0.7;
     padding: var(--mantine-spacing-xl);
-    padding-left: calc(var(--mantine-spacing-xl) * 2);
+    /* padding-left: calc(var(--mantine-spacing-xl) * 2); */
     border-left: 0;
     margin: auto;
-    /* border: 1px solid green; */
+    border: 1px solid green;
+    border: 1px solid rgba(128, 128, 128, 0.334);
+    border-radius: 10px;
   
     @media (max-width: $mantine-breakpoint-sm) {
       padding: var(--mantine-spacing-md);

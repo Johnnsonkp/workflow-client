@@ -27,8 +27,8 @@ export function EmptyTaskModal({listTasks}) {
 
   const EmptyComp = () => (
     <Grid className={classes.wrapper}>
-      {loading ? 
-        <TaskListLoadSkeleton /> :
+      {/* {loading ? 
+        <TaskListLoadSkeleton /> : */}
         <Container my="xl">
           <SimpleGrid cols={{ base: 1, sm: 1 }} spacing="md" className='' >
                 <>
@@ -49,7 +49,7 @@ export function EmptyTaskModal({listTasks}) {
                 </>
           </SimpleGrid>
         </Container>
-      }
+      {/* } */}
     </Grid>
   )
   return <EmptyComp />;

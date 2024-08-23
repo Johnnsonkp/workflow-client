@@ -30,7 +30,11 @@ const initialState = {
     deletedTask: null,
     refreshState: false,
     lightMode: false,
-    monthly: null
+    monthly: null,
+    notification: {
+      status: '',
+      message: ''
+    }
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -69,6 +73,10 @@ export const reducer = (state, action) => {
             newState = {...state, refreshState: action.payload}
             return newState
             break;
+        case "NOTIFICATION_STATUS":
+          newState = {...state, notification: action.payload}
+          return newState
+          break;
         case "LOGOUT":
             newState = {...state, token: null, user: [{}]}
             return newState

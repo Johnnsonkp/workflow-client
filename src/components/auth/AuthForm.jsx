@@ -30,7 +30,18 @@ const formActionData = {
         storeUserData(data, dispatch, formActionData[section].action)
         setUserData(data);
         setLoginSuccess(true)
+
+        dispatch({ type: 'NOTIFICATION_STATUS', payload: {
+          status: 'success',
+          message: "Successfully signed in"
+        }})
+        
       } else {
+        dispatch({ type: 'NOTIFICATION_STATUS', payload: {
+          status: 'error',
+          message: data.error
+        }})
+        
         location.reload()
       }
     });
@@ -52,6 +63,12 @@ const formActionData = {
       if (data && !data.error) {
         storeUserData(data, dispatch, formActionData["Log in"].action)
         setUserData(data);
+
+        dispatch({ type: 'NOTIFICATION_STATUS', payload: {
+          status: 'success',
+          message: "Successfully signed in"
+        }})
+        
       } else {
         console.log(`${data.error} please try again !`);
         alert(`${data.error} please try again !`);

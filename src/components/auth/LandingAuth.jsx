@@ -7,6 +7,7 @@ import AppLogoContainer from '../appLogo/AppLogoContainer';
 import AuthForm from './AuthForm';
 import HeroSection from '../hero/HeroSection.tsx';
 import { ReactRailsFeatures } from '../featuresDisplay/ReactRailsFeacture';
+import UserCardCustom from '../cards/userCardInfo/UserCardCustom';
 import { UserCardInfo } from '../cards/userCardInfo/UserCardInfo';
 import classes from './LandingAuth.module.css';
 import { useAppState } from '../../store/AppState';
@@ -14,7 +15,7 @@ import {useNavigate} from 'react-router-dom'
 
 export function LandingAuth() {
  const [userData, setUserData] = useState(null)
- const {state, dispatch} = useAppState()
+ const {state, dispatch} = useAppState()         
  const navigate = useNavigate()
  const [userType, setUserType] = useState()
  const [currentUserSession, setCurrentUserSession] = useState()
@@ -52,7 +53,8 @@ export function LandingAuth() {
           <div className='flex justify-center w-[100%] h-[100%]'>
             {currentUserSession?.token ? 
               <div className='flex align-middle justify-center '>
-                <UserCardInfo state={state} user={userAuthStatus} navigate={navigate}/>
+                {/* <UserCardInfo state={state} user={userAuthStatus} navigate={navigate}/> */}
+                <UserCardCustom state={state} user={userAuthStatus} navigate={navigate}/>
               </div> : 
               <AuthForm setUserData={setUserData} userData={userData}/>
             }

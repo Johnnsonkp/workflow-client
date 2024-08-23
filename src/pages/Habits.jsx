@@ -219,8 +219,8 @@ useEffect(() => {
 
 const WeekDateDisplay = () => {
        return  <>
-            <Table.Thead className={''}>
-                <Table.Tr>
+            <Table.Thead className={''} >
+                <Table.Tr >
                     <Table.Th className={''}>Habit</Table.Th>
                     { DateDisplay.map((obj, index) => (
                         <Table.Th key={index} className={` text-[12px]  `}>
@@ -308,7 +308,7 @@ const HabitViewDisplay = () => {
             <InnerTopNav title={'Habits'} tab1={'Week view'} tab2={'Month view'} setTab1={setTab1} data={data} activeTab={activeTab} setActiveTab={setActiveTab}/>
 
             <ScrollArea onScrollPositionChange={({ y }) => setScrolled(y !== 0)} border={'true'} className='border border-#D1D1D1 rounded-md shadow-md '>
-                <Table miw={700} withColumnBorders={true} >
+                <Table miw={700} withColumnBorders={true} striped={true} >
                     <HabitViewDisplay />
                     <Table.Tfoot className='border border-gray-200 h-5 !p-5 bg-[#F1F3F5]'>
                         <p className='p-2 text-xs'>Habit count: {Array.isArray(habitObj) && habitObj?.length || 0 }</p>

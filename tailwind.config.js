@@ -9,6 +9,10 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        // 'custom-gradient': 'linear-gradient(transparent, #7C72FF 30%)',
+        'custom-gradient': 'linear-gradient(#7C72FF, 80%, #3FB950)'
+      },
       keyframes: {
         pulse: {
           '0%, 100%': {
