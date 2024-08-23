@@ -8,22 +8,12 @@ import classes from './emptyTaskModal.module.css'
 import { useAppState } from '../../store/AppState';
 import { useDisclosure } from '@mantine/hooks';
 
-export function EmptyTaskModal({listTasks}) {
+export function EmptyTaskModal() {
   const [loading, setLoading] = useState(true)
   const [comp, setComp] = useState()
   const {state} = useAppState()
   // console.log("EmptyTaskModal loading...", Date.now())
 
-  useEffect(() => {
-    let loadingDelay = setTimeout(() => {
-      if(listTasks && listTasks.length == 0 ){
-        setLoading(false)
-      }
-    }, 200)
-    return () => {
-      clearTimeout(loadingDelay)
-    }
-}, [listTasks])
 
   const EmptyComp = () => (
     <Grid className={classes.wrapper}>
